@@ -1,0 +1,329 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@300;400;500&display=swap');
+@import url('variables.css');
+
+/* ════════════════════════════════
+   RESET
+════════════════════════════════ */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ════════════════════════════════
+   BASE
+════════════════════════════════ */
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--color-white-1);
+    color: var(--color-black-3);
+}
+
+/* ════════════════════════════════
+   TOP NAV
+════════════════════════════════ */
+.top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--size-9);
+    padding: 0 var(--padding-thick);
+    background: var(--color-white-0);
+    border-bottom: var(--size-0) solid var(--color-white-3);
+}
+
+/* Logo */
+.top-nav__logo {
+    font-family: 'Playfair Display', serif;
+    font-size: var(--size-4);
+    font-weight: 600;
+    color: var(--color-black-3);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+/* Search */
+.top-nav__search {
+    flex: 1;
+    max-width: 420px;
+    margin: 0 var(--padding-thick);
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: var(--padding-thin);
+    height: var(--size-5);
+    padding: 0 var(--padding);
+    background: var(--color-white-1);
+    border-radius: 999px;
+    transition: box-shadow 0.2s;
+}
+
+.search-box:focus-within {
+    box-shadow: 0 0 0 2px var(--color-main-4);
+}
+
+.search-box__icon {
+    color: var(--color-white-9);
+    flex-shrink: 0;
+}
+
+.search-box__input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-family: inherit;
+    font-size: var(--size-3);
+    color: var(--color-black-3);
+}
+
+.search-box__input::placeholder {
+    color: var(--color-white-9);
+}
+
+/* Actions (icons + login) */
+.top-nav__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--padding-thick);
+}
+
+.icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--padding-thin);
+    border-radius: 50%;
+    color: var(--color-black-3);
+    transition: background 0.15s, color 0.15s;
+}
+
+.icon-btn:hover {
+    background: var(--color-white-1);
+    color: var(--color-main-5);
+}
+
+.login-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--padding-thin);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: var(--size-3);
+    font-weight: 500;
+    color: var(--color-black-3);
+    padding: var(--padding-thin) var(--padding);
+    border-radius: 999px;
+    transition: background 0.15s, color 0.15s;
+}
+
+.login-btn:hover {
+    background: var(--color-white-1);
+    color: var(--color-main-5);
+}
+
+/* ════════════════════════════════
+   CATEGORY NAV
+════════════════════════════════ */
+.cat-nav {
+    display: flex;
+    align-items: center;
+    height: var(--size-9);
+    padding: 0 var(--padding-thick);
+    background: var(--color-white-0);
+    border-bottom: var(--size-0) solid var(--color-white-3);
+    gap: var(--padding-thin);
+}
+
+/* "All products" hamburger button */
+.cat-nav__all-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--padding-thin);
+    background: none;
+    border: none;
+    border-right: var(--size-0) solid var(--color-white-3);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: var(--size-3);
+    font-weight: 500;
+    color: var(--color-black-3);
+    padding-right: var(--padding);
+    margin-right: var(--padding-thin);
+    white-space: nowrap;
+    height: 100%;
+    transition: color 0.15s;
+}
+
+.cat-nav__all-btn:hover {
+    color: var(--color-main-5);
+}
+
+/* Category links list */
+.cat-nav__list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    flex: 1;
+}
+
+.cat-nav__list a {
+    display: block;
+    padding: 0 var(--padding);
+    line-height: var(--size-9);
+    font-size: var(--size-3);
+    color: var(--color-black-3);
+    text-decoration: none;
+    white-space: nowrap;
+    position: relative;
+    transition: color 0.15s;
+}
+
+.cat-nav__list a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: var(--padding);
+    right: var(--padding);
+    height: var(--size-1);
+    background: var(--color-main-5);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+}
+
+.cat-nav__list a:hover {
+    color: var(--color-main-5);
+}
+
+.cat-nav__list a:hover::after {
+    transform: scaleX(1);
+}
+
+/* "More" chevron button */
+.cat-nav__more-btn {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-black-3);
+    padding: var(--padding-thin);
+    transition: color 0.15s;
+}
+
+.cat-nav__more-btn:hover {
+    color: var(--color-main-5);
+}
+
+/* ════════════════════════════════
+   RESPONSIVE — TABLET (≤1024px)
+════════════════════════════════ */
+@media (max-width: 1024px) {
+
+    /* Хайлтын талбарыг багасгана */
+    .top-nav__search {
+        max-width: 260px;
+        margin: 0 var(--padding);
+    }
+
+    /* Ангиллын холбоосуудыг багасгана */
+    .cat-nav__list a {
+        padding: 0 var(--padding-thin);
+    }
+
+    /* "Бүх бүтээгдэхүүн" текстийг нуух */
+    .cat-nav__all-btn-text {
+        display: none;
+    }
+}
+
+/* ════════════════════════════════
+   RESPONSIVE — MOBILE (≤768px)
+════════════════════════════════ */
+@media (max-width: 768px) {
+
+    /* TOP NAV: logo + icons л үлдэнэ, хайлт нуугдана */
+    .top-nav {
+        padding: 0 var(--padding);
+    }
+
+    .top-nav__search {
+        display: none;
+    }
+
+    .top-nav__actions {
+        gap: var(--padding-thin);
+    }
+
+    /* "Нэвтрэх" текстийг нуух — icon л үлдэнэ */
+    .login-btn__text {
+        display: none;
+    }
+
+    /* CATEGORY NAV: scroll хийж болно, wrap хийхгүй */
+    .cat-nav {
+        padding: 0 var(--padding);
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;        /* Firefox */
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .cat-nav::-webkit-scrollbar {
+        display: none;                /* Chrome / Safari */
+    }
+
+    /* "Бүх бүтээгдэхүүн" текстийг нуух */
+    .cat-nav__all-btn-text {
+        display: none;
+    }
+
+    /* Ангиллын холбоосуудыг бага padding-тай */
+    .cat-nav__list a {
+        padding: 0 var(--padding-thin);
+        font-size: var(--size-2);
+    }
+
+    /* hero өндрийг багасгах */
+    .hero {
+        height: 160px;
+    }
+
+    .hero__title {
+        font-size: var(--size-4);
+    }
+}
+
+/* ════════════════════════════════
+   HERO (demo placeholder)
+════════════════════════════════ */
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--padding);
+    height: 280px;
+    background: linear-gradient(135deg, var(--color-main-0), var(--color-main-2));
+}
+
+.hero__title {
+    font-family: 'Playfair Display', serif;
+    font-size: var(--size-5);
+    color: var(--color-white-0);
+    text-shadow: var(--shadow-text);
+}
+
+.hero__sub {
+    font-size: var(--size-3);
+    color: var(--color-white-2);
+    font-weight: 300;
+}

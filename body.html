@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://kit.fontawesome.com/f23fece6f2.js" crossorigin="anonymous"></script>
+
+  <title>BeautyShop</title>
+  <style>
+    
+    :root {
+      --pink-light: #fce4ec;
+      --pink-mid: #f8bbd0;
+      --product-rating: #fbc02d;
+      --gradient-section: linear-gradient(90deg, #fce4ec, #f8bbd0);
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+      --shadow-card: 0 4px 24px rgba(233,30,140,0.08);
+      --shadow-hover: 0 8px 40px rgba(233,30,140,0.18);
+      --text-light: #999;
+  }
+
+    body{
+      font-family: Inter, sans-serif;
+      background-color: #ffffff;
+    }
+
+    .hero {
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+
+    }
+
+    main.container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    main section h2{
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #000000;
+      margin-bottom: 20px;
+    }
+
+    section {margin-bottom: 60px;}
+
+    .high-rated {margin-bottom: 60px;}
+
+    .discount-product {margin-top: 40px;}
+
+    .high-rated {margin-bottom: 20px}
+
+    .strip{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px;
+      background: var(--gradient-section);
+      border-radius: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 28px;
+      column-gap: 40px;
+    }
+
+    .strip-item{
+      width: 160px;
+      gap: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      align-items: center;
+      flex-direction: column;
+      transition: transform 0.2s;
+  
+    }
+
+    .strip-item:hover .strip-circle {
+      background: linear-gradient(180deg, #ecaac1 0%, #f8bbd0 50%)
+    }
+
+    .strip-label {
+      font-size: 12px;
+    }
+
+    .strip-circle{
+      width: 70px;
+      height: 70px;
+      border-radius: 70%;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0px;
+      transition: transform 0.2;
+    }
+     
+    .products {
+      display: flex;
+      overflow-x: auto;
+      padding: 10px;
+      gap:16px;
+    }
+
+    .products::-webkit-scrollbar{display: none;}
+    
+    .product-card {background: #fff;
+    border-radius: 20px;
+    box-shadow: var(--shadow-card);
+    padding: 16px;
+    position: relative; transition: all 0.3s; min-width: 220px; flex-shrink: 0; scroll-snap-align: start; padding-left: 12px; padding-right: 12px;}
+
+    .product-card:hover{transform: translateY(-6px); box-shadow: var(--shadow-hover);}
+    .product-image {height: 150px; display: flex;  align-items: center; justify-content: center;}
+    .product-image img{width: 200%; max-width: 150px; object-fit: contain;}
+   
+    .product-actions {display: flex; gap: 10px;}
+    .product-actions button:hover {background: #f8bbd0;}
+       .product-actions .add-cart {flex: 1; background: linear-gradient(90deg, #fce4ec, #f8bbd0); border: none; border-radius: 20px;padding: 12px;}
+       .product-actions .wishlist{width: 40px; height: 40px; background: linear-gradient(90deg, #fce4ec, #f8bbd0); border: none; border-radius: 12px;}
+
+
+    .product-menu {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      border: none;
+      background: #f5f5f5;
+      border-radius: 10px;
+      padding: 6px 10px;
+      }
+    
+    .product-rating i {color: var(--product-rating)}
+    .product-rating {font-size: 12px;}
+    .product-title {font-size: 14px;}
+    .product-brand {font-size: 12px; color: var(--text-light);}
+    .product-price {font-size: 14px;}
+    .product-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      border: none;
+      background: #f5f5f5;
+      padding: 6px 14px;
+      border-radius: 14px;
+    }
+
+
+  </style>
+
+</head>
+<body>
+  
+<section class="hero" aria-label="uramshuulal">
+  <img src="images/hero.jpg" class="hero-img">
+</section>
+
+<main class="container">
+
+  <section class="skin-type-heading">
+    <h2 id="skin-type-heading">Арьсны төрлөөр</h2>
+
+    <ul class="strip">
+
+      <li class="strip-item">
+        <span class="strip-circle" aria-hidden="true"></span>
+        <span class="strip-label">Энгийн</span>
+      </li>
+
+      <li class="strip-item">
+        <span class="strip-circle" aria-hidden="true"></span>
+        <span class="strip-label">Хуурай</span>
+      </li>
+
+      <li class="strip-item">
+        <span class="strip-circle" aria-hidden="true"></span>
+        <span class="strip-label">Эмзэг</span>
+      </li>
+
+      <li class="strip-item">
+        <span class="strip-circle" aria-hidden="true"></span>
+        <span class="strip-label">Холимог</span>
+      </li>
+      
+      <li class="strip-item">
+        <span class="strip-circle" aria-hidden="true"></span>
+        <span class="strip-label">Тослог</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="skin-concern-heading">
+    <h2 id="skin-concern-heading">Арьсны асуудлаар</h2>
+
+    <ul class="strip">
+
+      <li class="strip-item">
+        <span class="strip-circle" aria-hidden="true"></span>
+        <span class="strip-label">Нүхжилт</span>
+      </li>
+
+      <li class="strip-item">
+        <span class="strip-circle" aria-hidden="true"></span>
+        <span class="strip-label">Хуурайшилт</span>
+      </li>
+
+      <li class="strip-item">
+        <span class="strip-circle" aria-hidden="true"></span>
+        <span class="strip-label">Батгашилт</span>
+      </li>
+
+      <li class="strip-item">
+        <span class="strip-circle" aria-hidden="true"></span>
+        <span class="strip-label">Үрчлээ</span>
+      </li>
+
+      <li class="strip-item">
+        <span class="strip-circle" aria-hidden="true"></span>
+        <span class="strip-label">Сэвх нөсөө</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="high-rated">
+    <h2 id="highRated-heading">Үнэлгээ өндөр бүтээгдэхүүн</h2>
+  <div class="products">
+
+    <article class="product-card">
+      <button class="product-menu"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+
+      <div class="product-image">
+        <img src="images/Jumiso-Cream.jpg" alt="Snail Mucin 88 + Peptide Cream">
+      </div>
+
+      <div class="product-body">
+        <h3 class="product-title">Snail Mucin 88 + Peptide Cream</h3>
+        <p class="product-brand">Jumiso</p>
+
+        <div class="product-rating">
+          <i class="fa-solid fa-star"></i>
+          <span class="rating">4.9</span>
+          <span class="reviews">(5)</span>
+        </div>
+
+        <p class="product-price">95,000₮</p>
+
+        <div class="product-actions">
+          <button class="add-cart"><i class="fa-regular fa-cart-shopping"></i></button>
+          <button class="wishlist"><i class="fa-regular fa-heart"></i></button>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-card">
+      <button class="product-menu"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+      <div class="product-image">
+        <img src="images/mung-bean.jpg" alt="Mung Bean Pore Clay Mask">
+      </div>
+
+      <div class="product-body">
+        <h3 class="product-title">Mung Bean Pore Clay Mask</h3>
+        <p class="product-brand">Beplain</p>
+
+        <div class="product-rating">
+          <i class="fa-solid fa-star"></i>
+          <span class="rating">5</span>
+          <span class="reviews">(20)</span>
+        </div>
+
+        <p class="product-price">55,900₮</p>
+
+        <div class="product-actions">
+          <button class="add-cart"><i class="fa-regular fa-cart-shopping"></i></button>
+          <button class="wishlist"><i class="fa-regular fa-heart"></i></button>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-card">
+      <button class="product-menu"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+      <div class="product-image">
+        <img src="images/37.jpg" alt="Mugwort Calming Cleanser">
+      </div>
+
+      <div class="product-body">
+        <h3 class="product-title">Mugwort Calming Cleanser</h3>
+        <p class="product-brand">Round Lab</p>
+
+        <div class="product-rating">
+          <i class="fa-solid fa-star"></i>
+          <span class="rating">4.7</span>
+          <span class="reviews">(5)</span>
+        </div>
+
+        <p class="product-price">29,900₮</p>
+
+        <div class="product-actions">
+          <button class="add-cart"><i class="fa-regular fa-cart-shopping"></i></button>
+          <button class="wishlist"><i class="fa-regular fa-heart"></i></button>
+        </div>
+      </div>
+    </article>
+
+
+    <article class="product-card">
+      <button class="product-menu"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+      <div class="product-image">
+        <img src="images/dark-spot-serum.jpg" alt="Dark Spot Correcting Glow Serum">
+      </div>
+
+      <div class="product-body">
+        <h3 class="product-title">Dark Spot Correcting Glow Serum</h3>
+        <p class="product-brand">AXIS-Y</p>
+
+        <div class="product-rating">
+          <i class="fa-solid fa-star"></i>
+          <span class="rating">5.0</span>
+          <span class="reviews">(11)</span>
+        </div>
+
+        <p class="product-price">40,000₮</p>
+
+        <div class="product-actions">
+          <button class="add-cart"><i class="fa-regular fa-cart-shopping"></i></button>
+          <button class="wishlist"><i class="fa-regular fa-heart"></i></button>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-card">
+      <button class="product-menu"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+      <div class="product-image">
+        <img src="images/345cream.jpg" alt="345 Relief Cream">
+      </div>
+
+      <div class="product-body">
+        <h3 class="product-title">345 Relief Cream (New Version)</h3>
+        <p class="product-brand">Dr.Althea</p>
+
+        <div class="product-rating">
+          <i class="fa-solid fa-star"></i>
+          <span class="rating">4.6</span>
+          <span class="reviews">(15)</span>
+        </div>
+
+        <p class="product-price">69,900₮</p>
+
+        <div class="product-actions">
+          <button class="add-cart"><i class="fa-regular fa-cart-shopping"></i></button>
+          <button class="wishlist"><i class="fa-regular fa-heart"></i></button>
+        </div>
+      </div>
+    </article>
+    </div>
+  </section>
+ 
+
+  <section class="discount-product">
+    <h2 id="discount-product">Хямдралтай бүтээгдэхүүн</h2>
+  <div class="products">
+
+    <article class="product-card">
+      <button class="product-menu"><i class="Swimming Pool Toner"></i></button>
+
+      <div class="product-image">
+        <img src="images/eqqualberry-toner.jpg" alt="Swimming Pool Toner">
+      </div>
+
+      <div class="product-body">
+        <h3 class="product-title">Swimming Pool Toner</h3>
+        <p class="product-brand">eqqualberry-toner</p>
+
+        <div class="product-rating">
+          <i class="fa-solid fa-star"></i>
+          <span class="rating">4.8</span>
+          <span class="reviews">(16)</span>
+        </div>
+
+        <p class="product-price">42,00₮</p>
+
+        <div class="product-actions">
+          <button class="add-cart"><i class="fa-regular fa-cart-shopping"></i></button>
+          <button class="wishlist"><i class="fa-regular fa-heart"></i></button>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-card">
+      <button class="product-menu"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+      <div class="product-image">
+        <img src="images/mung-bean.jpg" alt="Mung Bean Pore Clay Mask">
+      </div>
+
+      <div class="product-body">
+        <h3 class="product-title">Mung Bean Pore Clay Mask</h3>
+        <p class="product-brand">Beplain</p>
+
+        <div class="product-rating">
+          <i class="fa-solid fa-star"></i>
+          <span class="rating">5</span>
+          <span class="reviews">(20)</span>
+        </div>
+
+        <p class="product-price">55,900₮</p>
+
+        <div class="product-actions">
+          <button class="add-cart"><i class="fa-regular fa-cart-shopping"></i></button>
+          <button class="wishlist"><i class="fa-regular fa-heart"></i></button>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-card">
+      <button class="product-menu"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+      <div class="product-image">
+        <img src="images/37.jpg" alt="Mugwort Calming Cleanser">
+      </div>
+
+      <div class="product-body">
+        <h3 class="product-title">Mugwort Calming Cleanser</h3>
+        <p class="product-brand">Round Lab</p>
+
+        <div class="product-rating">
+          <i class="fa-solid fa-star"></i>
+          <span class="rating">4.7</span>
+          <span class="reviews">(5)</span>
+        </div>
+
+        <p class="product-price">29,900₮</p>
+
+        <div class="product-actions">
+          <button class="add-cart"><i class="fa-regular fa-cart-shopping"></i></button>
+          <button class="wishlist"><i class="fa-regular fa-heart"></i></button>
+        </div>
+      </div>
+    </article>
+
+
+    <article class="product-card">
+      <button class="product-menu"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+      <div class="product-image">
+        <img src="images/37.jpg" alt="Mugwort Calming Cleanser">
+      </div>
+
+      <div class="product-body">
+        <h3 class="product-title">Mugwort Calming Cleanser</h3>
+        <p class="product-brand">Round Lab</p>
+
+        <div class="product-rating">
+          <i class="fa-solid fa-star"></i>
+          <span class="rating">4.7</span>
+          <span class="reviews">(5)</span>
+        </div>
+
+        <p class="product-price">29,900₮</p>
+
+        <div class="product-actions">
+          <button class="add-cart"><i class="fa-regular fa-cart-shopping"></i></button>
+          <button class="wishlist"><i class="fa-regular fa-heart"></i></button>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-card">
+      <button class="product-menu"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+      <div class="product-image">
+        <img src="images/37.jpg" alt="Mugwort Calming Cleanser">
+      </div>
+
+      <div class="product-body">
+        <h3 class="product-title">Mugwort Calming Cleanser</h3>
+        <p class="product-brand">Round Lab</p>
+
+        <div class="product-rating">
+          <i class="fa-solid fa-star"></i>
+          <span class="rating">4.7</span>
+          <span class="reviews">(5)</span>
+        </div>
+
+        <p class="product-price">29,900₮</p>
+
+        <div class="product-actions">
+          <button class="add-cart"><i class="fa-regular fa-cart-shopping"></i></button>
+          <button class="wishlist"><i class="fa-regular fa-heart"></i></button>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+  
+  
+
+</main>
+</body>
+<head>
+  <link rel="stylesheet" href="footer.css">
+</head>
+<footer class="footer">
+  <div class="footer-container">
+
+    <div class="footer-section">
+      <h3>BeautyShop</h3>
+      <p>
+        Гоо сайхны бүтээгдэхүүний онлайн дэлгүүр.
+        Чанартай, найдвартай үйлчилгээ.
+      </p>
+    </div>
+
+    <div class="footer-section">
+      <h3>Холбоос</h3>
+      <ul>
+        <li><a href="#">Бүтээгдэхүүнүүд</a></li>
+        <li><a href="#">Хямдрал</a></li>
+        <li><a href="#">Бидний тухай</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h3>Үйлчилгээ</h3>
+      <ul>
+        <li><a href="#">Холбоо барих</a></li>
+        <li><a href="#">Хүргэлт</a></li>
+        <li><a href="#">Буцаалт</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h3>Холбоо барих</h3>
+      <p>И-мэйл: <a href="mailto:info@beautyshop.mn">info@beautyshop.mn</a></p>
+      <p>Утас: <a href="tel:77777777">7777-7777</a></p>
+      <p>
+        Хаяг: 
+        <a href="https://www.google.com/maps?q=Ulaanbaatar" target="_blank">
+           Сүхбаатар дүүрэг, Улаанбаатар хот
+        </a>
+      </p>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 BeautyShop. Бүх эрх хуулиар хамгаалагдсан.
+  </div>
+</footer>
+</html>
