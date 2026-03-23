@@ -18,6 +18,7 @@
       --shadow-card: 0 4px 24px rgba(233,30,140,0.08);
       --shadow-hover: 0 8px 40px rgba(233,30,140,0.18);
       --text-light: #999;
+      --sale-rate: #930000; 
   }
 
     body{
@@ -54,8 +55,6 @@
 
     section {margin-bottom: 60px;}
 
-    .high-rated {margin-bottom: 60px;}
-
     .discount-product {margin-top: 40px;}
 
     .high-rated {margin-bottom: 20px}
@@ -64,13 +63,8 @@
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
-      padding: 20px;
-      background: var(--gradient-section);
-      border-radius: 16px;
-      flex-wrap: wrap;
+      padding: 10px;
       justify-content: center;
-      row-gap: 28px;
-      column-gap: 40px;
     }
 
     .strip-item{
@@ -78,40 +72,39 @@
       gap: 8px;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: flex-start;
       align-items: center;
-      flex-direction: column;
       transition: transform 0.2s;
-  
-    }
-
-    .strip-item:hover .strip-circle {
-      background: linear-gradient(180deg, #ecaac1 0%, #f8bbd0 50%)
     }
 
     .strip-label {
+      display: block;
       font-size: 12px;
     }
-
+    
     .strip-circle{
-      width: 70px;
-      height: 70px;
+      width: 50px;
+      height: 50px;
       border-radius: 70%;
       background-color: #fff;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 0px;
-      transition: transform 0.2;
+      justify-content: center;
     }
-     
+    .strip-circle img {width: 50%;}
+
+    .strip-button{background: none; border: none; cursor: pointer; text-align: center;}
+    .strip-button:hover .strip-circle{transition: 0.3s; transform: translateY(-10%);}
+    .strip-button:hover .strip-circle{color: #fce4ec; font-weight: 600px;}
+    
+
     .products {
       display: flex;
       overflow-x: auto;
       padding: 10px;
-      gap:16px;
+      gap:10px;
     }
+    .product-body {position: relative; overflow: hidden;}
 
     .products::-webkit-scrollbar{display: none;}
     
@@ -125,10 +118,19 @@
     .product-image {height: 150px; display: flex;  align-items: center; justify-content: center;}
     .product-image img{width: 200%; max-width: 150px; object-fit: contain;}
    
-    .product-actions {display: flex; gap: 10px;}
-    .product-actions button:hover {background: #f8bbd0;}
-       .product-actions .add-cart {flex: 1; background: linear-gradient(90deg, #fce4ec, #f8bbd0); border: none; border-radius: 20px;padding: 12px;}
-       .product-actions .wishlist{width: 40px; height: 40px; background: linear-gradient(90deg, #fce4ec, #f8bbd0); border: none; border-radius: 12px;}
+    .product-actions {
+      display: flex; 
+      gap: 10px; 
+      margin-top: 10px;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px);
+      transition: transform 0.2s; 
+    }
+    .product-card:hover .product-actions{opacity: 1; pointer-events: auto; transform: translateY(0);}
+      .product-actions .add-cart {display: flex; align-items: center; justify-content: center;width: 70px; height: 35px; background: linear-gradient(90deg, #fce4ec, #f8bbd0); border: none; border-radius: 12px; padding: 12px;}
+      .product-actions .wishlist{display: flex; align-items: center; justify-content: center;width: 70px; height: 35px; background: linear-gradient(90deg, #fce4ec, #f8bbd0); border: none; border-radius: 12px; padding: 12px;}
 
 
     .product-menu {
@@ -143,9 +145,11 @@
     
     .product-rating i {color: var(--product-rating)}
     .product-rating {font-size: 12px;}
-    .product-title {font-size: 14px;}
-    .product-brand {font-size: 12px; color: var(--text-light);}
-    .product-price {font-size: 14px;}
+    .product-title {font-size: 14px; margin: 5px}
+    .product-brand {margin: 5px;font-size: 12px; color: var(--text-light); }
+    .old-price {font-size: 12px; color: var(--text-light); text-decoration: line-through;}
+    .sale-rate {font-size: 14px; color: var(--sale-rate); display:inline-block; border: 1px solid #b71212;border-radius:100px; padding:1px 5px;}
+
     .product-badge {
       position: absolute;
       top: 16px;
@@ -155,8 +159,6 @@
       padding: 6px 14px;
       border-radius: 14px;
     }
-
-
   </style>
 
 </head>
@@ -168,67 +170,51 @@
 
 <main class="container">
 
-  <section class="skin-type-heading">
-    <h2 id="skin-type-heading">Арьсны төрлөөр</h2>
-
-    <ul class="strip">
-
-      <li class="strip-item">
-        <span class="strip-circle" aria-hidden="true"></span>
-        <span class="strip-label">Энгийн</span>
-      </li>
-
-      <li class="strip-item">
-        <span class="strip-circle" aria-hidden="true"></span>
-        <span class="strip-label">Хуурай</span>
-      </li>
-
-      <li class="strip-item">
-        <span class="strip-circle" aria-hidden="true"></span>
-        <span class="strip-label">Эмзэг</span>
-      </li>
-
-      <li class="strip-item">
-        <span class="strip-circle" aria-hidden="true"></span>
-        <span class="strip-label">Холимог</span>
-      </li>
-      
-      <li class="strip-item">
-        <span class="strip-circle" aria-hidden="true"></span>
-        <span class="strip-label">Тослог</span>
-      </li>
-    </ul>
-  </section>
-
   <section class="skin-concern-heading">
-    <h2 id="skin-concern-heading">Арьсны асуудлаар</h2>
+    <h2 id="skin-concern-heading">Бүтээгдэхүүний төрлөөр</h2>
 
     <ul class="strip">
 
       <li class="strip-item">
-        <span class="strip-circle" aria-hidden="true"></span>
-        <span class="strip-label">Нүхжилт</span>
+        <button class="strip-button">
+          <span class="strip-circle">
+            <img src="images/digital-password.svg" alt="энгийн">
+          </span>
+          <span class="strip-label">Чийгшүүлэх</span>
+
+        </button>
       </li>
 
       <li class="strip-item">
         <span class="strip-circle" aria-hidden="true"></span>
-        <span class="strip-label">Хуурайшилт</span>
+        <span class="strip-label">Тайвшруулах</span>
       </li>
 
       <li class="strip-item">
         <span class="strip-circle" aria-hidden="true"></span>
-        <span class="strip-label">Батгашилт</span>
+        <span class="strip-label">Тэжээл өгөх</span>
       </li>
 
       <li class="strip-item">
         <span class="strip-circle" aria-hidden="true"></span>
-        <span class="strip-label">Үрчлээ</span>
+        <span class="strip-label">Цайруулах</span>
       </li>
 
       <li class="strip-item">
         <span class="strip-circle" aria-hidden="true"></span>
-        <span class="strip-label">Сэвх нөсөө</span>
+        <span class="strip-label">Нүхжилт ашгаах</span>
       </li>
+
+      <li class="strip-item">
+        <span class="strip-circle" aria-hidden="true"></span>
+        <span class="strip-label">pH тэнцвэржүүлэх</span>
+      </li>
+
+      <li class="strip-item">
+        <span class="strip-circle" aria-hidden="true"></span>
+        <span class="strip-label">Үрчлээний эсрэг</span>
+      </li>
+
     </ul>
   </section>
 
@@ -253,7 +239,7 @@
           <span class="reviews">(5)</span>
         </div>
 
-        <p class="product-price">95,000₮</p>
+        <p class="product-price">60,000₮</p>
 
         <div class="product-actions">
           <button class="add-cart"><i class="fa-regular fa-cart-shopping"></i></button>
@@ -316,7 +302,7 @@
     <article class="product-card">
       <button class="product-menu"><i class="fa-solid fa-ellipsis-vertical"></i></button>
       <div class="product-image">
-        <img src="images/dark-spot-serum.jpg" alt="Dark Spot Correcting Glow Serum">
+        <img src="images/axis-y_dark-spot-serum.jpg" alt="Dark Spot Correcting Glow Serum">
       </div>
 
       <div class="product-body">
@@ -379,7 +365,7 @@
 
       <div class="product-body">
         <h3 class="product-title">Swimming Pool Toner</h3>
-        <p class="product-brand">eqqualberry-toner</p>
+        <p class="product-brand">Eqqualberry</p>
 
         <div class="product-rating">
           <i class="fa-solid fa-star"></i>
@@ -387,7 +373,12 @@
           <span class="reviews">(16)</span>
         </div>
 
-        <p class="product-price">42,00₮</p>
+       <p class="product-price">
+          <div class="old-price">42,000₮</div>
+
+          <span class="new-price">33,600₮</span>
+          <span class="sale-rate">-20%</span>
+        </p>
 
         <div class="product-actions">
           <button class="add-cart"><i class="fa-regular fa-cart-shopping"></i></button>
@@ -399,20 +390,86 @@
     <article class="product-card">
       <button class="product-menu"><i class="fa-solid fa-ellipsis-vertical"></i></button>
       <div class="product-image">
-        <img src="images/mung-bean.jpg" alt="Mung Bean Pore Clay Mask">
+        <img src="images/fwee-lip&cheek-blurry.jpg" alt="Mung Bean Pore Clay Mask">
       </div>
 
       <div class="product-body">
-        <h3 class="product-title">Mung Bean Pore Clay Mask</h3>
-        <p class="product-brand">Beplain</p>
+        <h3 class="product-title">Lip&Cheek Blurry Pudding Pot - Feel'n</h3>
+        <p class="product-brand">Fwee</p>
 
         <div class="product-rating">
           <i class="fa-solid fa-star"></i>
-          <span class="rating">5</span>
-          <span class="reviews">(20)</span>
+          <span class="rating">3.5</span>
+          <span class="reviews">(2)</span>
         </div>
 
-        <p class="product-price">55,900₮</p>
+        <p class="product-price">
+          <div class="old-price">40,000₮</div>
+
+          <span class="new-price">28,000₮</span>
+          <span class="sale-rate">-30%</span>
+        </p>
+
+        <div class="product-actions">
+          <button class="add-cart"><i class="fa-regular fa-cart-shopping"></i></button>
+          <button class="wishlist"><i class="fa-regular fa-heart"></i></button>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-card">
+      <button class="product-menu"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+      <div class="product-image">
+        <img src="images/medicube-serum-antiedad-pdrn-pink-peptide.jpg" alt="Mugwort Calming Cleanser">
+      </div>
+
+      <div class="product-body">
+        <h3 class="product-title">Anti-aging serum PDRN Pink Peptide</h3>
+        <p class="product-brand">Medicube</p>
+
+        <div class="product-rating">
+          <i class="fa-solid fa-star"></i>
+          <span class="rating">0</span>
+          <span class="reviews">(0)</span>
+        </div>
+
+        <p class="product-price">
+          <div class="old-price">55,900₮</div>
+
+          <span class="new-price">50,310₮</span>
+          <span class="sale-rate">-10%</span>
+        </p>
+
+        <div class="product-actions">
+          <button class="add-cart"><i class="fa-regular fa-cart-shopping"></i></button>
+          <button class="wishlist"><i class="fa-regular fa-heart"></i></button>
+        </div>
+      </div>
+    </article>
+
+
+    <article class="product-card">
+      <button class="product-menu"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+      <div class="product-image">
+        <img src="images/eberryoserum.webp" alt="Mugwort Calming Cleanser">
+      </div>
+
+      <div class="product-body">
+        <h3 class="product-title">Bakuchiol Plumping Serum</h3>
+        <p class="product-brand">Eqqualberry</p>
+
+        <div class="product-rating">
+          <i class="fa-solid fa-star"></i>
+          <span class="rating">0</span>
+          <span class="reviews">(0)</span>
+        </div>
+
+        <p class="product-price">
+          <div class="old-price">70,000₮</div>
+
+          <span class="new-price">56,000₮</span>
+          <span class="sale-rate">-20%</span>
+        </p>
 
         <div class="product-actions">
           <button class="add-cart"><i class="fa-regular fa-cart-shopping"></i></button>
@@ -437,58 +494,12 @@
           <span class="reviews">(5)</span>
         </div>
 
-        <p class="product-price">29,900₮</p>
+        <p class="product-price">
+          <div class="old-price">40,000₮</div>
 
-        <div class="product-actions">
-          <button class="add-cart"><i class="fa-regular fa-cart-shopping"></i></button>
-          <button class="wishlist"><i class="fa-regular fa-heart"></i></button>
-        </div>
-      </div>
-    </article>
-
-
-    <article class="product-card">
-      <button class="product-menu"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-      <div class="product-image">
-        <img src="images/37.jpg" alt="Mugwort Calming Cleanser">
-      </div>
-
-      <div class="product-body">
-        <h3 class="product-title">Mugwort Calming Cleanser</h3>
-        <p class="product-brand">Round Lab</p>
-
-        <div class="product-rating">
-          <i class="fa-solid fa-star"></i>
-          <span class="rating">4.7</span>
-          <span class="reviews">(5)</span>
-        </div>
-
-        <p class="product-price">29,900₮</p>
-
-        <div class="product-actions">
-          <button class="add-cart"><i class="fa-regular fa-cart-shopping"></i></button>
-          <button class="wishlist"><i class="fa-regular fa-heart"></i></button>
-        </div>
-      </div>
-    </article>
-
-    <article class="product-card">
-      <button class="product-menu"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-      <div class="product-image">
-        <img src="images/37.jpg" alt="Mugwort Calming Cleanser">
-      </div>
-
-      <div class="product-body">
-        <h3 class="product-title">Mugwort Calming Cleanser</h3>
-        <p class="product-brand">Round Lab</p>
-
-        <div class="product-rating">
-          <i class="fa-solid fa-star"></i>
-          <span class="rating">4.7</span>
-          <span class="reviews">(5)</span>
-        </div>
-
-        <p class="product-price">29,900₮</p>
+          <span class="new-price">28,000₮</span>
+          <span class="sale-rate">-30%</span>
+        </p>
 
         <div class="product-actions">
           <button class="add-cart"><i class="fa-regular fa-cart-shopping"></i></button>
