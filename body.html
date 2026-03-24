@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/f23fece6f2.js" crossorigin="anonymous"></script>
 
   <title>BeautyShop</title>
@@ -10,9 +13,9 @@
     
     :root {
       --pink-light: #fce4ec;
-      --pink-mid: #f8bbd0;
+      --pink-mid: #e7d1d9;
       --product-rating: #fbc02d;
-      --gradient-section: linear-gradient(90deg, #fce4ec, #f8bbd0);
+      --gradient-section: linear-gradient(90deg, #c7bfc2, #f8bbd0);
       --radius-lg: 24px;
       --radius-full: 9999px;
       --shadow-card: 0 4px 24px rgba(233,30,140,0.08);
@@ -22,7 +25,7 @@
   }
 
     body{
-      font-family: Inter, sans-serif;
+      font-family: "Inter", sans-serif;
       background-color: #ffffff;
     }
 
@@ -60,15 +63,16 @@
     .high-rated {margin-bottom: 20px}
 
     .strip{
-      display: flex;
+      display:flex;
       flex-wrap: wrap;
       gap: 20px;
       padding: 10px;
       justify-content: center;
+
     }
 
     .strip-item{
-      width: 160px;
+      width: 100px;
       gap: 8px;
       display: flex;
       flex-direction: column;
@@ -83,15 +87,15 @@
     }
     
     .strip-circle{
-      width: 50px;
-      height: 50px;
+      width: 5px;
+      height: 5px;
       border-radius: 70%;
       background-color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .strip-circle img {width: 50%;}
+    .strip-circle img {width: 50px;}
 
     .strip-button{background: none; border: none; cursor: pointer; text-align: center;}
     .strip-button:hover .strip-circle{transition: 0.3s; transform: translateY(-10%);}
@@ -159,6 +163,7 @@
       padding: 6px 14px;
       border-radius: 14px;
     }
+
   </style>
 
 </head>
@@ -177,44 +182,51 @@
 
       <li class="strip-item">
         <button class="strip-button">
-          <span class="strip-circle">
-            <img src="images/digital-password.svg" alt="энгийн">
-          </span>
+          <span class="strip-circle"></span>
           <span class="strip-label">Чийгшүүлэх</span>
-
         </button>
       </li>
 
       <li class="strip-item">
-        <span class="strip-circle" aria-hidden="true"></span>
-        <span class="strip-label">Тайвшруулах</span>
+        <button class="strip-button">
+          <span class="strip-circle"></span>
+             <span class="strip-label">Тайвшруулах</span>
       </li>
 
       <li class="strip-item">
-        <span class="strip-circle" aria-hidden="true"></span>
-        <span class="strip-label">Тэжээл өгөх</span>
+        <button class="strip-button">
+          <span class="strip-circle"></span>
+            <span class="strip-label">Тэжээл өгөх</span>
+        </button>
       </li>
 
       <li class="strip-item">
-        <span class="strip-circle" aria-hidden="true"></span>
-        <span class="strip-label">Цайруулах</span>
+        <button class="strip-button">
+          <span class="strip-circle"></span>
+            <span class="strip-label">Цайруулах</span>
+        </button>
       </li>
 
       <li class="strip-item">
-        <span class="strip-circle" aria-hidden="true"></span>
-        <span class="strip-label">Нүхжилт ашгаах</span>
+        <button class="strip-button">
+          <span class="strip-circle"></span>
+            <span class="strip-label">Нүхжилт ашгаах</span>
+        </button>
       </li>
 
       <li class="strip-item">
-        <span class="strip-circle" aria-hidden="true"></span>
-        <span class="strip-label">pH тэнцвэржүүлэх</span>
+        <button class="strip-button">
+          <span class="strip-circle"></span>
+            <span class="strip-label">pH тэнцвэржүүлэх</span>
+        </button>
       </li>
 
       <li class="strip-item">
-        <span class="strip-circle" aria-hidden="true"></span>
-        <span class="strip-label">Үрчлээний эсрэг</span>
+        <button class="strip-button">
+          <span class="strip-circle"></span>
+            <span class="strip-label">Үрчлээний эсрэг</span>
+        </button>
       </li>
-
     </ul>
   </section>
 
@@ -225,6 +237,7 @@
     <article class="product-card">
       <button class="product-menu"><i class="fa-solid fa-ellipsis-vertical"></i></button>
 
+      <a href="product-detail.html" class="product-detail">
       <div class="product-image">
         <img src="images/Jumiso-Cream.jpg" alt="Snail Mucin 88 + Peptide Cream">
       </div>
@@ -232,6 +245,7 @@
       <div class="product-body">
         <h3 class="product-title">Snail Mucin 88 + Peptide Cream</h3>
         <p class="product-brand">Jumiso</p>
+      </a>
 
         <div class="product-rating">
           <i class="fa-solid fa-star"></i>
