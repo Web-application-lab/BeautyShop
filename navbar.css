@@ -117,7 +117,7 @@ body {
 }
 
 .icon-btn:hover {
-    background: var(--color-rose-light);
+    background: var(--color-main-100);
     color: var(--color-main-500);
 }
 

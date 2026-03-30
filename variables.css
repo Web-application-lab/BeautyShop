@@ -42,15 +42,13 @@
     --color-black-9: #888888;
     --color-black-10: #999;
 
-
-    --product-rating: #fbc02d;
+    --product-rating-star: #fbc02d;
     --gradient-section: linear-gradient(90deg, #c7bfc2, #f8bbd0);
     --shadow-card: 0 4px 24px rgba(233,30,140,0.08);
     --shadow-hover: 0 8px 40px rgba(233,30,140,0.18);
     --sale-rate: #930000; 
 
-
-    /* ── Sizing (px-based, reliable) ── */
+    /* ── Sizing ── */
     --nav-height:    64px;
     --cat-height:    48px;
     --radius-sm:     6px;
@@ -83,4 +81,30 @@
     --shadow-nav:     0 2px 12px rgba(0,0,0,0.08);
     --shadow-dropdown:0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
     --shadow-btn:     0 2px 8px rgba(232,51,106,0.35);
+
+    /* ── Borders ── */
+    --border-width-thin: 1px;
+    --border-width-md: 2px;
+    --border-width-thick: 3px;
+
+    --border-style: solid;
+
+    --border-light: var(--color-white-3);
+    --border-default: var(--color-white-4);
+    --border-dark: var(--color-black-4);
+
+    --border-primary: var(--color-main-400);
+    --border-primary-strong: var(--color-main-500);
+    --border-primary-soft: var(--color-main-200);
+
+    --border-rose: var(--color-rose-border);
+
+    --border-light-all: var(--border-width-thin) var(--border-style) var(--border-light);
+    --border-default-all: var(--border-width-thin) var(--border-style) var(--border-default);
+    --border-dark-all: var(--border-width-thin) var(--border-style) var(--border-dark);
+
+    --border-primary-all: var(--border-width-thin) var(--border-style) var(--border-primary);
+    --border-primary-strong-all: var(--border-width-md) var(--border-style) var(--border-primary-strong);
+
+    --border-rose-all: var(--border-width-thin) var(--border-style) var(--border-rose);
 }
