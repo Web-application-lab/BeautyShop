@@ -1,346 +1,416 @@
 <!DOCTYPE html>
 <html lang="mn">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="variables.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/f23fece6f2.js" crossorigin="anonymous"></script> 
-  <header class="top-nav">
-  <link rel="stylesheet" href="variables.css"/>
-  <link rel="stylesheet" href="navbar.css"/>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="variables.css">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/f23fece6f2.js" crossorigin="anonymous"></script> 
+        <link rel="stylesheet" href="variables.css"/>
+        <link rel="stylesheet" href="navbar.css"/>
 
-  <title>Product detail</title>
+        <title>Product detail</title>
  
- <style>
+        <style>
 
-    body{
-      font-family: "Inter", sans-serif;
-      background-color: #ffffff;
-    }
-    .product-detail {display: flex; padding: 3rem 6rem;}
-    .detail-left {width: 40%;}
-    .detail-left img {width: 100%; max-width: 28rem; height: auto; display: block;}
-    .detail-right {width: 100%; max-width: 700px; justify-content: center; align-items: flex-start; padding-left:2rem;}
-    
-    .product-brand {font-size: 0.75rem; color: var(--color-black-10);}
-    .product-rating i {color: var(--product-rating-star); font-size: 12px}
-    .rating {font-size: 0.75rem;}
-    .reviews {font-size: 0.75rem; color: var(--color-black-10);}
-    .product-price {font-size: 1rem;}
+            body{
+            font-family: "Inter", sans-serif;
+            background-color: #ffffff;
+            }
+            .product-detail {display: flex; padding: 3rem 6rem;}
+            .detail-left {width: 40%;}
+            .detail-left img {width: 100%; max-width: 28rem; height: auto; display: block;}
+            .detail-right {width: 100%; max-width: 700px; justify-content: center; align-items: flex-start; padding-left:2rem;}
+            
+            .product-brand {font-size: 0.75rem; color: var(--color-black-10);}
+            .product-rating i {color: var(--product-rating-star); font-size: 12px}
+            .rating {font-size: 0.75rem;}
+            .reviews {font-size: 0.75rem; color: var(--color-black-10);}
+            .product-price {font-size: 1rem;}
 
-    
+            .product-count {display: flex; align-items: center; justify-content:flex-start ;margin: 20px 0 0 0; padding: 0; gap: 0.75rem; width: 100%; height: auto; }
+            .product-count .minus, .product-count .plus {width: 2rem; height: 2rem; margin: 0; padding: 0; border: var(--border-default-all); border-radius: 12px; font-size: 12px; background-color: var(--color-white-0); cursor: pointer;}
+            
+            .product-actions {display: flex; gap: 10px; align-items: center; justify-content: center; width: 100%; padding: 20px 0 0 0;}
+            .add-cart, .order{flex: 1; min-width: 100px;height: 50px; background: var(--color-main-100); border: none; border-radius: 18px; font-size: 12px; cursor: pointer; align-items: center; justify-content: center; }
+            .wishlist {width: 50px; height: 50px;border: var(--border-default-all); border-radius: 18px; background-color: var(--color-white-0);}
+            .wishlist i {font-size: 1rem;}
+            .add-cart:hover, .order:hover {background-color: var(--color-main-200); color: var(--color-black-5)}
+            .wishlist:hover {background: var(--color-main-100); color: var(--color-main-500)}
 
-    .product-count {display: flex; align-items: center; justify-content:flex-start ;margin: 20px 0 0 0; padding: 0; gap: 0.75rem; width: 100%; height: auto; }
-    .product-count .minus, .product-count .plus {width: 2rem; height: 2rem; margin: 0; padding: 0; border: var(--border-default-all); border-radius: 12px; font-size: 12px; background-color: var(--color-white-0); cursor: pointer;}
-    
-    .product-actions {display: flex; gap: 10px; align-items: center; justify-content: center; width: 100%; padding: 20px 0 0 0;}
-    .add-cart, .order{flex: 1; min-width: 100px;height: 50px; background: var(--color-main-100); border: none; border-radius: 18px; font-size: 12px; cursor: pointer; align-items: center; justify-content: center; }
-    .wishlist {width: 50px; height: 50px;border: var(--border-default-all); border-radius: 18px; background-color: var(--color-white-0);}
-    .wishlist i {font-size: 1rem;}
-    .add-cart:hover, .order:hover {background-color: var(--color-main-200); color: var(--color-black-5)}
-    .wishlist:hover {background: var(--color-main-100); color: var(--color-main-500)}
+            .tabs {display: flex; align-items: center; justify-content:center ;margin: 20px 0 0 0; padding: 0; gap: 2rem; width: 100%; height: auto; border-bottom: 1px solid var(--color-black-10);}
+            .tab-btn {border: none; cursor: pointer; padding: 0.75rem 1rem; background: #ffffff; border-bottom: 1px solid transparent; font-size: 0.75rem; color: var(--color-black-10);} 
+            .tab-btn.active {border-bottom: 2px solid var(--color-black-5); color: var(--color-black-5);}
+            .tab-content {font-size: 0.85rem; color: var(--color-black-6); padding: 0.75rem; line-height: 1.8rem;}
 
-    .tabs {display: flex; align-items: center; justify-content:center ;margin: 20px 0 0 0; padding: 0; gap: 2rem; width: 100%; height: auto; border-bottom: 1px solid var(--color-black-10);}
-    .tab-btn {border: none; cursor: pointer; padding: 0.75rem 1rem; background: #ffffff; border-bottom: 1px solid transparent; font-size: 0.75rem; color: var(--color-black-10);} 
-    .tab-btn.active {border-bottom: 2px solid var(--color-black-5); color: var(--color-black-5);}
-    .tab-content {font-size: 0.75rem; color: var(--color-black-5); padding: 0.75rem}
-    
+            .product-reviews {padding: 1rem 6rem;}
+            .cards-container {display: flex; flex-wrap: wrap ;flex-direction: row; justify-content: space-between; margin-top: 1rem; gap: 1rem;}
 
-  </style>
-</head>
+            .reviews-card {border: none; border-radius: 18px; border: var(--border-default-all); width: 48%; padding: 1rem 1rem 1rem 1rem; }
+            .your-rating {font-size: 0.75rem;}
+            .give-rating {font-size: 0.74rem; color: var(--color-black-7); margin-top: 0.75rem;}
+            .comment {font-size: 0.74rem; color: var(--color-black-7); margin: 0.75rem 0 0.3rem 0;}
+            .login-required {width: 100%; min-width: 100px; height: 50px; background: var(--color-main-100); border: none; border-radius: 18px; font-size: 12px; cursor: pointer; margin-top: 0.5rem;}
+            .write-comment {width: 100%; box-sizing: border-box; resize: none;}
 
-<body>
-        <a href="#" class="top-nav__logo">BeautyShop</a>
+            .comments-card {border: none; border-radius: 18px; border: var(--border-default-all); width: 48%; padding: 1rem 1rem 1rem 1rem; }
+            .comments-header {border: none; border-radius: 18px; border: var(--border-default-all); width: 100%; padding: 1rem;}
+            .comments-left-header {display: flex; flex-direction: row; gap: 0.5rem;}
+            .comments-left .avatar-circle { display: flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; border-radius: 50rem; border: var(--border-default-all);background-color: var(--color-main-200);}
+            .comment-right {padding: 0.5rem;}
+            .comment-by {font-size: 0.75rem;} 
+            .review-date {font-size: 0.7rem; color: var(--color-black-10);}   
+            .review-rating  {margin-top: 0.75rem;}
+            .review-stars {color: var(--product-rating-star);}    
+            .rating-point {font-size: 0.75rem; }
+            .review-comment {font-size: 0.75rem; margin-top: 0.75rem;}
+            
+            @media (max-width: 1000px) {
+                .reviews-card, .comments-card {width: 100%;}
+            }
 
-        <div class="top-nav__search">
-            <div class="search-box">
-                <svg class="search-box__icon" width="15" height="15" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8"/>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                </svg>
-                <input class="search-box__input" type="text" placeholder="Бүтээгдэхүүн хайх..."/>
+        </style>
+    </head>
+
+    <body>
+        <header class="top-nav">
+            <a href="#" class="top-nav__logo">BeautyShop</a>
+
+            <div class="top-nav__search">
+                <div class="search-box">
+                    <svg class="search-box__icon" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input class="search-box__input" type="text" placeholder="Бүтээгдэхүүн хайх..."/>
+                </div>
             </div>
-        </div>
 
-        <div class="top-nav__actions">
-            <!-- Wishlist -->
-            <button class="icon-btn" aria-label="Wishlist">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06
-                             a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78
-                             1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            <div class="top-nav__actions">
+                <!-- Wishlist -->
+                <button class="icon-btn" aria-label="Wishlist">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06
+                                a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78
+                                1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </button>
+
+                <!-- Cart -->
+                <button class="icon-btn" aria-label="Cart">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                        <line x1="3" y1="6" x2="21" y2="6"/>
+                        <path d="M16 10a4 4 0 0 1-8 0"/>
+                    </svg>
+                </button>
+
+                <!-- Login -->
+                <button class="login-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    <span class="login-btn__text">Нэвтрэх</span>
+                </button>
+            </div>
+
+        </header>
+
+        <!-- ════════════════════════════════
+            CATEGORY NAV  (with dropdowns)
+        ════════════════════════════════ -->
+        <nav class="cat-nav">
+
+            <button class="cat-nav__all-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="6"  x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+                <span>Бүх бүтээгдэхүүн</span>
+            </button>
+        <ul class="cat-nav__list">
+
+                <!-- 1. Арьс арчилгаа -->
+                <li class="cat-nav__item">
+                    <a href="#">Арьс арчилгаа</a>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown__item">
+                            Цэвэрлэгээ
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <a href="#" class="dropdown__item">
+                            Арчилгаа
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <a href="#" class="dropdown__item">
+                            Чийгшүүлэгч
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <a href="#" class="dropdown__item">
+                            Маск
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <div class="dropdown__divider"></div>
+                        <a href="#" class="dropdown__see-all">Бүгдийг харах</a>
+                    </div>
+                </li>
+
+                <!-- 2. Нүүр будалт -->
+                <li class="cat-nav__item">
+                    <a href="#">Нүүр будалт</a>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown__item">
+                            Суурь
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <a href="#" class="dropdown__item">
+                            Нүд
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <a href="#" class="dropdown__item">
+                            Уруул
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <a href="#" class="dropdown__item">
+                            Хацар өнгөлөгч
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <div class="dropdown__divider"></div>
+                        <a href="#" class="dropdown__see-all">Бүгдийг харах</a>
+                    </div>
+                </li>
+
+                <!-- 3. Нарны хамгаалалт -->
+                <li class="cat-nav__item">
+                    <a href="#">Нарны хамгаалалт</a>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown__item">
+                            Нүүр
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <a href="#" class="dropdown__item">
+                            Бие
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <div class="dropdown__divider"></div>
+                        <a href="#" class="dropdown__see-all">Бүгдийг харах</a>
+                    </div>
+                </li>
+
+                <!-- 4. Бие арчилгаа -->
+                <li class="cat-nav__item">
+                    <a href="#">Бие арчилгаа</a>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown__item">
+                            Биеийн саван
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <a href="#" class="dropdown__item">
+                            Биеийн тос
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <a href="#" class="dropdown__item">
+                            Үнэртэн
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <div class="dropdown__divider"></div>
+                        <a href="#" class="dropdown__see-all">Бүгдийг харах</a>
+                    </div>
+                </li>
+
+                <!-- 5. Үс арчилгаа -->
+                <li class="cat-nav__item">
+                    <a href="#">Үс арчилгаа</a>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown__item">
+                            Шампунь
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <a href="#" class="dropdown__item">
+                            Ангижруулагч
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <a href="#" class="dropdown__item">
+                            Маск & Тос
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <div class="dropdown__divider"></div>
+                        <a href="#" class="dropdown__see-all">Бүгдийг харах</a>
+                    </div>
+                </li>
+
+                <!-- 6. Брэнд -->
+                <li class="cat-nav__item">
+                    <a href="#">Брэнд</a>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown__item">
+                            COSRX
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <a href="#" class="dropdown__item">
+                            Laneige
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <a href="#" class="dropdown__item">
+                            Innisfree
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <a href="#" class="dropdown__item">
+                            Sulwhasoo
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <a href="#" class="dropdown__item">
+                            Etude House
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </a>
+                        <div class="dropdown__divider"></div>
+                        <a href="#" class="dropdown__see-all">Бүгдийг харах</a>
+                    </div>
+                </li>
+
+            </ul>
+
+            <button class="cat-nav__more-btn" aria-label="Дэлгэрэнгүй">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
                 </svg>
             </button>
 
-            <!-- Cart -->
-            <button class="icon-btn" aria-label="Cart">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-                    <line x1="3" y1="6" x2="21" y2="6"/>
-                    <path d="M16 10a4 4 0 0 1-8 0"/>
-                </svg>
-            </button>
+        </nav>
 
-            <!-- Login -->
-            <button class="login-btn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                    <circle cx="12" cy="7" r="4"/>
-                </svg>
-                <span class="login-btn__text">Нэвтрэх</span>
-            </button>
-        </div>
+        <section class="product-detail">
+            <div class="detail-left">
+                <img src="images/Jumiso-Cream.jpg" alt="Jumiso-cream">
+            </div>
 
-    </header>
-
-    <!-- ════════════════════════════════
-         CATEGORY NAV  (with dropdowns)
-    ════════════════════════════════ -->
-    <nav class="cat-nav">
-
-        <button class="cat-nav__all-btn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="3" y1="6"  x2="21" y2="6"/>
-                <line x1="3" y1="12" x2="21" y2="12"/>
-                <line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
-            <span>Бүх бүтээгдэхүүн</span>
-        </button>
-    <ul class="cat-nav__list">
-
-            <!-- 1. Арьс арчилгаа -->
-            <li class="cat-nav__item">
-                <a href="#">Арьс арчилгаа</a>
-                <div class="dropdown">
-                    <a href="#" class="dropdown__item">
-                        Цэвэрлэгээ
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <a href="#" class="dropdown__item">
-                        Арчилгаа
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <a href="#" class="dropdown__item">
-                        Чийгшүүлэгч
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <a href="#" class="dropdown__item">
-                        Маск
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <div class="dropdown__divider"></div>
-                    <a href="#" class="dropdown__see-all">Бүгдийг харах</a>
+            <div class="detail-right">
+                <div class="product-body">
+                    <p class="product-brand">Jumiso</p>
+                    <h3 class="product-title">Snail Mucin 88 + Peptide Cream</h3>
                 </div>
-            </li>
 
-            <!-- 2. Нүүр будалт -->
-            <li class="cat-nav__item">
-                <a href="#">Нүүр будалт</a>
-                <div class="dropdown">
-                    <a href="#" class="dropdown__item">
-                        Суурь
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <a href="#" class="dropdown__item">
-                        Нүд
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <a href="#" class="dropdown__item">
-                        Уруул
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <a href="#" class="dropdown__item">
-                        Хацар өнгөлөгч
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <div class="dropdown__divider"></div>
-                    <a href="#" class="dropdown__see-all">Бүгдийг харах</a>
+                <div class="product-rating">
+                    <i class="fa-solid fa-star"></i>
+                    <span class="rating">0</span>
+                    <span class="reviews">(0)</span>
+                    <p class="product-price">60,000₮</p>
+                </div> 
+
+                <div class="product-count">
+                    <button class="plus"><i class="fa-solid fa-plus"></i></button>
+                    <span class="count">1</span>
+                    <button class="minus"><i class="fa-solid fa-minus"></i></button>
                 </div>
-            </li>
 
-            <!-- 3. Нарны хамгаалалт -->
-            <li class="cat-nav__item">
-                <a href="#">Нарны хамгаалалт</a>
-                <div class="dropdown">
-                    <a href="#" class="dropdown__item">
-                        Нүүр
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <a href="#" class="dropdown__item">
-                        Бие
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <div class="dropdown__divider"></div>
-                    <a href="#" class="dropdown__see-all">Бүгдийг харах</a>
+                <div class="product-actions">
+                    <button class="add-cart">Сагслах</button>
+                    <button class="order">Захиалах</button>
+                    <button class="wishlist"><i class="fa-regular fa-heart"></i></button>
                 </div>
-            </li>
 
-            <!-- 4. Бие арчилгаа -->
-            <li class="cat-nav__item">
-                <a href="#">Бие арчилгаа</a>
-                <div class="dropdown">
-                    <a href="#" class="dropdown__item">
-                        Биеийн саван
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <a href="#" class="dropdown__item">
-                        Биеийн тос
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <a href="#" class="dropdown__item">
-                        Үнэртэн
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <div class="dropdown__divider"></div>
-                    <a href="#" class="dropdown__see-all">Бүгдийг харах</a>
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="openTab('how-to-use', this)">Хэрэглэх заавар</button>
+                    <button class="tab-btn" onclick="openTab('description', this)">Тайлбар</button>
+                    <button class="tab-btn" onclick="openTab('ingredients', this)">Найрлага</button>
                 </div>
-            </li>
 
-            <!-- 5. Үс арчилгаа -->
-            <li class="cat-nav__item">
-                <a href="#">Үс арчилгаа</a>
-                <div class="dropdown">
-                    <a href="#" class="dropdown__item">
-                        Шампунь
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <a href="#" class="dropdown__item">
-                        Ангижруулагч
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <a href="#" class="dropdown__item">
-                        Маск & Тос
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <div class="dropdown__divider"></div>
-                    <a href="#" class="dropdown__see-all">Бүгдийг харах</a>
+                <div id="how-to-use" class="tab-content" style="display: none;">
+                    <p>Jumiso Snail Mucin 88 + Peptide тосыг арьс арчилгааны сүүлийн шатанд, цэвэрлэгч, тонер, серум хэрэглэсний дараа түрхэнэ. Дунд зэргийн хэмжээтэйг нүүр болон хүзүүндээ жигд түрхээд, зөөлөн товшин шингээнэ. Өдөр бүр, өглөө оройд хэрэглэхэд аюулгүй бөгөөд бүх төрлийн арьсанд тохиромжтой.</p>
                 </div>
-            </li>
 
-            <!-- 6. Брэнд -->
-            <li class="cat-nav__item">
-                <a href="#">Брэнд</a>
-                <div class="dropdown">
-                    <a href="#" class="dropdown__item">
-                        COSRX
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <a href="#" class="dropdown__item">
-                        Laneige
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <a href="#" class="dropdown__item">
-                        Innisfree
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <a href="#" class="dropdown__item">
-                        Sulwhasoo
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <a href="#" class="dropdown__item">
-                        Etude House
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </a>
-                    <div class="dropdown__divider"></div>
-                    <a href="#" class="dropdown__see-all">Бүгдийг харах</a>
+                <div id="description" class="tab-content">
+                    <p><strong>Хүчирхэг арьс сэргээх найрлага:</strong>
+                        88% эмгэн хумсны шүүрэл агуулсан Солонгос нүүрний тос нь гэмтсэн арьсны хамгаалах давхаргыг эрчимтэй сэргээж, гүн чийгшүүлснээр арьсыг тань булбарай, эрүүл, сэргэсэн харагдуулна.</p>
+                    <p><strong>Дэвшилтэт 5 пептидийн цогцолбор:</strong>
+                        Copper Tripeptide-1, Palmitoyl Pentapeptide-4, Acetyl Hexapeptide-8, Palmitoyl Tripeptide-1, Palmitoyl Tetrapeptide-7 зэрэг найрлагууд нь коллагены үүсэлтийг дэмжиж, арьсны уян хатан чанарыг сэргээж өгнө.</p>
+                    <p><strong>Чийгшил ба уян хатан чанарыг нэмэгдүүлнэ:</strong>
+                        Sodium Hyaluronate болон Niacinamide-тай найрлага нь арьсыг гүн чийгшүүлж, уян хатан байдлыг сайжруулан, илүүдэл тослогийг зохицуулж, чийгийн тэнцвэрийг хадгална.</p>
+                    <p><strong>Чийгшил ба уян хатан чанарыг нэмэгдүүлнэ:</strong>
+                        Sodium Hyaluronate болон Niacinamide-тай найрлага нь арьсыг гүн чийгшүүлж, уян хатан байдлыг сайжруулан, илүүдэл тослогийг зохицуулж, чийгийн тэнцвэрийг хадгална.</p>
+                    <p><strong>Хөнгөн гель бүтэц:</strong>  
+                        Нүх бөглөхгүй (non-comedogenic) туршигдсан найрлага нь арьсанд хурдан шингэж, наалдамхай мэдрэмж үлдээхгүй. Мэдрэмтгий арьсанд аюулгүй, цочролын тестийг давсан. Арьс арчилгааны сүүлийн шатанд түрхэж, зөөлөн товшин шингээнэ.</p>
                 </div>
-            </li>
 
-        </ul>
+                
+                <div id="ingredients" class="tab-content" style="display: none;">
+                    <p>Snail Secretion Filtrate (88%), Niacinamide, Cetearyl Olivate, Sorbitan Olivate, Caprylic/​Capric Triglyceride, Betaine, Cetearyl Alcohol, Butylene Glycol, Water, Triethylhexanoin, Phenoxyethanol, Cyclohexasiloxane, Carbomer, Ethyl Hexanediol, Arginine, Allantoin, Sodium Polyacrylate, Sodium Hyaluronate, Dimethicone/​Vinyl Dimethicone Crosspolymer, Xanthan Gum, Panthenol, Adenosine, 1,2-Hexanediol, Copper Tripeptide-1, Palmitoyl Pentapeptide-4, Acetyl Hexapeptide-8, Palmitoyl Tripeptide-1, Palmitoyl Tetrapeptide-7</p>
+                </div>
+            </div>
+        </section>
 
-        <button class="cat-nav__more-btn" aria-label="Дэлгэрэнгүй">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="6 9 12 15 18 9"/>
-            </svg>
-        </button>
+        <section class="product-reviews">
+            <h3 class="heading">Сэтгэгдэл</h3>
+            <div class="cards-container">
+                <article class="reviews-card">
+                    <h4  class="your-rating">Таны үнэлгээ</h4>
+                    <p class="give-rating">Үнэлгээ:</p>
+                    <div class="rating-stars">
+                        <span class="review-stars"><i class="fa-solid fa-star"></i></span>
+                        <span class="review-stars"><i class="fa-regular fa-star"></i></span>
+                        <span class="review-stars"><i class="fa-regular fa-star"></i></span>
+                        <span class="review-stars"><i class="fa-regular fa-star"></i></span>
+                        <span class="review-stars"><i class="fa-regular fa-star"></i></span>
+                        <span class="rating-point">5/5</span>
+                    </div>
+                    <p class="comment">Сэтгэгдэл:</p>
+                    <textarea class="write-comment" rows="10" minlength="5" maxlength="200" placeholder="Таны сэтгэгдэл..."></textarea>
+                    <button class="login-required">Нэвтрэх шаардлагатай</button>
+                </article>
 
-    </nav>
+                <div class="comments-card">
+                    <article class="comments-header">
+                        <div class="comments-left-header">
+                            <div class="comments-left">
+                                <span class="avatar-circle"><img class="profile-avatar"></span>
+                            </div>
+                            <div class="comments-right">
+                                <p class="comment-by">Сарангэрэл</p>
+                                <time class="review-date" datetime="2026-03-31">2026-03-31</time>
+                            </div>
+                        </div>
 
-<section class="product-detail">
-    <div class="detail-left">
-        <img src="images/Jumiso-Cream.jpg" alt="Jumiso-cream">
-    </div>
+                        <div class="review-rating">
+                            <span class="review-stars"><i class="fa-solid fa-star"></i></span>
+                            <span class="review-stars"><i class="fa-solid fa-star"></i></span>
+                            <span class="review-stars"><i class="fa-solid fa-star"></i></span>
+                            <span class="review-stars"><i class="fa-solid fa-star"></i></span>
+                            <span class="review-stars"><i class="fa-solid fa-star"></i></span>
+                            <span class="rating-point">5/5</span>
+                        </div>
 
-    <div class="detail-right">
-        <div class="product-body">
-        <p class="product-brand">Jumiso</p>
-        <h3 class="product-title">Snail Mucin 88 + Peptide Cream</h3>
-    <div class="product-rating">
-        <i class="fa-solid fa-star"></i>
-        <span class="rating">0</span>
-        <span class="reviews">(0)</span>
-        <p class="product-price">60,000₮</p>
-      </div> 
-    </div>
+                        <p class="review-comment">Маш сайн бүтээгдэхүүн! Арьс ч илүү чийглэг, гялалзсан болсон.</p>
+                    </article>
+                </div>
+            </div>
 
-    <div class="product-count">
-      <button class="plus"><i class="fa-solid fa-plus"></i></button>
-      <span class="count">1</span>
-      <button class="minus"><i class="fa-solid fa-minus"></i></button>
-    </div>
+        </section>
 
-    <div class="product-actions">
-      <button class="add-cart">Сагслах</button>
-      <button class="order">Захиалах</button>
-      <button class="wishlist"><i class="fa-regular fa-heart"></i></button>
-    </div>
-
-    <div class="tabs">
-      <button class="tab-btn active" onclick="openTab('description', this)">Тайлбар</button>
-      <button class="tab-btn" onclick="openTab('how-to-use', this)">Хэрэглэх заавар</button>
-      <button class="tab-btn" onclick="openTab('ingredients', this)">Найрлага</button>
-    </div>
-
-    <div id="description" class="tab-content">
-      <p><strong>Хүчирхэг арьс сэргээх найрлага:</strong>
-          88% эмгэн хумсны шүүрэл агуулсан Солонгос нүүрний тос нь гэмтсэн арьсны хамгаалах давхаргыг эрчимтэй сэргээж, гүн чийгшүүлснээр арьсыг тань булбарай, эрүүл, сэргэсэн харагдуулна.</p>
-      <p><strong>Дэвшилтэт 5 пептидийн цогцолбор:</strong>
-          Copper Tripeptide-1, Palmitoyl Pentapeptide-4, Acetyl Hexapeptide-8, Palmitoyl Tripeptide-1, Palmitoyl Tetrapeptide-7 зэрэг найрлагууд нь коллагены үүсэлтийг дэмжиж, арьсны уян хатан чанарыг сэргээж өгнө.</p>
-      <p><strong>Чийгшил ба уян хатан чанарыг нэмэгдүүлнэ:</strong>
-          Sodium Hyaluronate болон Niacinamide-тай найрлага нь арьсыг гүн чийгшүүлж, уян хатан байдлыг сайжруулан, илүүдэл тослогийг зохицуулж, чийгийн тэнцвэрийг хадгална.</p>
-      <p><strong>Чийгшил ба уян хатан чанарыг нэмэгдүүлнэ:</strong>
-          Sodium Hyaluronate болон Niacinamide-тай найрлага нь арьсыг гүн чийгшүүлж, уян хатан байдлыг сайжруулан, илүүдэл тослогийг зохицуулж, чийгийн тэнцвэрийг хадгална.</p>
-      <p><strong>Хөнгөн гель бүтэц:  </strong>  
-          Нүх бөглөхгүй (non-comedogenic) туршигдсан найрлага нь арьсанд хурдан шингэж, наалдамхай мэдрэмж үлдээхгүй. Мэдрэмтгий арьсанд аюулгүй, цочролын тестийг давсан. Арьс арчилгааны сүүлийн шатанд түрхэж, зөөлөн товшин шингээнэ.</p>
-    </div>
-
-    <div id="how-to-use" class="tab-content" style="display: none;">
-      <p>Jumiso Snail Mucin 88 + Peptide тосыг арьс арчилгааны сүүлийн шатанд, цэвэрлэгч, тонер, серум хэрэглэсний дараа түрхэнэ. Дунд зэргийн хэмжээтэйг нүүр болон хүзүүндээ жигд түрхээд, зөөлөн товшин шингээнэ. Өдөр бүр, өглөө оройд хэрэглэхэд аюулгүй бөгөөд бүх төрлийн арьсанд тохиромжтой.</p>
-    </div>
-    
-    <div id="ingredients" class="tab-content" style="display: none;"> 
-      <p>Snail Secretion Filtrate (88%), Niacinamide, Cetearyl Olivate, Sorbitan Olivate, Caprylic/​Capric Triglyceride, Betaine, Cetearyl Alcohol, Butylene Glycol, Water, Triethylhexanoin, Phenoxyethanol, Cyclohexasiloxane, Carbomer, Ethyl Hexanediol, Arginine, Allantoin, Sodium Polyacrylate, Sodium Hyaluronate, Dimethicone/​Vinyl Dimethicone Crosspolymer, Xanthan Gum, Panthenol, Adenosine, 1,2-Hexanediol, Copper Tripeptide-1, Palmitoyl Pentapeptide-4, Acetyl Hexapeptide-8, Palmitoyl Tripeptide-1, Palmitoyl Tetrapeptide-7</p>
-    </div>
-    </div>
+    </body>
 
     <script>
-      function openTab(tabName, element) {
-        var i;
-        var x = document.getElementsByClassName("tab-content");
-        var buttons = document.getElementsByClassName("tab-btn");
-        for (i = 0; i < x.length; i++) {
-          x[i].style.display = "none";
+        function openTab(tabName, element) {
+            let i;
+            let x = document.getElementsByClassName("tab-content");
+            let buttons = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+            }
+            for (i = 0; i < buttons.length; i++) {
+            buttons[i].classList.remove("active");
+            }
+            document.getElementById(tabName).style.display = "block";
+            element.classList.add("active");
         }
-        for (i = 0; i < buttons.length; i++) {
-          buttons[i].classList.remove("active");
-        }
-        document.getElementById(tabName).style.display = "block";
-        element.classList.add("active");
-      }
     </script>
 
-
-
-    </div>
-</section>
-</body>
 </html>
