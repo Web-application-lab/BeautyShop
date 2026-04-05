@@ -20,7 +20,7 @@
     }
     .detail-right, .product-description {
         width: 100%; 
-        max-width: 700px; 
+        max-width: 45rem; 
         justify-content: center; 
         align-items: flex-start; 
         padding-left:2rem;
@@ -33,24 +33,24 @@
     }
     .product-rating i {
         color: var(--product-rating-star); 
-        font-size: 12px
+        font-size: var(--text-xs)
     }
     .rating {
-        font-size: 0.75rem;
+        font-size: var(--text-xs);
     }
     .reviews {
-        font-size: 0.75rem; 
+        font-size: var(--text-xs); 
         color: var(--color-black-10);
     }
     .product-price {
-        font-size: 1rem;
+        font-size: var(--text-m);
     }
 
     .product-count {
         display: flex; 
         align-items: center; 
         justify-content:flex-start;
-        margin: 20px 0 0 0;
+        margin: 1.5rem 0 0 0;
         padding: 0; 
         gap: 0.75rem; 
         width: 100%; 
@@ -62,38 +62,40 @@
         margin: 0; 
         padding: 0; 
         border: var(--border-default-all); 
-        border-radius: 12px; font-size: 12px; 
+        border-radius: var(--radius-xs); 
+        font-size: var(--text-xs); 
         background-color: var(--color-white-0); 
         cursor: pointer;
     }
     
     .product-actions {
         display: flex; 
-        gap: 10px; 
+        gap: 0.75rem; 
         align-items: center; 
         justify-content: center; 
         width: 100%; 
-        padding: 20px 0 0 0;
+        padding: 1rem 0 0 0;
     }
     .add-cart, .order{
-        flex: 1; min-width: 100px;
-        height: 50px; 
+        flex: 1; 
+        height: 3rem; 
         background: var(--color-main-100); 
-        border: none; border-radius: 18px; 
-        font-size: 12px; 
+        border: none; 
+        border-radius: var(--radius-lg); 
+        font-size: var(--text-xs); 
         cursor: pointer; 
         align-items: center; 
         justify-content: center; 
     }
     .wishlist {
-        width: 50px; 
-        height: 50px;
+        width: 3rem; 
+        height: 3rem;
         border: var(--border-default-all); 
-        border-radius: 18px; 
+        border-radius: var(--radius-lg); 
         background-color: var(--color-white-0);
     }
     .wishlist i {
-        font-size: 1rem;
+        font-size: var(--text-m);
     }
     .add-cart:hover, .order:hover {
         background-color: var(--color-main-200); 
@@ -108,7 +110,7 @@
         display: flex; 
         align-items: center; 
         justify-content:center;
-        margin: 20px 0 0 0; 
+        margin: 1rem 0 0 0; 
         padding: 0; 
         gap: 2rem; 
         width: 100%; 
@@ -119,24 +121,30 @@
         cursor: pointer; 
         padding: 0.75rem 1rem; 
         background: #ffffff; 
-        border-bottom: 1px solid transparent; 
-        font-size: 0.75rem; 
+        font-size: var(--text-xs); 
         color: var(--color-black-10);} 
     .tab-btn.active {
-        border-bottom: 2px solid var(--color-black-5); 
+        border-bottom: var(--border-dark-all); 
         color: var(--color-black-5);
     }
     .tab-content {
         width: 100%;
-        font-size: 0.85rem; 
+        font-size: var(--text-sm); 
         color: var(--color-black-6); 
         padding: 0.75rem; 
         margin-top: 1rem;
-        border-radius: 1.25rem;
+        border-radius: var(--radius-lg);
         border: var(--border-default-all);
     }
 
-    .product-reviews {padding: 1rem 6rem;}
+    .tab-content p {
+        font-size: var(--text-sm);
+    }
+
+    .product-reviews {
+        padding: 1rem 6rem;
+    }
+
     .cards-container {
         display: flex; 
         flex-wrap: wrap;
@@ -148,28 +156,30 @@
 
     .reviews-card {
         border: none; 
-        border-radius: 18px; 
+        border-radius: var(--radius-lg); 
         border: var(--border-default-all); 
-        width: 48%; padding: 1rem 1rem 1rem 1rem; }
+        width: 48%; 
+        padding: 1rem 1rem 1rem 1rem; 
+    }
     .your-rating {
-        font-size: 0.75rem;
+        font-size: var(--text-base);
     }
     .give-rating {
-        font-size: 0.74rem; 
+        font-size: var(--text-xs); 
         color: var(--color-black-7); 
         margin-top: 0.75rem;}
     .comment {
-        font-size: 0.74rem; 
+        font-size: var(--text-xs); 
         color: var(--color-black-7); 
-        margin: 0.75rem 0 0.3rem 0;}
+        margin: 0.75rem 0rem 0.3rem 0rem;}
+
     .login-required {
         width: 100%; 
-        min-width: 100px; 
-        height: 50px;
+        height: 3rem;
         background: var(--color-main-100); 
         border: none; 
-        border-radius: 18px; 
-        font-size: 12px; 
+        border-radius: var(--radius-lg); 
+        font-size: var(--text-xs); 
         cursor: pointer; 
         margin-top: 0.5rem;
     }
@@ -180,13 +190,13 @@
 
     .comments-card {
         border: none; 
-        border-radius: 18px; 
+        border-radius: var(--radius-lg); 
         border: var(--border-default-all); 
         width: 48%; 
         padding: 1rem 1rem 1rem 1rem; }
     .comments-header {
         border: none; 
-        border-radius: 18px;
+        border-radius: var(--radius-lg);
         border: var(--border-default-all); 
         width: 100%; 
         padding: 1rem;}
@@ -199,26 +209,28 @@
         align-items: center; 
         justify-content: center; 
         width: 2rem; 
-        height: 2rem; border-radius: 50rem; 
+        height: 2rem; 
+        border-radius: var(--radius-circle); 
         border: var(--border-default-all);
         background-color: var(--color-main-200);}
+
     .comment-right {
-        padding: 0.5rem;
+        padding:var(--text-sm);
     }
 
     .review-date {
         font-size: 0.7rem; 
         color: var(--color-black-10);
     }   
-    .review-rating, .rating-point, .comment-by{
-        margin-top: 0.75rem;
+    .review-rating, .rating-point {
+        margin-top: var(--text-sm);
     }
     .review-stars {
         color: var(--product-rating-star);
     }    
     
     .review-comment {
-        font-size: 0.75rem; 
+        font-size: var(--text-sm); 
         margin-top: 0.75rem;
     }
             
@@ -252,7 +264,7 @@
     }
 
     .tab-content p {
-        font-size: 1rem;
+        font-size: var(--text-sm);
         margin: 1rem 1rem 1rem 1rem;
     }
 

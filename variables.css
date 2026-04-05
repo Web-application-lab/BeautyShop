@@ -74,6 +74,7 @@
     --text-sm:   13px;
     --text-base: 14px;
     --text-md:   15px;
+    --text-m:    16px;
     --text-lg:   18px;
     --text-xl:   22px;
     --text-2xl:  28px;
@@ -89,9 +90,15 @@
     --border-width-thin: 1px;
     --border-width-md: 2px;
     --border-width-thick: 3px;
+    --radius-circle: 50rem;
+    --radius-xxxs: 5px;
+    --radius-xxs: 10px;
+    --radius-xs:  12px;
+    --radius-md: 14px;
+    --radius-lg: 18px;
+    --radius-xl: 20px;
 
     --border-style: solid;
-
     --border-light: var(--color-white-3);
     --border-default: var(--color-white-4);
     --border-dark: var(--color-black-4);

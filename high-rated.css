@@ -19,21 +19,20 @@
 
     .sort {
       display: flex;
-      border-radius: 5px;
+      border-radius: var(--radius-xxxs);
       border: var(--border-default-all);
       padding: 1rem;
       gap: 2rem;
       padding: 0.75rem;
       margin-top: 1rem;
       .category, .sorting {
-        border-radius: 5px;
+        border-radius: var(--radius-xxxs);
         border-color: var(--color-white-3);
         font-size: var(--text-base);
         background: var(--color-white-3);
         height: 2rem;
       }
     }
-
 
     .products {
         display: grid;
@@ -50,7 +49,7 @@
       transition: all 0.3s; 
       scroll-snap-align: start; 
       &:hover {
-        transform: translateY(-6px); 
+        transform: translateY(-0.33rem); 
         box-shadow: var(--shadow-hover);
       }
     }
@@ -80,11 +79,11 @@
     .product-actions {
       display: flex; 
       gap: 0.75rem; 
-      margin-top: 10px; 
+      margin-top: 0.75rem; 
       justify-content: center; 
       opacity: 0; 
       pointer-events: none; 
-      transform: translateY(20px); 
+      transform: translateY(1rem); 
       transition: transform 0.2s; 
         .add-cart, .wishlist {
           align-items: center; 
@@ -93,19 +92,19 @@
           height: 2rem; 
           background: var(--color-main-100); 
           border: none; 
-          border-radius: 12px; 
-          padding: 12px;
+          border-radius: var(--radius-xs); 
+          padding: 0.75rem;
       }
     }
 
     .product-title {
       font-size: var(--text-md); 
-      margin: 5px; 
+      margin: 0.33rem; 
       text-decoration: none;
 
     }
     .product-brand {
-      margin: 5px;
+      margin: 0.33rem;
       font-size: var(--text-sm); 
       color: var(--color-black-10); 
       text-decoration: none;
@@ -126,7 +125,7 @@
         padding: 0.75rem;
         gap: 1rem;
         .category, .sorting {
-          border-radius: 5px;
+          border-radius: var(--radius-xxxs);
           border-color: var(--color-white-3);
           font-size: var(--text-xs);
           background: var(--color-white-3);
