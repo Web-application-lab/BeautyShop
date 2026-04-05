@@ -21,11 +21,13 @@
       display: flex;
       border-radius: 5px;
       border: var(--border-default-all);
-      padding: 10px;
+      padding: 1rem;
       gap: 2rem;
-      margin-top: 2rem;
+      padding: 0.75rem;
+      margin-top: 1rem;
       .category, .sorting {
-        border: none;
+        border-radius: 5px;
+        border-color: var(--color-white-3);
         font-size: var(--text-base);
         background: var(--color-white-3);
         height: 2rem;
@@ -37,18 +39,16 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
         gap: 1rem;
-        margin: 2rem;
+        margin: 2rem 0rem 2rem 0rem;
     }
     .product-card {
       overflow: hidden;
       background: var(--color-white-0);
       border-radius: 1rem;
       box-shadow: var(--shadow-card);
-      padding: 1rem;
+      padding: 0.75rem;
       transition: all 0.3s; 
       scroll-snap-align: start; 
-      padding-left: 0.75rem; 
-      padding-right: 0.75rem;
       &:hover {
         transform: translateY(-6px); 
         box-shadow: var(--shadow-hover);
@@ -62,7 +62,7 @@
       justify-content: center;
       img {
         width: 100%;
-        height: 12rem;
+        height: 5rem;
         object-fit: contain;
       }
     }
@@ -113,31 +113,30 @@
  
     .product-detail {text-decoration: none; color: var(--color-black-0);}
     
-    /* ════════════════════════════════
-   RESPONSIVE — TABLET (≤1024px)
-    ════════════════════════════════ */
-    @media (max-width: 1024px) {
-        .high-rated-product {
-          font-size: var(--text-sm);
-        }
-        
-    }
 
     /* ════════════════════════════════
       RESPONSIVE — MOBILE (≤768px)
     ════════════════════════════════ */
     @media (max-width: 768px) {
-        h2.high-rated-product {
-          font-size: var(--text-lg);
+      h2.high-rated-product {
+        font-size: var(--text-lg);
+      }
+
+      .sort {
+        padding: 0.75rem;
+        gap: 1rem;
+        .category, .sorting {
+          border-radius: 5px;
+          border-color: var(--color-white-3);
+          font-size: var(--text-xs);
+          background: var(--color-white-3);
+          height: 2rem;
         }
-        .products {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-          gap: 1rem;
-          margin: 2rem;
-        }
-        .product-image img {
-          object-fit: contain;
-        }
+      }
+      .products {
+        grid-template-columns: 1fr 1fr;
+      }
     }
+
+    
     
