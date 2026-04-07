@@ -664,30 +664,7 @@
 
   </aside>
 
-  <script>
-    const cartToggle  = document.getElementById('cartToggle');
-    const cartPanel   = document.getElementById('cartPanel');
-    const cartOverlay = document.getElementById('cartOverlay');
-    const cartClose   = document.getElementById('cartClose');
-    const cartContinue= document.getElementById('cartContinue');
 
-    function openCart()  {
-      cartPanel.classList.add('is-open');
-      cartOverlay.classList.add('is-open');
-    }
-    function closeCart() {
-      cartPanel.classList.remove('is-open');
-      cartOverlay.classList.remove('is-open');
-    }
-
-    cartToggle.addEventListener('click', openCart);
-    cartOverlay.addEventListener('click', closeCart);
-    cartClose.addEventListener('click', closeCart);
-    cartContinue.addEventListener('click', closeCart);
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeCart();
-    });
-  </script>
 
   </main>
   </body>
