@@ -47,7 +47,7 @@
               </button>
 
               <!-- Cart -->
-              <button class="icon-btn" aria-label="Cart">
+              <button class="icon-btn" id="cartToggle" aria-label="Cart">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                       stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
@@ -632,8 +632,62 @@
           </article>
         </div>
       </section>
-    
-    
+   <!-- ═══ CART OVERLAY ═══ -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+
+  <!-- ═══ CART PANEL ═══ -->
+  <aside class="cart-panel" id="cartPanel">
+
+    <div class="cart-header">
+      <div>
+        <h3>Миний сагс</h3>
+        <p class="cart-count" id="cartCount">0 бүтээгдэхүүн</p>
+      </div>
+      <button id="cartClose">✕</button>
+    </div>
+
+    <div class="cart-body" id="cartBody">
+      <p class="cart-empty">Сагс хоосон байна</p>
+    </div>
+
+    <div class="cart-footer" id="cartFooter">
+      <div class="cart-total-row">
+        <span class="cart-total-label">Нийт</span>
+        <span class="cart-total-amount" id="cartTotal">0₮</span>
+      </div>
+      <p class="cart-shipping">Хүргэлт тооцоолоогүй</p>
+      <button class="cart-checkout-btn">Захиалга хийх →</button>
+      <button class="cart-continue-btn" id="cartContinue">
+        Худалдаалалт үргэлжлүүлэх
+      </button>
+    </div>
+
+  </aside>
+
+  <script>
+    const cartToggle  = document.getElementById('cartToggle');
+    const cartPanel   = document.getElementById('cartPanel');
+    const cartOverlay = document.getElementById('cartOverlay');
+    const cartClose   = document.getElementById('cartClose');
+    const cartContinue= document.getElementById('cartContinue');
+
+    function openCart()  {
+      cartPanel.classList.add('is-open');
+      cartOverlay.classList.add('is-open');
+    }
+    function closeCart() {
+      cartPanel.classList.remove('is-open');
+      cartOverlay.classList.remove('is-open');
+    }
+
+    cartToggle.addEventListener('click', openCart);
+    cartOverlay.addEventListener('click', closeCart);
+    cartClose.addEventListener('click', closeCart);
+    cartContinue.addEventListener('click', closeCart);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeCart();
+    });
+  </script>
 
   </main>
   </body>
