@@ -46,6 +46,13 @@
         font-size: var(--text-m);
     }
 
+    .new-price {
+        font-size: var(--text-xs); 
+        color: var(--color-black-100); 
+        color: var(--color-black-6);
+        text-decoration: line-through;
+    }
+
     .product-count {
         display: flex; 
         align-items: center; 
@@ -227,6 +234,7 @@
     }
     .review-stars {
         color: var(--product-rating-star);
+        cursor: pointer;
     }    
     
     .review-comment {

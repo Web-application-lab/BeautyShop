@@ -1,3 +1,4 @@
+import { starRating } from "./components/starRating.js";
 export const template = {
     cardTemplate(product) {
         return `
