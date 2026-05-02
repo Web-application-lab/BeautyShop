@@ -1,9 +1,11 @@
-@ -1,54 +0,0 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('variables.css');
+
 .footer {
-  background-color: #ffffff;
-  border-top: 1px solid #ddd;
-  padding: 40px 0 0 0;
-  font-family: Arial, sans-serif;
+  background-color: var(--color-white-0);
+  border-top: 1px solid var(--color-white-4);
+  padding: 40px 0 0;
+  font-family: var(--font-body);
 }
 
 .footer-container {
@@ -11,6 +13,7 @@
   margin: auto;
   display: flex;
   justify-content: space-between;
+  gap: 24px;
 }
 
 .footer-section {
@@ -22,9 +25,10 @@
   margin-bottom: 15px;
 }
 
-.footer-section p {
+.footer-section p,
+.footer-section ul li a {
   font-size: 14px;
-  color: #555;
+  color: var(--color-black-6);
 }
 
 .footer-section ul {
@@ -38,25 +42,22 @@
 
 .footer-section ul li a {
   text-decoration: none;
-  color: #555;
-  font-size: 14px;
 }
 
 .footer-section ul li a:hover {
-  color: #000;
+  color: var(--color-black-0);
 }
 
 .footer-bottom {
   text-align: center;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid var(--color-white-4);
   margin-top: 30px;
-  padding: 15px 0;
-  padding-top: 30px;
+  padding: 30px 0 15px;
   font-size: 13px;
-  color: #777;
+  color: var(--color-black-8);
 }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
   .footer-container {
     flex-direction: column;
     align-items: center;

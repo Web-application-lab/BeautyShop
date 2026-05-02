@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url("variables.css");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  background: var(--color-white-1);
+  color: var(--color-black-4);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+main {
+  width: 100%;
+  min-height: calc(100vh - var(--nav-height));
+}
+
+/* Utility card, not product card */
+.card {
+  background: var(--color-white-0);
+  padding: var(--space-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  border: var(--border-primary-all);
+  line-height: 1.6;
+  transition: 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
+}
+
+.section {
+  margin-bottom: var(--space-2xl);
+}
+
+.input {
+  width: 100%;
+  padding: var(--space-md);
+  margin-top: var(--space-sm);
+  margin-bottom: var(--space-md);
+  border-radius: var(--radius-md);
+  border: var(--border-default-all);
+  font-size: var(--text-sm);
+}
+
+/* Generic product link */
+.product-link,
+.product-detail {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.product-link:hover,
+.product-detail:hover {
+  color: inherit;
+  text-decoration: none;
+}

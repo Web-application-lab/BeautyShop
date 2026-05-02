@@ -1,5 +1,4 @@
 :root {
-    /* ── Brand Pink Palette ── */
     --color-main-50:  #fff0f3;
     --color-main-100: #ffd6e0;
     --color-main-150: #fce4ec;
@@ -12,12 +11,10 @@
     --color-main-800: #72062d;
     --color-main-900: #4a001b;
 
-    /* ── Rose accent ── */
     --color-rose-light: #fce8ed;
     --color-rose-mid:   #f4b8c8;
     --color-rose-border:#e8a0b5;
 
-    /* ── White scale ── */
     --color-white-0: #ffffff;
     --color-white-1: #fafafa;
     --color-white-2: #f5f5f5;
@@ -29,7 +26,6 @@
     --color-white-8: #757575;
     --color-white-9: #616161;
 
-    /* ── Black scale ── */
     --color-black-0: #000000;
     --color-black-1: #111111;
     --color-black-2: #1a1a1a;
@@ -48,7 +44,6 @@
     --shadow-hover: 0 8px 40px rgba(233,30,140,0.18);
     --sale-rate: #930000; 
 
-    /* ── Sizing ── */
     --nav-height:    64px;
     --cat-height:    48px;
     --radius-sm:     6px;
@@ -56,7 +51,6 @@
     --radius-lg:     16px;
     --radius-pill:   999px;
 
-    /* ── Spacing ── */
     --space-xs:  4px;
     --space-sm:  8px;
     --space-m:   10px;
@@ -65,7 +59,6 @@
     --space-xl:  32px;
     --space-2xl: 48px;
 
-    /* ── Typography ── */
     --font-display: 'Playfair Display', Georgia, serif;
     --font-body:    'DM Sans', system-ui, sans-serif;
 
@@ -81,12 +74,10 @@
     --text-3xl:  36px;
     --text-4xl:  48px;
 
-    /* ── Shadows ── */
     --shadow-nav:     0 2px 12px rgba(0,0,0,0.08);
     --shadow-dropdown:0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
     --shadow-btn:     0 2px 8px rgba(232,51,106,0.35);
 
-    /* ── Borders ── */
     --border-width-thin: 1px;
     --border-width-md: 2px;
     --border-width-thick: 3px;
