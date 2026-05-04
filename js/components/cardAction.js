@@ -1,4 +1,5 @@
 import { updateNavbarCount } from "./navbarCount.js";
+import { showToast } from "./toggle.js";
 
 export function setupCardActions(products) {
   document.addEventListener("add-cart", (event) => {
@@ -23,24 +24,7 @@ export function setupCardActions(products) {
 
     localStorage.setItem("cart", JSON.stringify(cart));
     updateNavbarCount();
+    showToast("Сагсанд нэмэгдлээ!")
   });
 
-  document.addEventListener("add-wishlist", (event) => {
-    console.log("add-wishlist event received", event.detail);
-
-    const id = Number(event.detail.productId);
-    const product = products.find(p => Number(p.id) === id);
-
-    if (!product) return;
-
-    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    const exists = wishlist.some(item => Number(item.id) === id);
-
-    if (!exists) {
-      wishlist.push(product);
-    }
-
-    localStorage.setItem("wishlist", JSON.stringify(wishlist));
-    updateNavbarCount();
-  });
 }

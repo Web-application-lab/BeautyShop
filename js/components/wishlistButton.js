@@ -1,24 +1,46 @@
+import { updateNavbarCount } from "./navbarCount.js";
+import { showToast } from "./toggle.js";
+
 class WishlistButton extends HTMLElement {
   connectedCallback() {
     this.productId = this.getAttribute("product-id");
+    this.#render();
+  }
 
-    // wishlistButton.js
+  #isWishlisted() {
+    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    return wishlist.some(item => Number(item) === Number(this.productId));
+  }
+
+  #toggle() {
+    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    const index = wishlist.findIndex(item => Number(item) === Number(this.productId));
+
+    if (index === -1) {
+      wishlist.push(Number(this.productId));
+      showToast("Хүслийн жагсаалтад нэмэгдлээ!")
+    } else {
+      wishlist.splice(index, 1);
+      showToast("Хүслийн жагсаалтаас хасагдлаа!")
+    }
+
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    updateNavbarCount();
+    this.#render();
+  }
+
+  #render() {
+    const wishlisted = this.#isWishlisted();
     this.innerHTML = `
       <button class="wishlist" type="button">
-        <i class="fa-regular fa-heart"></i>
+        <i class="${wishlisted ? "fa-solid" : "fa-regular"} fa-heart"
+           style="color: ${wishlisted ? "var(--color-main-500)" : "inherit"}">
+        </i>
       </button>
     `;
 
     this.querySelector("button").addEventListener("click", () => {
-      console.log("wishlist component clicked", this.productId);
-      this.dispatchEvent(
-        new CustomEvent("add-wishlist", {
-          detail: {
-            productId: Number(this.productId),
-          },
-          bubbles: true,
-        })
-      );
+      this.#toggle();
     });
   }
 }

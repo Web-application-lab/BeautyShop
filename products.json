@@ -21,6 +21,26 @@
       "name": "Үс арчилгаа"
     }
   ],
+
+  "subCategories": [
+    { "id": 1, "name": "Цэвэрлэгээ", "categoryId": 1 },
+    { "id": 2, "name": "Арчилгаа", "categoryId": 1 },
+    { "id": 3, "name": "Чийгшүүлэгч", "categoryId": 1 },
+    { "id": 4, "name": "Маск", "categoryId": 1 },
+    { "id": 5, "name": "Суурь", "categoryId": 2 },
+    { "id": 6, "name": "Нүд", "categoryId": 2 },
+    { "id": 7, "name": "Уруул", "categoryId": 2 },
+    { "id": 8, "name": "Хацар өнгөлөгч", "categoryId": 2 },
+    { "id": 9, "name": "Нүүр", "categoryId": 3 },
+    { "id": 10, "name": "Бие", "categoryId": 3 },
+    { "id": 11, "name": "Биеийн саван", "categoryId": 4 },
+    { "id": 12, "name": "Биеийн тос", "categoryId": 4 },
+    { "id": 13, "name": "Үнэртэн", "categoryId": 4 },
+    { "id": 14, "name": "Шампунь", "categoryId": 5 },
+    { "id": 15, "name": "Ангижруулагч", "categoryId": 5 },
+    { "id": 16, "name": "Маск & Тос", "categoryId": 5 }
+  ],
+
   "products": [
     {
       "id": 1,
