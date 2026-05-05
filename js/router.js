@@ -12,11 +12,9 @@ import { renderWishlistPage } from "./pages/wishlistPage.js";
 import { renderCartPage } from "./pages/cartPage.js";
 
 export function router(products) {
-  const app = document.querySelector("#app");
-
+  const app  = document.querySelector("#app");
   const hash = location.hash || "#home";
 
-  // #product-detail?id=1 → product-detail + params
   const [page, query] = hash.replace("#", "").split("?");
   const params = new URLSearchParams(query || "");
 
@@ -37,7 +35,10 @@ export function router(products) {
       break;
 
     case "wishlist":
-      renderWishlistPage(products, app);
+      // Hash өөрчлөгдөхгүйн тулд home руу буцаана + drawer нээнэ
+      history.replaceState(null, "", "#home");
+      renderHomePage(products, app);
+      renderWishlistPage(products, app); // → WishlistPanel.open()
       break;
 
     case "cart":
