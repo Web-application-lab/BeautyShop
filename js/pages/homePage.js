@@ -94,7 +94,7 @@ export function renderHomePage(products, container) {
       <section class="discount-product">
         <div class="heading-sale-product">
           <h2 id="sale-product">Хямдралтай бүтээгдэхүүн</h2>
-          <a href="#sales" lass="view-all">Бүгдийг үзэх</a>
+          <a href="#sales" class="view-all">Бүгдийг үзэх</a>
         </div>
 
         <div class="products">

@@ -98,26 +98,20 @@ body {
   justify-content: space-between;
 }
 
-.view-all-highRated {
-  text-decoration: none;
-}
-
-.view-all {
-  font-size: var(--text-sm) !important;
-}
 
 .discount-product {
     margin-bottom: 3rem;
 }
+
 .heading-sale-product {
   display: flex;
   justify-content: space-between;
 }
-.view-all-sales {
-  text-decoration: none;
-}
+
 .view-all {
-  font-size: var(--text-sm) !important;
+  font-size: var(--text-sm);
+  color: var(--color-black-1);
+  text-decoration: none;
 }
 
 .container .products {
@@ -200,7 +194,7 @@ body {
   opacity: 0;
   pointer-events: none;
   transform: translateY(1rem);
-  transition: transform 0.2s;
+  transition: opacity 0.2s, transform 0.2s;
 }
 
 .container .product-actions button {
