@@ -10,6 +10,7 @@ import { renderDeliveryPage } from "./pages/deliveryPage.js";
 import { renderProductDetailPage } from "./pages/productDetailPage.js";
 import { renderWishlistPage } from "./pages/wishlistPage.js";
 import { renderCartPage } from "./pages/cartPage.js";
+import { renderSearchPage } from "./pages/searchPage.js";
 
 export function router(products) {
   const app  = document.querySelector("#app");
@@ -62,7 +63,7 @@ export function router(products) {
       break;
 
     case "skin-coach":
-      renderSkinCoachPage(app);
+      renderSkinCoachPage(products, app);
       break;
 
     case "delivery":
@@ -71,6 +72,10 @@ export function router(products) {
 
     case "product-detail":
       renderProductDetailPage(products, app, params);
+      break;
+
+    case "search":
+      renderSearchPage(products, app, params);
       break;
 
     default:

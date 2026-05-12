@@ -34,6 +34,75 @@ function getData(dataUrl) {
     });
 }
 
+function syncSearchInputWithHash() {
+  const input = document.querySelector(".search-box__input");
+  if (!input) return;
+
+  const hash = window.location.hash || "";
+  const [page, query] = hash.replace("#", "").split("?");
+
+  if (page !== "search") {
+    return;
+  }
+
+  const params = new URLSearchParams(query || "");
+  input.value = params.get("q") || "";
+}
+
+function setupSearch(products) {
+  const input = document.querySelector(".search-box__input");
+  const icon = document.querySelector(".search-box__icon");
+  if (!input) return;
+
+  const runSearch = () => {
+    const query = input.value.trim();
+    const nextHash = `#search?q=${encodeURIComponent(query)}`;
+
+    if (window.location.hash === nextHash) {
+      router(products);
+      return;
+    }
+
+    window.location.hash = nextHash;
+  };
+
+  input.addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      runSearch();
+    }
+  });
+
+  icon?.addEventListener("click", runSearch);
+  syncSearchInputWithHash();
+}
+
+function setupFooterNavigation(products) {
+  const footer = document.querySelector(".footer");
+  if (!footer) return;
+
+  footer.querySelectorAll("[data-route]").forEach(link => {
+    link.addEventListener("click", () => {
+      const route = link.dataset.route;
+      if (!route) return;
+
+      const nextHash = `#${route}`;
+
+      if (window.location.hash === nextHash) {
+        router(products);
+        return;
+      }
+
+      window.location.hash = nextHash;
+    });
+  });
+
+  const footerYear = document.querySelector("#footer-year");
+  if (footerYear) {
+    footerYear.textContent = String(new Date().getFullYear());
+  }
+}
+
 async function initApp() {
   const data     = await getData("./products.json");
   const products = data.products.map(product => new Product(product));
@@ -50,10 +119,13 @@ async function initApp() {
     ?.addEventListener("click", () => CartPanel.open());
 
   setupCardActions(products);
+  setupSearch(products);
+  setupFooterNavigation(products);
   router(products);
   updateNavbarCount();
 
   window.addEventListener("hashchange", () => {
+    syncSearchInputWithHash();
     router(products);
     updateNavbarCount();
   });
