@@ -7,5 +7,7 @@ export function showToast(message) {
     toast.textContent = message;
     document.body.appendChild(toast);
 
+    toast.style.zIndex = "1100"
+
     setTimeout(() => toast.remove(), 3000);
 }

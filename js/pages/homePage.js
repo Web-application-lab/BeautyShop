@@ -3,6 +3,12 @@ import { template } from "../components/productCard.js";
 export function renderHomePage(products, container) {
   const highRated = products.filter(product => product.rating >= 4.5).slice(0, 5);
   const sales = products.filter(product => product.discount > 0).slice(0, 5);
+  container.querySelectorAll(".strip-button[data-concern]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const concernId = Number(btn.dataset.concern);
+      window.location.hash = `#category?concern=${concernId}`;
+    });
+  });
 
   container.innerHTML = `
     <section class="hero" aria-label="hero">
@@ -16,7 +22,7 @@ export function renderHomePage(products, container) {
 
         <ul class="strip">
           <li class="strip-item">
-            <button class="strip-button">
+            <button class="strip-button" data-concern="1">
               <span class="strip-circle">
                 <img src="icons/Hydrating.svg" alt="Hydrating">
               </span>
@@ -25,7 +31,7 @@ export function renderHomePage(products, container) {
           </li>
 
           <li class="strip-item">
-            <button class="strip-button">
+            <button class="strip-button" data-concern="2">
               <span class="strip-circle">
                 <img src="icons/Calming.svg" alt="Calming">
               </span>
@@ -34,7 +40,7 @@ export function renderHomePage(products, container) {
           </li>
 
           <li class="strip-item">
-            <button class="strip-button">
+            <button class="strip-button" data-concern="3">
               <span class="strip-circle">
                 <img src="icons/Nutrition.svg" alt="Nutrition">
               </span>
@@ -43,7 +49,7 @@ export function renderHomePage(products, container) {
           </li>
 
           <li class="strip-item">
-            <button class="strip-button">
+            <button class="strip-button" data-concern="4">
               <span class="strip-circle">
                 <img src="icons/Whitening.svg" alt="Whitening">
               </span>
@@ -52,7 +58,7 @@ export function renderHomePage(products, container) {
           </li>
 
           <li class="strip-item">
-            <button class="strip-button">
+            <button class="strip-button" data-concern="5">
               <span class="strip-circle">
                 <img src="icons/Pores.svg" alt="Pores">
               </span>
@@ -61,7 +67,7 @@ export function renderHomePage(products, container) {
           </li>
 
           <li class="strip-item">
-            <button class="strip-button">
+            <button class="strip-button" data-concern="6">
               <span class="strip-circle">
                 <img src="icons/pH-balancing.svg" alt="pH-balancing">
               </span>
@@ -70,7 +76,7 @@ export function renderHomePage(products, container) {
           </li>
 
           <li class="strip-item">
-            <button class="strip-button">
+            <button class="strip-button" data-concern="7">
               <span class="strip-circle">
                 <img src="icons/Anti-aging.svg" alt="Anti-aging">
               </span>

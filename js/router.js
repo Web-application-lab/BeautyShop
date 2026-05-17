@@ -34,12 +34,15 @@ export function router(products) {
     case "sales":
       renderSalePage(products, app);
       break;
+    
+    case "concern":
+      renderCategoryPage(products, app, params);
+      break;
 
     case "wishlist":
-      // Hash өөрчлөгдөхгүйн тулд home руу буцаана + drawer нээнэ
       history.replaceState(null, "", "#home");
       renderHomePage(products, app);
-      renderWishlistPage(products, app); // → WishlistPanel.open()
+      renderWishlistPage(products, app);
       break;
 
     case "cart":

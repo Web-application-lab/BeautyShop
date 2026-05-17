@@ -1,6 +1,8 @@
 export function renderCategoryPage(products, container, params) {
     const categoryId = Number(params.get("id"));
     const subId = Number(params.get("sub"));
+    const concernId = Number(params.get("concern"));
+    
     const filtered = products.filter(p => {
         if (subId) return p.subCategoryId === subId;
         return p.categoryId === categoryId;
