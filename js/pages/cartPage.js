@@ -501,19 +501,9 @@ class CartPanel {
     // Зураг
     let imgEl;
     if (p.img) {
-<<<<<<< HEAD
-      const src = p.imageUrl || (p.img?.includes("/") ? p.img : `/images/${p.img}`);
+      const src = p.imageUrl || (p.img?.includes("/") ? p.img : `images/${p.img}`);
       imgEl = Object.assign(this.#el("img", "cp-item__img"), { src, alt: p.name ?? "" });
       imgEl.onerror = () => { imgEl.onerror = null; imgEl.src = "/images/placeholder.svg"; };
-=======
-<<<<<<< HEAD
-      const src = p.imageUrl || (p.img?.includes("/") ? p.img : `/images/${p.img}`);
-      imgEl = Object.assign(this.#el("img", "cp-item__img"), { src, alt: p.name ?? "" });
-      imgEl.onerror = () => { imgEl.onerror = null; imgEl.src = "/images/placeholder.svg"; };
-=======
-      imgEl = Object.assign(this.#el("img", "cp-item__img"), { src: `images/${p.img}`, alt: p.name ?? "" });
->>>>>>> d8fc03cb717da0a3506582113502e623537f1414
->>>>>>> 13e5ae2cbe1ccaf68b6d6ec2be083f4a01852868
     } else {
       imgEl = this.#el("div", "cp-item__img-placeholder");
       imgEl.innerHTML = `<i class="fa-solid fa-bottle-droplet"></i>`;
