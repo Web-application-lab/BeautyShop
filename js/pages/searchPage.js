@@ -1,4 +1,5 @@
 import { template } from "../components/productCard.js";
+import { navigateTo } from "../navigation.js";
 
 const categoryLabels = {
   1: "Арьс арчилгаа / Skincare",
@@ -556,12 +557,13 @@ export function renderSearchPage(products, container, params) {
     const nextHash = buildSearchHash(nextState);
     syncGlobalSearchInput(nextState.q);
 
-    if (window.location.hash === nextHash) {
+    const current = window.location.pathname + window.location.hash;
+    if (current === `/${nextHash}` || current === nextHash) {
       renderSearchPage(products, container, new URLSearchParams(nextHash.split("?")[1] || ""));
       return;
     }
 
-    history.replaceState(null, "", nextHash);
+    navigateTo(nextHash, { replace: true });
     renderSearchPage(products, container, new URLSearchParams(nextHash.split("?")[1] || ""));
   };
 

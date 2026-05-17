@@ -34,19 +34,29 @@ export function parseLocation() {
     history.replaceState(null, "", legacyPath);
   }
 
-  const categoryParams = categoryPathToParams(window.location.pathname);
-  if (categoryParams !== null) {
-    return { page: "category", params: categoryParams };
-  }
-
   const hash = window.location.hash || "";
   if (hash.startsWith("#")) {
     const [page, query] = hash.slice(1).split("?");
     const route = page || "home";
-    return {
-      page: route,
-      params: new URLSearchParams(query || "")
-    };
+
+    if (route === "category") {
+      return {
+        page: "category",
+        params: new URLSearchParams(query || "")
+      };
+    }
+
+    if (HASH_ROUTES.has(route)) {
+      return {
+        page: route,
+        params: new URLSearchParams(query || "")
+      };
+    }
+  }
+
+  const categoryParams = categoryPathToParams(window.location.pathname);
+  if (categoryParams !== null) {
+    return { page: "category", params: categoryParams };
   }
 
   const path = window.location.pathname.replace(/\/index\.html$/i, "").replace(/\/$/, "") || "/";
@@ -58,7 +68,12 @@ export function parseLocation() {
 }
 
 export function navigateTo(path, { replace = false } = {}) {
-  const next = path.startsWith("/") || path.startsWith("#") ? path : `/${path}`;
+  let next = path.startsWith("/") || path.startsWith("#") ? path : `/${path}`;
+
+  // Hash routes must reset pathname to / (e.g. /c/skincare + #home → /#home)
+  if (next.startsWith("#")) {
+    next = `/${next}`;
+  }
 
   if (replace) {
     history.replaceState(null, "", next);
@@ -74,6 +89,13 @@ export function setupAppNavigation(products, router) {
 
     const href = link.getAttribute("href");
     if (!href || isExternalHref(href)) return;
+
+    if (href === "/" || href === "/index.html") {
+      event.preventDefault();
+      navigateTo("#home");
+      router(products);
+      return;
+    }
 
     if (href.startsWith("/c")) {
       event.preventDefault();

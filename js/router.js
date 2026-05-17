@@ -38,11 +38,6 @@ export function router(products) {
       break;
 
     case "wishlist":
-<<<<<<< HEAD
-      history.replaceState(null, "", "/");
-=======
-      history.replaceState(null, "", "#home");
->>>>>>> 6a05cb9021755b740c06ad0cf083e2a6f66ee366
       renderHomePage(products, app);
       renderWishlistPage(products, app);
       break;

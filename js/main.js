@@ -8,7 +8,7 @@ import { WishlistPanel } from "./pages/wishlistPage.js";
 import { CartPanel } from "./pages/cartPage.js";
 import { setupCategoryNav } from "./components/categoryNav.js";
 import { initCategoryCatalog } from "./components/categoryCatalog.js";
-import { setupAppNavigation } from "./navigation.js";
+import { navigateTo, setupAppNavigation } from "./navigation.js";
 import { productImageSrc } from "./utils/assets.js";
 
 class Product {
@@ -23,6 +23,7 @@ class Product {
     this.reviews     = product.reviews;
     this.categoryId     = product.categoryId;
     this.subCategoryId = product.subCategoryId;
+    this.concernIds    = product.concernIds || [];
     this.description = product.description;
     this.ingredients = product.ingredients;
     this.usage       = product.usage;
@@ -64,12 +65,13 @@ function setupSearch(products) {
     const query = input.value.trim();
     const nextHash = `#search?q=${encodeURIComponent(query)}`;
 
-    if (window.location.hash === nextHash) {
+    if (window.location.pathname + window.location.hash === `/${nextHash}`) {
       router(products);
       return;
     }
 
-    window.location.hash = nextHash;
+    navigateTo(nextHash);
+    router(products);
   };
 
   input.addEventListener("keydown", event => {
@@ -94,12 +96,13 @@ function setupFooterNavigation(products) {
 
       const nextHash = `#${route}`;
 
-      if (window.location.hash === nextHash) {
+      if (window.location.pathname + window.location.hash === `/${nextHash}`) {
         router(products);
         return;
       }
 
-      window.location.hash = nextHash;
+      navigateTo(nextHash);
+      router(products);
     });
   });
 
@@ -116,6 +119,20 @@ async function initApp() {
 
   // Drawer-уудыг нэг удаа эхлүүлнэ
   WishlistPanel.init(products);
+  document.addEventListener("wishlist:addToCart", (e) => {
+    const product = e.detail;
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const existing = cart.find(item => Number(item.id) === Number(product.id));
+    
+    if (existing) {
+      existing.quantity = (existing.quantity || 1) + 1;
+    } else {
+      cart.push({ id: product.id, quantity: 1 });
+    }
+    
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateNavbarCount();
+  });
   CartPanel.init(products);
 
   // Navbar товчнуудыг drawer-тай холбоно

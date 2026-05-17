@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { template } from "../components/productCard.js";
 import { setActiveCategoryNav } from "../components/categoryNav.js";
 import {
@@ -8,23 +7,19 @@ import {
   normalizeCategoryPath,
   resolveCategoryParams
 } from "../components/categoryCatalog.js";
-=======
-export function renderCategoryPage(products, container, params) {
-    const categoryId = Number(params.get("id"));
-    const subId = Number(params.get("sub"));
-    const concernId = Number(params.get("concern"));
-    
-    const filtered = products.filter(p => {
-        if (subId) return p.subCategoryId === subId;
-        return p.categoryId === categoryId;
-    });
->>>>>>> 6a05cb9021755b740c06ad0cf083e2a6f66ee366
 
 function getSubCategoryId(product) {
   return product.subCategoryId;
 }
 
-function filterProducts(products, categoryId, subCategoryId) {
+function filterProducts(products, resolved) {
+  if (resolved.concernId) {
+    return products.filter(product =>
+      (product.concernIds || []).includes(resolved.concernId)
+    );
+  }
+
+  const { categoryId, subCategoryId } = resolved;
   if (!categoryId) return products;
 
   let list = products.filter(product => product.categoryId === categoryId);
@@ -94,10 +89,7 @@ function setupCategorySorting(container, products, resolved) {
   if (!sortSelect || !grid) return;
 
   sortSelect.addEventListener("change", () => {
-    const sorted = sortProducts(
-      filterProducts(products, resolved.categoryId, resolved.subCategoryId),
-      sortSelect.value
-    );
+    const sorted = sortProducts(filterProducts(products, resolved), sortSelect.value);
 
     if (countEl) countEl.textContent = String(sorted.length);
     grid.innerHTML = renderProductGrid(sorted);
@@ -124,7 +116,7 @@ function renderBreadcrumb(resolved, pageTitle) {
   }
 
   return `
-    <a href="#home" class="category-page__crumb">Нүүр</a>
+    <a href="/" class="category-page__crumb">Нүүр</a>
     <span class="category-page__sep">/</span>
     <span class="category-page__crumb category-page__crumb--current">${pageTitle}</span>
   `;
@@ -155,11 +147,7 @@ export function renderCategoryPage(products, container, params) {
   }
 
   const pageTitle = getCategoryPageTitle(resolved);
-  const filtered = filterProducts(
-    products,
-    resolved.categoryId,
-    resolved.subCategoryId
-  );
+  const filtered = filterProducts(products, resolved);
 
   container.innerHTML = `
     <section class="high-rated category-page">

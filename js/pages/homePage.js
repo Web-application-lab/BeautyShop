@@ -1,14 +1,9 @@
 import { template } from "../components/productCard.js";
+import { navigateTo } from "../navigation.js";
 
 export function renderHomePage(products, container) {
   const highRated = products.filter(product => product.rating >= 4.5).slice(0, 5);
   const sales = products.filter(product => product.discount > 0).slice(0, 5);
-  container.querySelectorAll(".strip-button[data-concern]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const concernId = Number(btn.dataset.concern);
-      window.location.hash = `#category?concern=${concernId}`;
-    });
-  });
 
   container.innerHTML = `
     <section class="hero" aria-label="hero">
@@ -110,4 +105,12 @@ export function renderHomePage(products, container) {
 
     </main>
   `;
+
+  container.querySelectorAll(".strip-button[data-concern]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const concernId = Number(btn.dataset.concern);
+      navigateTo(`#category?concern=${concernId}`);
+      window.dispatchEvent(new PopStateEvent("popstate"));
+    });
+  });
 }

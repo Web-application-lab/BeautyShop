@@ -17,6 +17,7 @@ export function initCategoryCatalog(data) {
   catalog = {
     categories,
     subCategories,
+    concerns: data.concerns || [],
     navigation,
     categoryById,
     subCategoryById,
@@ -70,6 +71,8 @@ export function normalizeLegacyCategoryLocation() {
 
   const query = hash.includes("?") ? hash.split("?")[1] : "";
   const params = new URLSearchParams(query);
+  if (params.get("concern")) return null;
+
   const resolved = resolveCategoryParams(params);
   if (resolved.notFound) return null;
 
@@ -191,6 +194,19 @@ export function resolveCategoryParams(params) {
     return resolveFromSlugParams(catSlug, subSlug);
   }
 
+  const concernParam = params.get("concern");
+  if (concernParam) {
+    const concernId = Number(concernParam);
+    const concern = catalog.concerns.find(c => c.id === concernId);
+    if (!concern) return { notFound: true };
+
+    return {
+      notFound: false,
+      concernId,
+      concernName: concern.name
+    };
+  }
+
   const legacyId = params.get("id");
   if (legacyId) {
     const entry = entryFromLegacyIds(legacyId, params.get("sub"));
@@ -217,6 +233,7 @@ export function resolveCategoryParams(params) {
 
 export function getCategoryPageTitle(resolved) {
   if (resolved.notFound) return "Ангилал олдсонгүй";
+  if (resolved.concernName) return resolved.concernName;
   if (resolved.subCategoryName) return resolved.subCategoryName;
   if (resolved.categoryName) return resolved.categoryName;
   return "Бүх бүтээгдэхүүн";
