@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { template } from "../components/productCard.js";
 import { setActiveCategoryNav } from "../components/categoryNav.js";
 import {
@@ -7,6 +8,17 @@ import {
   normalizeCategoryPath,
   resolveCategoryParams
 } from "../components/categoryCatalog.js";
+=======
+export function renderCategoryPage(products, container, params) {
+    const categoryId = Number(params.get("id"));
+    const subId = Number(params.get("sub"));
+    const concernId = Number(params.get("concern"));
+    
+    const filtered = products.filter(p => {
+        if (subId) return p.subCategoryId === subId;
+        return p.categoryId === categoryId;
+    });
+>>>>>>> 6a05cb9021755b740c06ad0cf083e2a6f66ee366
 
 function getSubCategoryId(product) {
   return product.subCategoryId;
