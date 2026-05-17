@@ -11,7 +11,7 @@ export function renderAboutPage(container) {
         </header>
 
         <div class="about-page__hero-media">
-          <img src="images/about-beautyshop.png" alt="BeautyShop танилцуулга зураг">
+          <img src="/images/about-beautyshop.png" alt="BeautyShop танилцуулга зураг">
         </div>
 
         <section class="about-page__section">

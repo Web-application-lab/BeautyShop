@@ -11,18 +11,16 @@ import { renderProductDetailPage } from "./pages/productDetailPage.js";
 import { renderWishlistPage } from "./pages/wishlistPage.js";
 import { renderCartPage } from "./pages/cartPage.js";
 import { renderSearchPage } from "./pages/searchPage.js";
+import { renderCategoryPage } from "./pages/categoryPage.js";
+import { parseLocation } from "./navigation.js";
 
 export function router(products) {
-  const app  = document.querySelector("#app");
-  const hash = location.hash || "#home";
-
-  const [page, query] = hash.replace("#", "").split("?");
-  const params = new URLSearchParams(query || "");
+  const app = document.querySelector("#app");
+  const { page, params } = parseLocation();
 
   window.scrollTo(0, 0);
 
   switch (page) {
-    case "":
     case "home":
       renderHomePage(products, app);
       break;
@@ -36,10 +34,9 @@ export function router(products) {
       break;
 
     case "wishlist":
-      // Hash өөрчлөгдөхгүйн тулд home руу буцаана + drawer нээнэ
-      history.replaceState(null, "", "#home");
+      history.replaceState(null, "", "/");
       renderHomePage(products, app);
-      renderWishlistPage(products, app); // → WishlistPanel.open()
+      renderWishlistPage(products, app);
       break;
 
     case "cart":
@@ -78,11 +75,15 @@ export function router(products) {
       renderSearchPage(products, app, params);
       break;
 
+    case "category":
+      renderCategoryPage(products, app, params);
+      break;
+
     default:
       app.innerHTML = `
         <section class="page">
           <h2>Page not found</h2>
-          <a href="#home">Back to home</a>
+          <a href="/">Back to home</a>
         </section>
       `;
   }

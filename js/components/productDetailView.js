@@ -1,14 +1,17 @@
 import { starRating } from "./starRating.js";
 import { priceTemplate } from "./priceTemplate.js";
+import { productImageSrc } from "../utils/assets.js";
 import "./quantitySelector.js";
 import "./cartButton.js";
 import "./wishlistButton.js";
+
 export function renderProductDetailView(product, container) {
+    const imageSrc = product.imageUrl || productImageSrc(product.img);
     container.innerHTML = `
         <section class="product-detail" id="product-detail">
 
             <div class="detail-left">
-                <img src="images/${product.img}" alt="${product.name}">
+                <img src="${imageSrc}" alt="${product.name}" onerror="this.onerror=null;this.src='/images/placeholder.svg'">
             </div>
 
             <div class="detail-right">
@@ -70,7 +73,7 @@ export function renderProductDetailView(product, container) {
                         <div class="comments-left-header">
                             <div class="comments-left">
                                 <span class="avatar-circle">
-                                    <img class="profile-avatar" src="images/avatar.jpg" alt="User">
+                                    <img class="profile-avatar" src="/images/avatar.jpg" alt="User">
                                 </span>
                             </div>
                             <div class="comments-right">

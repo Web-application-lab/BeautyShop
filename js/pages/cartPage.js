@@ -501,7 +501,9 @@ class CartPanel {
     // Зураг
     let imgEl;
     if (p.img) {
-      imgEl = Object.assign(this.#el("img", "cp-item__img"), { src: p.img, alt: p.name ?? "" });
+      const src = p.imageUrl || (p.img?.includes("/") ? p.img : `/images/${p.img}`);
+      imgEl = Object.assign(this.#el("img", "cp-item__img"), { src, alt: p.name ?? "" });
+      imgEl.onerror = () => { imgEl.onerror = null; imgEl.src = "/images/placeholder.svg"; };
     } else {
       imgEl = this.#el("div", "cp-item__img-placeholder");
       imgEl.innerHTML = `<i class="fa-solid fa-bottle-droplet"></i>`;

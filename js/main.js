@@ -6,6 +6,10 @@ import { updateNavbarCount } from "./components/navbarCount.js";
 import { setupCardActions } from "./components/cardAction.js";
 import { WishlistPanel } from "./pages/wishlistPage.js";
 import { CartPanel } from "./pages/cartPage.js";
+import { setupCategoryNav } from "./components/categoryNav.js";
+import { initCategoryCatalog } from "./components/categoryCatalog.js";
+import { setupAppNavigation } from "./navigation.js";
+import { productImageSrc } from "./utils/assets.js";
 
 class Product {
   constructor(product) {
@@ -17,11 +21,13 @@ class Product {
     this.newPrice    = product.price - (product.price * this.discount / 100);
     this.rating      = product.rating;
     this.reviews     = product.reviews;
-    this.categoryId  = product.categoryId;
+    this.categoryId     = product.categoryId;
+    this.subCategoryId = product.subCategoryId;
     this.description = product.description;
     this.ingredients = product.ingredients;
     this.usage       = product.usage;
     this.img         = product.img;
+    this.imageUrl    = productImageSrc(product.img);
   }
 }
 
@@ -104,7 +110,8 @@ function setupFooterNavigation(products) {
 }
 
 async function initApp() {
-  const data     = await getData("./products.json");
+  const data     = await getData("/products.json");
+  initCategoryCatalog(data);
   const products = data.products.map(product => new Product(product));
 
   // Drawer-уудыг нэг удаа эхлүүлнэ
@@ -121,6 +128,8 @@ async function initApp() {
   setupCardActions(products);
   setupSearch(products);
   setupFooterNavigation(products);
+  setupCategoryNav();
+  setupAppNavigation(products, router);
   router(products);
   updateNavbarCount();
 

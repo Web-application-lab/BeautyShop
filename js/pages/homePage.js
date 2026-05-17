@@ -6,7 +6,7 @@ export function renderHomePage(products, container) {
 
   container.innerHTML = `
     <section class="hero" aria-label="hero">
-      <img src="images/hero.jpg" class="hero-img">
+      <img src="/images/hero.jpg" class="hero-img" onerror="this.style.display='none'">
     </section>
 
     <main class="container">
@@ -18,7 +18,7 @@ export function renderHomePage(products, container) {
           <li class="strip-item">
             <button class="strip-button">
               <span class="strip-circle">
-                <img src="icons/Hydrating.svg" alt="Hydrating">
+                <img src="/icons/Hydrating.svg" alt="Hydrating">
               </span>
               <span class="strip-label">Чийгшүүлэх</span>
             </button>
@@ -27,7 +27,7 @@ export function renderHomePage(products, container) {
           <li class="strip-item">
             <button class="strip-button">
               <span class="strip-circle">
-                <img src="icons/Calming.svg" alt="Calming">
+                <img src="/icons/Calming.svg" alt="Calming">
               </span>
               <span class="strip-label">Тайвшруулах</span>
             </button>
@@ -36,7 +36,7 @@ export function renderHomePage(products, container) {
           <li class="strip-item">
             <button class="strip-button">
               <span class="strip-circle">
-                <img src="icons/Nutrition.svg" alt="Nutrition">
+                <img src="/icons/Nutrition.svg" alt="Nutrition">
               </span>
               <span class="strip-label">Тэжээл өгөх</span>
             </button>
@@ -45,7 +45,7 @@ export function renderHomePage(products, container) {
           <li class="strip-item">
             <button class="strip-button">
               <span class="strip-circle">
-                <img src="icons/Whitening.svg" alt="Whitening">
+                <img src="/icons/Whitening.svg" alt="Whitening">
               </span>
               <span class="strip-label">Цайруулах</span>
             </button>
@@ -54,7 +54,7 @@ export function renderHomePage(products, container) {
           <li class="strip-item">
             <button class="strip-button">
               <span class="strip-circle">
-                <img src="icons/Pores.svg" alt="Pores">
+                <img src="/icons/Pores.svg" alt="Pores">
               </span>
               <span class="strip-label">Нүхжилтийн эсрэг</span>
             </button>
@@ -63,7 +63,7 @@ export function renderHomePage(products, container) {
           <li class="strip-item">
             <button class="strip-button">
               <span class="strip-circle">
-                <img src="icons/pH-balancing.svg" alt="pH-balancing">
+                <img src="/icons/pH-balancing.svg" alt="pH-balancing">
               </span>
               <span class="strip-label">pH тэнцвэржүүлэх</span>
             </button>
@@ -72,7 +72,7 @@ export function renderHomePage(products, container) {
           <li class="strip-item">
             <button class="strip-button">
               <span class="strip-circle">
-                <img src="icons/Anti-aging.svg" alt="Anti-aging">
+                <img src="/icons/Anti-aging.svg" alt="Anti-aging">
               </span>
               <span class="strip-label">Үрчлээний эсрэг</span>
             </button>

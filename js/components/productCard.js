@@ -1,12 +1,20 @@
 import { starRating } from "./starRating.js";
 import { priceTemplate } from "./priceTemplate.js";
+import { productImageSrc } from "../utils/assets.js";
+
+const imgFallback = `onerror="this.onerror=null;this.src='/images/placeholder.svg'"`;
+
+function productImgSrc(product) {
+  return product.imageUrl || productImageSrc(product.img);
+}
+
 export const template = {
-    cardTemplate(product) {
-        return `
+  cardTemplate(product) {
+    return `
             <div class="product-card">
                 <a href="#product-detail?id=${product.id}" class="product-link">
                     <div class="product-image">
-                        <img src="images/${product.img}" alt="${product.name}">
+                        <img src="${productImgSrc(product)}" alt="${product.name}" ${imgFallback}>
                     </div>
 
                     <div class="product-body">
@@ -27,14 +35,14 @@ export const template = {
                 </div>
             </div>
         `;
-    }, 
-    saleTemplate(product) {
-        return`
+  },
+  saleTemplate(product) {
+    return `
             <div class="product-card">
                 <span class="sale-rate">-${product.discount}%</span>
                 <a href="#product-detail?id=${product.id}" class="product-link">
                     <div class="product-image">
-                        <img src="images/${product.img}" alt="${product.name}">
+                        <img src="${productImgSrc(product)}" alt="${product.name}" ${imgFallback}>
                     </div>
 
                     <div class="product-body">
@@ -55,5 +63,5 @@ export const template = {
                 </div>
             </div>
         `;
-    } 
+  }
 };
