@@ -412,7 +412,7 @@ class WishlistPanel {
     // Зураг — Product class дотор `img` гэсэн field байгаа тул тэрийг ашиглана
     let imgEl;
     if (p.img) {
-      imgEl = Object.assign(this.#el("img", "wl-item__img"), { src: p.img, alt: p.name ?? "" });
+      imgEl = Object.assign(this.#el("img", "wl-item__img"), { src: `images/${p.img}`, alt: p.name ?? "" });
     } else {
       imgEl = this.#el("div", "wl-item__img-placeholder");
       imgEl.innerHTML = `<i class="fa-solid fa-bottle-droplet"></i>`;

@@ -109,6 +109,20 @@ async function initApp() {
 
   // Drawer-уудыг нэг удаа эхлүүлнэ
   WishlistPanel.init(products);
+  document.addEventListener("wishlist:addToCart", (e) => {
+    const product = e.detail;
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const existing = cart.find(item => Number(item.id) === Number(product.id));
+    
+    if (existing) {
+      existing.quantity = (existing.quantity || 1) + 1;
+    } else {
+      cart.push({ id: product.id, quantity: 1 });
+    }
+    
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateNavbarCount();
+  });
   CartPanel.init(products);
 
   // Navbar товчнуудыг drawer-тай холбоно

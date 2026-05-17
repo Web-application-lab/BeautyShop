@@ -501,7 +501,7 @@ class CartPanel {
     // Зураг
     let imgEl;
     if (p.img) {
-      imgEl = Object.assign(this.#el("img", "cp-item__img"), { src: p.img, alt: p.name ?? "" });
+      imgEl = Object.assign(this.#el("img", "cp-item__img"), { src: `images/${p.img}`, alt: p.name ?? "" });
     } else {
       imgEl = this.#el("div", "cp-item__img-placeholder");
       imgEl.innerHTML = `<i class="fa-solid fa-bottle-droplet"></i>`;
