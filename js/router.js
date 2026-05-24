@@ -12,6 +12,7 @@ import { renderWishlistPage } from "./pages/wishlistPage.js";
 import { renderCartPage } from "./pages/cartPage.js";
 import { renderSearchPage } from "./pages/searchPage.js";
 import { renderCategoryPage } from "./pages/categoryPage.js";
+import { renderBrandPage } from "./pages/brandPage.js";
 import { parseLocation } from "./navigation.js";
 
 export function router(products) {
@@ -38,11 +39,6 @@ export function router(products) {
       break;
 
     case "wishlist":
-<<<<<<< HEAD
-      history.replaceState(null, "", "/");
-=======
-      history.replaceState(null, "", "#home");
->>>>>>> 6a05cb9021755b740c06ad0cf083e2a6f66ee366
       renderHomePage(products, app);
       renderWishlistPage(products, app);
       break;
@@ -85,6 +81,10 @@ export function router(products) {
 
     case "category":
       renderCategoryPage(products, app, params);
+      break;
+
+    case "brand":
+      renderBrandPage(products, app, params);
       break;
 
     default:

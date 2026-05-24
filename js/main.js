@@ -7,8 +7,10 @@ import { setupCardActions } from "./components/cardAction.js";
 import { WishlistPanel } from "./pages/wishlistPage.js";
 import { CartPanel } from "./pages/cartPage.js";
 import { setupCategoryNav } from "./components/categoryNav.js";
+import { setupBrandNav } from "./components/brandNav.js";
 import { initCategoryCatalog } from "./components/categoryCatalog.js";
-import { setupAppNavigation } from "./navigation.js";
+import { initBrandCatalog } from "./components/brandCatalog.js";
+import { navigateTo, setupAppNavigation } from "./navigation.js";
 import { productImageSrc } from "./utils/assets.js";
 
 class Product {
@@ -23,6 +25,7 @@ class Product {
     this.reviews     = product.reviews;
     this.categoryId     = product.categoryId;
     this.subCategoryId = product.subCategoryId;
+    this.concernIds    = product.concernIds || [];
     this.description = product.description;
     this.ingredients = product.ingredients;
     this.usage       = product.usage;
@@ -31,13 +34,15 @@ class Product {
   }
 }
 
-function getData(dataUrl) {
-  return fetch(dataUrl)
-    .then(res => res.json())
-    .catch(error => {
-      console.error("Error fetching data:", error);
-      return { products: [] };
-    });
+async function getData(dataUrl) {
+  try {
+    const res = await fetch(dataUrl);
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    return await res.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return { products: [], categories: [], subCategories: [] };
+  }
 }
 
 function syncSearchInputWithHash() {
@@ -64,12 +69,13 @@ function setupSearch(products) {
     const query = input.value.trim();
     const nextHash = `#search?q=${encodeURIComponent(query)}`;
 
-    if (window.location.hash === nextHash) {
+    if (window.location.pathname + window.location.hash === `/${nextHash}`) {
       router(products);
       return;
     }
 
-    window.location.hash = nextHash;
+    navigateTo(nextHash);
+    router(products);
   };
 
   input.addEventListener("keydown", event => {
@@ -94,12 +100,13 @@ function setupFooterNavigation(products) {
 
       const nextHash = `#${route}`;
 
-      if (window.location.hash === nextHash) {
+      if (window.location.pathname + window.location.hash === `/${nextHash}`) {
         router(products);
         return;
       }
 
-      window.location.hash = nextHash;
+      navigateTo(nextHash);
+      router(products);
     });
   });
 
@@ -110,12 +117,31 @@ function setupFooterNavigation(products) {
 }
 
 async function initApp() {
-  const data     = await getData("/products.json");
+  const app = document.querySelector("#app");
+
+  try {
+  const data = await getData("/products.json");
   initCategoryCatalog(data);
-  const products = data.products.map(product => new Product(product));
+  const list = data.products || [];
+  const products = list.map(product => new Product(product));
+  initBrandCatalog(products);
 
   // Drawer-уудыг нэг удаа эхлүүлнэ
   WishlistPanel.init(products);
+  document.addEventListener("wishlist:addToCart", (e) => {
+    const product = e.detail;
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const existing = cart.find(item => Number(item.id) === Number(product.id));
+    
+    if (existing) {
+      existing.quantity = (existing.quantity || 1) + 1;
+    } else {
+      cart.push({ id: product.id, quantity: 1 });
+    }
+    
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateNavbarCount();
+  });
   CartPanel.init(products);
 
   // Navbar товчнуудыг drawer-тай холбоно
@@ -129,6 +155,7 @@ async function initApp() {
   setupSearch(products);
   setupFooterNavigation(products);
   setupCategoryNav();
+  setupBrandNav();
   setupAppNavigation(products, router);
   router(products);
   updateNavbarCount();
@@ -138,6 +165,12 @@ async function initApp() {
     router(products);
     updateNavbarCount();
   });
+  } catch (err) {
+    console.error(err);
+    if (app) {
+      app.innerHTML = "<p style='padding:2rem'>Апп ачаалахад алдаа гарлаа. Console-оо шалгана уу.</p>";
+    }
+  }
 }
 
 initApp();

@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="/css/footer.css">
     <link rel="stylesheet" href="/css/product-detail.css">
     <link rel="stylesheet" href="/css/high-rated.css">
+    <link rel="stylesheet" href="/css/category-page.css">
     <link rel="stylesheet" href="/css/about-page.css">
     <link rel="stylesheet" href="/css/skin-coach.css">
     <link rel="stylesheet" href="/css/privacy-page.css">
@@ -31,7 +32,7 @@
 
         <header class="top-nav">
 
-            <a href="#home" class="top-nav__logo">BeautyShop</a>
+            <a href="/" class="top-nav__logo">BeautyShop</a>
 
             <div class="top-nav__search">
                 <div class="search-box">
@@ -156,31 +157,9 @@
                 </li>
 
                 <!-- 6. Брэнд -->
-                <li class="cat-nav__item">
-                    <a href="#">Брэнд</a>
-                    <div class="dropdown">
-                        <a href="#" class="dropdown__item">
-                            COSRX
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                        </a>
-                        <a href="#" class="dropdown__item">
-                            Laneige
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                        </a>
-                        <a href="#" class="dropdown__item">
-                            Innisfree
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                        </a>
-                        <a href="#" class="dropdown__item">
-                            Sulwhasoo
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                        </a>
-                        <a href="#" class="dropdown__item">
-                            Etude House
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                        </a>
-                        <div class="dropdown__divider"></div>
-                        <a href="#" class="dropdown__see-all">Бүгдийг харах</a>
+                <li class="cat-nav__item cat-nav__item--brand">
+                    <a href="/b">Брэнд</a>
+                    <div class="dropdown" data-brand-dropdown>
                     </div>
                 </li>
 
@@ -197,9 +176,9 @@
     <main id="app"></main>
 
     <footer class="footer">
-        <div class="footer-shell">
-        <div class="footer-top">
-            <button class="footer-brand-link footer-brand-link--top" type="button" data-route="home">BeautyShop</button>
+        <section class="footer-shell">
+            <section class="footer-top">
+                <button class="footer-brand-link footer-brand-link--top" type="button" data-route="home">BeautyShop</button>
             <div class="footer-social">
                 <a class="footer-social-link" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                     <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
@@ -208,11 +187,10 @@
                     <i class="fa-brands fa-instagram" aria-hidden="true"></i>
                 </a>
             </div>
-        </div>
+            </section>
 
-        <div class="footer-container">
-
-        <div class="footer-section footer-section--brand">
+            <section class="footer-container">
+                <section class="footer-section footer-section--brand">
             <h3>Танилцуулга</h3>
             <ul class="footer-links">
             <li><button class="footer-link" type="button" data-route="about">Бидний тухай</button></li>
@@ -221,30 +199,29 @@
                 <p>И-мэйл: <a href="mailto:info@beautyshop.mn">info@beautyshop.mn</a></p>
                 <p>Утас: <a href="tel:77777777">7777-7777</a></p>
             </div>
-        </div>
+                </section>
 
-        <div class="footer-section">
-            <h3>Үйлчилгээ</h3>
+                <section class="footer-section">
+                    <h3>Үйлчилгээ</h3>
             <ul class="footer-links">
             <li><button class="footer-link" type="button" data-route="skin-coach">Skin coach</button></li>
             <li><button class="footer-link" type="button" data-route="privacy">Аюулгүй байдал, нууцлал</button></li>
             </ul>
-        </div>
+                </section>
 
-        <div class="footer-section">
-            <h3>Вебсайтын нөхцөл</h3>
-            <ul class="footer-links">
-            <li><button class="footer-link" type="button" data-route="terms">Бүтээгдэхүүний буцаалтын нөхцөл</button></li>
-            <li><button class="footer-link" type="button" data-route="delivery">Хүргэлтийн нөхцөл</button></li>
-            </ul>
-        </div>
+                <section class="footer-section">
+                    <h3>Вебсайтын нөхцөл</h3>
+                    <ul class="footer-links">
+                        <li><button class="footer-link" type="button" data-route="terms">Бүтээгдэхүүний буцаалтын нөхцөл</button></li>
+                        <li><button class="footer-link" type="button" data-route="delivery">Хүргэлтийн нөхцөл</button></li>
+                    </ul>
+                </section>
+            </section>
+        </section>
 
-        </div>
-        </div>
-
-        <div class="footer-bottom">
-        © <span id="footer-year">2026</span> BeautyShop. Бүх эрх хуулиар хамгаалагдсан.
-        </div>
+        <section class="footer-bottom">
+            © <span id="footer-year">2026</span> BeautyShop. Бүх эрх хуулиар хамгаалагдсан.
+        </section>
     </footer>
     <script type="module" src="/js/main.js"></script>
 </body>

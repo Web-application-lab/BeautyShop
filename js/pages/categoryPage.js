@@ -1,38 +1,30 @@
-<<<<<<< HEAD
 import { template } from "../components/productCard.js";
 import { setActiveCategoryNav } from "../components/categoryNav.js";
 import {
   buildCategoryPath,
+  categoryPathToParams,
   getCategoryCatalog,
   getCategoryPageTitle,
   normalizeCategoryPath,
   resolveCategoryParams
 } from "../components/categoryCatalog.js";
-=======
-export function renderCategoryPage(products, container, params) {
-    const categoryId = Number(params.get("id"));
-    const subId = Number(params.get("sub"));
-    const concernId = Number(params.get("concern"));
-    
-    const filtered = products.filter(p => {
-        if (subId) return p.subCategoryId === subId;
-        return p.categoryId === categoryId;
-    });
->>>>>>> 6a05cb9021755b740c06ad0cf083e2a6f66ee366
+import {
+  getFilterMode,
+  renderSidebarFilters,
+  setupSidebarFilters
+} from "../components/categoryFilters.js";
 
-function getSubCategoryId(product) {
-  return product.subCategoryId;
-}
-
-function filterProducts(products, categoryId, subCategoryId) {
-  if (!categoryId) return products;
-
-  let list = products.filter(product => product.categoryId === categoryId);
-
-  if (subCategoryId) {
-    list = list.filter(product => getSubCategoryId(product) === subCategoryId);
+function filterProducts(products, resolved) {
+  if (resolved.concernId) {
+    return products.filter(p => (p.concernIds || []).includes(resolved.concernId));
   }
 
+  if (!resolved.categoryId) return products;
+
+  let list = products.filter(p => p.categoryId === resolved.categoryId);
+  if (resolved.subCategoryId) {
+    list = list.filter(p => p.subCategoryId === resolved.subCategoryId);
+  }
   return list;
 }
 
@@ -55,98 +47,123 @@ function renderProductGrid(products) {
   if (!products.length) {
     return `<p class="category-page__empty">Бүтээгдэхүүн олдсонгүй</p>`;
   }
-
-  return products.map(product => template.cardTemplate(product)).join("");
+  return products.map(p => template.cardTemplate(p)).join("");
 }
 
-function renderSubNav(resolved) {
+function renderSidebar(resolved, products) {
   const catalog = getCategoryCatalog();
-  if (!catalog || !resolved.categoryId) return "";
+  if (!catalog) return "";
 
+  const mode = getFilterMode(resolved);
+  const base = filterProducts(products, resolved);
+  const filtersHtml = renderSidebarFilters(base, resolved, mode);
+
+  if (resolved.concernId) {
+    return `
+      <aside class="category-sidebar">
+        <a href="/" class="category-sidebar__link">← Нүүр</a>
+        ${filtersHtml}
+      </aside>
+    `;
+  }
+
+  if (!resolved.categoryId) {
+    let html = "";
+    catalog.categories.forEach(cat => {
+      const subs = catalog.subCategoriesByCategoryId[cat.id] || [];
+      const subsHtml = subs.map(sub => `
+        <li class="category-sidebar__item">
+          <a href="${buildCategoryPath({ categorySlug: cat.slug, subCategorySlug: sub.slug })}" class="category-sidebar__sub">${sub.name}</a>
+        </li>
+      `).join("");
+
+      let subsList = "";
+      if (subs.length) {
+        subsList = `<ul class="category-sidebar__list">${subsHtml}</ul>`;
+      }
+
+      html += `
+        <div class="category-sidebar__group">
+          <a href="${buildCategoryPath({ categorySlug: cat.slug })}" class="category-sidebar__parent">${cat.name}</a>
+          ${subsList}
+        </div>
+      `;
+    });
+
+    return `<aside class="category-sidebar">${html}${filtersHtml}</aside>`;
+  }
+
+  const category = catalog.categoryById[resolved.categoryId];
   const subs = catalog.subCategoriesByCategoryId[resolved.categoryId] || [];
-  if (!subs.length) return "";
+  const subsHtml = subs.map(sub => {
+    let active = "";
+    if (resolved.subCategoryId === sub.id) active = " is-active";
 
-  const allActive = !resolved.subCategoryId ? " category-subnav__link--active" : "";
-  const pills = subs
-    .map(sub => {
-      const active =
-        resolved.subCategoryId === sub.id ? " category-subnav__link--active" : "";
-      return `<a href="${buildCategoryPath({
-        categorySlug: resolved.categorySlug,
-        subCategorySlug: sub.slug
-      })}" class="category-subnav__link${active}">${sub.name}</a>`;
-    })
-    .join("");
+    return `
+      <li class="category-sidebar__item">
+        <a href="${buildCategoryPath({ categorySlug: category.slug, subCategorySlug: sub.slug })}" class="category-sidebar__sub${active}">${sub.name}</a>
+      </li>
+    `;
+  }).join("");
+
+  let parentActive = "";
+  if (!resolved.subCategoryId) parentActive = " is-active";
 
   return `
-    <nav class="category-subnav" aria-label="Дэд ангилал">
-      <a href="${buildCategoryPath({ categorySlug: resolved.categorySlug })}" class="category-subnav__link${allActive}">Бүгд</a>
-      ${pills}
-    </nav>
+    <aside class="category-sidebar">
+      <div class="category-sidebar__group">
+        <a href="${buildCategoryPath({ categorySlug: category.slug })}" class="category-sidebar__parent${parentActive}">${category.name}</a>
+        <ul class="category-sidebar__list">${subsHtml}</ul>
+      </div>
+      ${filtersHtml}
+    </aside>
   `;
 }
 
-function setupCategorySorting(container, products, resolved) {
-  const sortSelect = container.querySelector(".sorting");
-  const grid = container.querySelector(".products");
-  const countEl = container.querySelector("#category-product-count");
-
-  if (!sortSelect || !grid) return;
-
-  sortSelect.addEventListener("change", () => {
-    const sorted = sortProducts(
-      filterProducts(products, resolved.categoryId, resolved.subCategoryId),
-      sortSelect.value
-    );
-
-    if (countEl) countEl.textContent = String(sorted.length);
-    grid.innerHTML = renderProductGrid(sorted);
-  });
-}
-
 function renderBreadcrumb(resolved, pageTitle) {
+  const sep = `<span class="category-page__sep">&gt;</span>`;
+
   if (!resolved.categoryId) {
-    return `
-      <a href="/" class="category-page__crumb">Нүүр</a>
-      <span class="category-page__sep">/</span>
-      <span class="category-page__crumb category-page__crumb--current">${pageTitle}</span>
-    `;
+    return `<a href="/" class="category-page__crumb">Нүүр</a>${sep}<span class="category-page__crumb category-page__crumb--current">${pageTitle}</span>`;
   }
 
   if (resolved.subCategoryId) {
     return `
-      <a href="/" class="category-page__crumb">Нүүр</a>
-      <span class="category-page__sep">/</span>
-      <a href="${buildCategoryPath({ categorySlug: resolved.categorySlug })}" class="category-page__crumb">${resolved.categoryName}</a>
-      <span class="category-page__sep">/</span>
+      <a href="/" class="category-page__crumb">Нүүр</a>${sep}
+      <a href="${buildCategoryPath({ categorySlug: resolved.categorySlug })}" class="category-page__crumb">${resolved.categoryName}</a>${sep}
       <span class="category-page__crumb category-page__crumb--current">${pageTitle}</span>
     `;
   }
 
+  return `<a href="/" class="category-page__crumb">Нүүр</a>${sep}<span class="category-page__crumb category-page__crumb--current">${pageTitle}</span>`;
+}
+
+function renderSortSelect() {
   return `
-    <a href="#home" class="category-page__crumb">Нүүр</a>
-    <span class="category-page__sep">/</span>
-    <span class="category-page__crumb category-page__crumb--current">${pageTitle}</span>
+    <div class="category-sort">
+      <select class="sorting">
+        <option value="">--Эрэмбэлэх--</option>
+        <option value="price-asc">Үнэ өсөхөөр</option>
+        <option value="price-desc">Үнэ буурахаар</option>
+        <option value="sale">Хямдарсан</option>
+      </select>
+    </div>
   `;
 }
 
 export function renderCategoryPage(products, container, params) {
-  const canonicalPath = normalizeCategoryPath(params);
-  if (canonicalPath) {
-    history.replaceState(null, "", canonicalPath);
-    const pathParams = new URLSearchParams();
-    const segments = canonicalPath.replace(/^\/c\/?/, "").split("/").filter(Boolean);
-    if (segments[0]) pathParams.set("cat", segments[0]);
-    if (segments[1]) pathParams.set("sub", segments[1]);
-    params = pathParams;
+  const newPath = normalizeCategoryPath(params);
+  if (newPath) {
+    history.replaceState(null, "", newPath);
+    params = categoryPathToParams(newPath);
   }
 
   const resolved = resolveCategoryParams(params);
 
   if (resolved.notFound) {
     container.innerHTML = `
-      <section class="high-rated category-page">
-        <h2 class="high-rated-product">Ангилал олдсонгүй</h2>
+      <section class="category-page">
+        <h2>Ангилал олдсонгүй</h2>
         <p><a href="/">Нүүр хуудас руу буцах</a></p>
       </section>
     `;
@@ -155,36 +172,47 @@ export function renderCategoryPage(products, container, params) {
   }
 
   const pageTitle = getCategoryPageTitle(resolved);
-  const filtered = filterProducts(
-    products,
-    resolved.categoryId,
-    resolved.subCategoryId
-  );
+  const filtered = filterProducts(products, resolved);
+  const isConcern = Boolean(resolved.concernId);
+
+  let pageClass = "category-page";
+  if (isConcern) pageClass += " category-page--concern";
+
+  let concernHeader = "";
+  if (isConcern) {
+    concernHeader =
+      `<h1 class="category-page__title">${pageTitle}</h1>` +
+      `<p class="product-count"><span id="category-product-count">${filtered.length}</span> бүтээгдэхүүн</p>`;
+  }
 
   container.innerHTML = `
-    <section class="high-rated category-page">
-      <nav class="category-page__breadcrumb" aria-label="Зам">${renderBreadcrumb(resolved, pageTitle)}</nav>
-
-      <h2 class="high-rated-product">${pageTitle}</h2>
-      <p class="product-count"><span id="category-product-count">${filtered.length}</span> бүтээгдэхүүн</p>
-
-      ${resolved.categoryId ? renderSubNav(resolved) : ""}
-
-      <div class="sort">
-        <select name="sorting" class="sorting">
-          <option value="">Эрэмбэлэх</option>
-          <option value="price-asc">Үнэ өсөхөөр</option>
-          <option value="price-desc">Үнэ буурахаар</option>
-          <option value="sale">Хямдарсан</option>
-        </select>
-      </div>
-
-      <div class="products">
-        ${renderProductGrid(filtered)}
+    <section class="${pageClass}">
+      <div class="category-layout">
+        ${renderSidebar(resolved, products)}
+        <div class="category-main">
+          ${concernHeader}
+          <div class="category-toolbar">
+            <nav class="category-page__breadcrumb">${renderBreadcrumb(resolved, pageTitle)}</nav>
+            ${renderSortSelect()}
+          </div>
+          <div class="products">${renderProductGrid(filtered)}</div>
+        </div>
       </div>
     </section>
   `;
 
   setActiveCategoryNav(resolved);
-  setupCategorySorting(container, products, resolved);
+
+  const grid = container.querySelector(".products");
+  const countEl = container.querySelector("#category-product-count");
+
+  setupSidebarFilters(
+    container,
+    () => filterProducts(products, resolved),
+    (list, sortKey) => {
+      const sorted = sortProducts(list, sortKey);
+      grid.innerHTML = renderProductGrid(sorted);
+      if (countEl) countEl.textContent = sorted.length;
+    }
+  );
 }

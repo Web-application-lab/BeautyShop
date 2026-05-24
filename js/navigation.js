@@ -3,6 +3,7 @@ import {
   categoryPathToParams,
   normalizeLegacyCategoryLocation
 } from "./components/categoryCatalog.js";
+import { brandPathToParams } from "./components/brandCatalog.js";
 
 const HASH_ROUTES = new Set([
   "home",
@@ -34,19 +35,34 @@ export function parseLocation() {
     history.replaceState(null, "", legacyPath);
   }
 
-  const categoryParams = categoryPathToParams(window.location.pathname);
-  if (categoryParams !== null) {
-    return { page: "category", params: categoryParams };
-  }
-
   const hash = window.location.hash || "";
   if (hash.startsWith("#")) {
     const [page, query] = hash.slice(1).split("?");
     const route = page || "home";
-    return {
-      page: route,
-      params: new URLSearchParams(query || "")
-    };
+
+    if (route === "category") {
+      return {
+        page: "category",
+        params: new URLSearchParams(query || "")
+      };
+    }
+
+    if (HASH_ROUTES.has(route)) {
+      return {
+        page: route,
+        params: new URLSearchParams(query || "")
+      };
+    }
+  }
+
+  const brandParams = brandPathToParams(window.location.pathname);
+  if (brandParams !== null) {
+    return { page: "brand", params: brandParams };
+  }
+
+  const categoryParams = categoryPathToParams(window.location.pathname);
+  if (categoryParams !== null) {
+    return { page: "category", params: categoryParams };
   }
 
   const path = window.location.pathname.replace(/\/index\.html$/i, "").replace(/\/$/, "") || "/";
@@ -58,7 +74,12 @@ export function parseLocation() {
 }
 
 export function navigateTo(path, { replace = false } = {}) {
-  const next = path.startsWith("/") || path.startsWith("#") ? path : `/${path}`;
+  let next = path.startsWith("/") || path.startsWith("#") ? path : `/${path}`;
+
+  // Hash routes must reset pathname to / (e.g. /c/skincare + #home → /#home)
+  if (next.startsWith("#")) {
+    next = `/${next}`;
+  }
 
   if (replace) {
     history.replaceState(null, "", next);
@@ -75,7 +96,14 @@ export function setupAppNavigation(products, router) {
     const href = link.getAttribute("href");
     if (!href || isExternalHref(href)) return;
 
-    if (href.startsWith("/c")) {
+    if (href === "/" || href === "/index.html") {
+      event.preventDefault();
+      navigateTo("#home");
+      router(products);
+      return;
+    }
+
+    if (href.startsWith("/c") || href.startsWith("/b")) {
       event.preventDefault();
       navigateTo(href.split("?")[0]);
       router(products);

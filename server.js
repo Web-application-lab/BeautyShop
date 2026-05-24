@@ -13,6 +13,8 @@ function sendSpa(req, res) {
 
 app.get("/c", sendSpa);
 app.get("/c/*", sendSpa);
+app.get("/b", sendSpa);
+app.get("/b/*", sendSpa);
 
 app.listen(port, () => {
   console.log(`BeautyShop running at http://localhost:${port}`);
