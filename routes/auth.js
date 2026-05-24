@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+
 // Бүртгэл
 router.post("/register", async (req, res) => {
   try {
@@ -17,7 +18,6 @@ router.post("/register", async (req, res) => {
     if (exists)
       return res.status(400).json({ error: "Энэ имэйл бүртгэлтэй байна" });
 
-    // Hash хийж хадгална
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({ name, email, password: hashedPassword });
 
@@ -29,6 +29,7 @@ router.post("/register", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 // Нэвтрэх
 router.post("/login", async (req, res) => {
   try {
@@ -47,7 +48,37 @@ router.post("/login", async (req, res) => {
 
     res.json({
       message: "Амжилттай нэвтэрлээ",
-      user: { id: user._id, name: user.name, email: user.email }
+      user: { id: user._id, name: user.name, email: user.email, phone: user.phone || "" }
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Мэдээлэл шинэчлэх
+router.put("/update", async (req, res) => {
+  try {
+    const { id, name, phone, password } = req.body;
+
+    if (!id) return res.status(400).json({ error: "Хэрэглэгч олдсонгүй" });
+
+    const user = await User.findById(id);
+    if (!user) return res.status(404).json({ error: "Хэрэглэгч олдсонгүй" });
+
+    if (name) user.name = name;
+    if (phone !== undefined) user.phone = phone;
+
+    if (password) {
+      if (password.length < 6)
+        return res.status(400).json({ error: "Нууц үг хамгийн багадаа 6 тэмдэгт байна" });
+      user.password = await bcrypt.hash(password, 10);
+    }
+
+    await user.save({ validateModifiedOnly: true });
+
+    res.json({
+      message: "Амжилттай шинэчлэгдлээ",
+      user: { id: user._id, name: user.name, email: user.email, phone: user.phone || "" }
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
