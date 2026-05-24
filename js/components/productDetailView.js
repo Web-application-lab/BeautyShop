@@ -200,19 +200,26 @@ async function _loadReviews(productId) {
 
     list.innerHTML = reviews.map(r => `
       <div class="review-item">
-        <div class="review-item__header">
-          <div class="review-item__avatar">${r.userName.charAt(0).toUpperCase()}</div>
-          <div>
-            <p class="review-item__name">${r.userName}</p>
-            <p class="review-item__date">${new Date(r.createdAt).toLocaleDateString("mn-MN")}</p>
+        <div class="review-item-header">
+          <div class="review-item-avatar">
+            ${r.userName.charAt(0).toUpperCase()}
           </div>
-          <div class="review-item__stars">
-            ${[1,2,3,4,5].map(n =>
+
+          <div>
+            <p class="review-item-name">${r.userName}</p>
+            <p class="review-item-date">
+              ${new Date(r.createdAt).toLocaleDateString("mn-MN")}
+            </p>
+          </div>
+
+          <div class="review-item-stars">
+            ${[1, 2, 3, 4, 5].map(n =>
               `<i class="${n <= r.rating ? "fa-solid" : "fa-regular"} fa-star"></i>`
             ).join("")}
           </div>
         </div>
-        <p class="review-item__text">${r.comment}</p>
+
+        <p class="review-item-text">${r.comment}</p>
       </div>
     `).join("");
   } catch {

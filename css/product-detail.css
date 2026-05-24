@@ -8,13 +8,13 @@
 /* Зүүн хэсэг — зураг */
 .detail-left {
   width: 40%;
+}
 
-  img {
-    width: 100%;
-    max-width: 28rem;
-    height: auto;
-    display: block;
-  }
+.detail-left img {
+  width: 100%;
+  max-width: 28rem;
+  height: auto;
+  display: block;
 }
 
 /* Баруун хэсэг — мэдээлэл */
@@ -30,11 +30,9 @@
   color: var(--color-black-10);
 }
 
-.product-rating {
-  i {
-    color: var(--product-rating-star);
-    font-size: var(--text-xs);
-  }
+.product-rating i {
+  color: var(--product-rating-star);
+  font-size: var(--text-xs);
 }
 
 .rating {
@@ -64,17 +62,17 @@
   margin: var(--space-lg) 0 0;
   gap: var(--space-sm);
   width: 100%;
+}
 
-  .minus,
-  .plus {
-    width: 2rem;
-    height: 2rem;
-    border: var(--border-default-all);
-    border-radius: var(--radius-xs);
-    font-size: var(--text-xs);
-    background-color: var(--color-white-0);
-    cursor: pointer;
-  }
+.product-count .minus,
+.product-count .plus {
+  width: 2rem;
+  height: 2rem;
+  border: var(--border-default-all);
+  border-radius: var(--radius-xs);
+  font-size: var(--text-xs);
+  background-color: var(--color-white-0);
+  cursor: pointer;
 }
 
 /* Үйлдлийн товчнууд */
@@ -85,45 +83,46 @@
   justify-content: flex-start;
   width: 100%;
   padding: var(--space-md) 0 0;
+}
 
-  .add-cart,
-  .order {
-    flex: 1;
-    height: 3rem;
-    background: var(--color-main-100);
-    border: none;
-    border-radius: var(--radius-lg);
-    font-size: var(--text-xs);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.product-actions .add-cart,
+.product-actions .order {
+  flex: 1;
+  height: 3rem;
+  background: var(--color-main-100);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-xs);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    &:hover {
-      background-color: var(--color-main-200);
-      color: var(--color-black-5);
-    }
-  }
+.product-actions .add-cart:hover,
+.product-actions .order:hover {
+  background-color: var(--color-main-200);
+  color: var(--color-black-5);
+}
 
-  .wishlist {
-    width: 3rem;
-    height: 3rem;
-    border: var(--border-default-all);
-    border-radius: var(--radius-lg);
-    background-color: var(--color-white-0);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.product-actions .wishlist {
+  width: 3rem;
+  height: 3rem;
+  border: var(--border-default-all);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-white-0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    i {
-      font-size: var(--text-m);
-    }
+.product-actions .wishlist i {
+  font-size: var(--text-m);
+}
 
-    &:hover {
-      background: var(--color-main-100);
-      color: var(--color-main-500);
-    }
-  }
+.product-actions .wishlist:hover {
+  background: var(--color-main-100);
+  color: var(--color-main-500);
 }
 
 /* Таб */
@@ -134,20 +133,20 @@
   margin: var(--space-md) 0 0;
   gap: var(--space-xl);
   width: 100%;
+}
 
-  .tab-btn {
-    border: none;
-    cursor: pointer;
-    padding: var(--space-sm) var(--space-md);
-    background: var(--color-white-0);
-    font-size: var(--text-xs);
-    color: var(--color-black-10);
+.tab-btn {
+  border: none;
+  cursor: pointer;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-white-0);
+  font-size: var(--text-xs);
+  color: var(--color-black-10);
+}
 
-    &.active {
-      border-bottom: var(--border-dark-all);
-      color: var(--color-black-5);
-    }
-  }
+.tab-btn.active {
+  border-bottom: var(--border-dark-all);
+  color: var(--color-black-5);
 }
 
 .tab-content {
@@ -158,10 +157,10 @@
   margin-top: var(--space-md);
   border-radius: var(--radius-lg);
   border: var(--border-default-all);
+}
 
-  p {
-    font-size: var(--text-sm);
-  }
+.tab-content p {
+  font-size: var(--text-sm);
 }
 
 /* Сэтгэгдэл */
@@ -232,17 +231,15 @@
   gap: var(--space-sm);
 }
 
-.comments-left {
-  .avatar-circle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: var(--radius-circle);
-    border: var(--border-default-all);
-    background-color: var(--color-main-200);
-  }
+.comments-left .avatar-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-circle);
+  border: var(--border-default-all);
+  background-color: var(--color-main-200);
 }
 
 .review-date {
@@ -267,6 +264,211 @@
   transform: none !important;
 }
 
+/* ========== ЗАХИАЛАХ ТОВЧ ========== */
+
+.detail-order-btn {
+  flex: 1;
+  height: 3rem;
+  background: var(--color-main-500);
+  color: var(--color-white-0);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  transition: background 0.2s;
+}
+
+.detail-order-btn:hover {
+  background: var(--color-main-600);
+}
+
+.detail-order-btn.disabled {
+  background: var(--color-white-4);
+  color: var(--color-black-7);
+  cursor: not-allowed;
+}
+
+.detail-out-of-stock {
+  font-size: var(--text-sm);
+  color: #e24b4a;
+  margin-top: var(--space-sm);
+}
+
+/* ========== СЭТГЭГДЭЛ ХЭСЭГ ========== */
+
+.reviews-heading {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-black-1);
+  margin-bottom: var(--space-lg);
+}
+
+.reviews-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+/* Сэтгэгдэл бичих карт */
+.review-write-card {
+  border: var(--border-default-all);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+
+.review-write-card h4 {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-black-2);
+  margin-bottom: var(--space-md);
+}
+
+/* Одны үнэлгээ */
+.review-star-select {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+.review-star-icon {
+  font-size: var(--text-xl);
+  color: var(--product-rating-star);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.review-star-icon:hover {
+  transform: scale(1.2);
+}
+
+.review-star-label {
+  font-size: var(--text-sm);
+  color: var(--color-black-7);
+  margin-left: var(--space-sm);
+}
+
+/* Textarea */
+.review-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  resize: none;
+  padding: var(--space-sm) var(--space-md);
+  border: var(--border-default-all);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-black-3);
+  background: var(--color-white-1);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.review-textarea:focus {
+  border-color: var(--color-main-300);
+  background: var(--color-white-0);
+}
+
+.review-error {
+  font-size: var(--text-sm);
+  color: #e24b4a;
+  margin: var(--space-xs) 0;
+}
+
+/* Илгээх товч */
+.review-submit-btn {
+  width: 100%;
+  padding: var(--space-sm);
+  margin-top: var(--space-md);
+  background: var(--color-main-500);
+  color: var(--color-white-0);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.review-submit-btn:hover {
+  background: var(--color-main-600);
+}
+
+/* Сэтгэгдлийн жагсаалт */
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.review-loading,
+.review-empty {
+  font-size: var(--text-sm);
+  color: var(--color-black-7);
+  text-align: center;
+  padding: var(--space-lg);
+}
+
+/* Нэг сэтгэгдэл */
+.review-item {
+  border: var(--border-light-all);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+}
+
+.review-item-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.review-item-avatar {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-circle);
+  background: var(--color-main-100);
+  color: var(--color-main-600);
+  font-size: var(--text-base);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.review-item-name {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-black-2);
+  margin: 0;
+}
+
+.review-item-date {
+  font-size: var(--text-xs);
+  color: var(--color-black-8);
+  margin: 0;
+}
+
+.review-item-stars {
+  margin-left: auto;
+  color: var(--product-rating-star);
+  font-size: var(--text-sm);
+}
+
+.review-item-text {
+  font-size: var(--text-sm);
+  color: var(--color-black-5);
+  line-height: 1.7;
+  margin: 0;
+}
+
 /* Responsive */
 @media (max-width: 48rem) {
   .product-detail {
@@ -276,10 +478,10 @@
 
   .detail-left {
     width: 100%;
+  }
 
-    img {
-      max-width: 100%;
-    }
+  .detail-left img {
+    max-width: 100%;
   }
 
   .detail-right {
@@ -294,10 +496,10 @@
 
   .tab-content {
     padding: var(--space-md);
+  }
 
-    p {
-      margin: var(--space-md);
-    }
+  .tab-content p {
+    margin: var(--space-md);
   }
 
   .product-reviews {
@@ -307,5 +509,9 @@
   .reviews-card,
   .comments-card {
     width: 100%;
+  }
+
+  .reviews-layout {
+    grid-template-columns: 1fr;
   }
 }
