@@ -15,7 +15,6 @@ export async function renderAdminPage(app) {
         <button class="admin-back-btn" onclick="history.back()">← Буцах</button>
       </div>
 
-      <!-- Stats -->
       <div class="admin-stats">
         <div class="admin-stat-card">
           <div>
@@ -29,7 +28,7 @@ export async function renderAdminPage(app) {
         <div class="admin-stat-card">
           <div>
             <p class="admin-stat-card__label">Захиалга</p>
-            <p class="admin-stat-card__value" id="stat-orders">0</p>
+            <p class="admin-stat-card__value" id="stat-orders">–</p>
           </div>
           <div class="admin-stat-card__icon admin-stat-card__icon--green">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
@@ -46,14 +45,12 @@ export async function renderAdminPage(app) {
         </div>
       </div>
 
-      <!-- Tabs -->
       <div class="admin-tabs">
         <button class="admin-tab active" data-tab="products">Бүтээгдэхүүн</button>
         <button class="admin-tab" data-tab="orders">Захиалга</button>
         <button class="admin-tab" data-tab="add">Бүтээгдэхүүн нэмэх</button>
       </div>
 
-      <!-- Tab content -->
       <div class="admin-content" id="admin-content">
         <div class="admin-loading">Ачаалж байна...</div>
       </div>
@@ -67,15 +64,18 @@ export async function renderAdminPage(app) {
 
 async function _loadStats() {
   try {
-    const [productsRes, usersRes] = await Promise.all([
+    const [productsRes, usersRes, ordersRes] = await Promise.all([
       fetch("/api/admin/products"),
-      fetch("/api/admin/users")
+      fetch("/api/admin/users"),
+      fetch("/api/admin/orders")
     ]);
     const products = await productsRes.json();
     const users    = await usersRes.json();
+    const orders   = await ordersRes.json();
 
     document.getElementById("stat-products").textContent = products.length || 0;
-    document.getElementById("stat-users").textContent    = users.length || 0;
+    document.getElementById("stat-users").textContent    = users.length    || 0;
+    document.getElementById("stat-orders").textContent   = orders.length   || 0;
   } catch {}
 }
 
@@ -99,12 +99,13 @@ async function _renderTab(tab) {
     content.innerHTML = `
       <div class="admin-table-wrap">
         <h3 class="admin-table-title">Бүтээгдэхүүний жагсаалт</h3>
-        ${products.map(p => `
+        ${!products.length ? `<p class="admin-empty">Бүтээгдэхүүн байхгүй байна</p>` : products.map(p => `
           <div class="admin-product-row" data-id="${p._id}">
             <img class="admin-product-row__img" src="/images/${p.img}" onerror="this.src='/images/placeholder.svg'" />
             <div class="admin-product-row__info">
               <p class="admin-product-row__name">${p.name}</p>
-              <p class="admin-product-row__meta">${Number(p.price).toLocaleString("mn-MN")}₮ &nbsp;·&nbsp; Нөөц: ${p.stock || 0} &nbsp;
+              <p class="admin-product-row__meta">
+                ${Number(p.price).toLocaleString("mn-MN")}₮ &nbsp;·&nbsp; Нөөц: ${p.stock || 0} &nbsp;
                 <span class="admin-product-row__tag">${p.categorySlug || ""}</span>
               </p>
             </div>
@@ -121,7 +122,6 @@ async function _renderTab(tab) {
       </div>
     `;
 
-    // Delete
     content.querySelectorAll(".admin-delete-btn").forEach(btn => {
       btn.addEventListener("click", async () => {
         if (!confirm("Устгах уу?")) return;
@@ -131,7 +131,6 @@ async function _renderTab(tab) {
       });
     });
 
-    // Edit
     content.querySelectorAll(".admin-edit-btn").forEach(btn => {
       btn.addEventListener("click", async () => {
         const res = await fetch(`/api/admin/products/${btn.dataset.id}`);
@@ -141,12 +140,48 @@ async function _renderTab(tab) {
     });
 
   } else if (tab === "orders") {
+    const res    = await fetch("/api/admin/orders");
+    const orders = await res.json();
+
     content.innerHTML = `
       <div class="admin-table-wrap">
         <h3 class="admin-table-title">Захиалгын жагсаалт</h3>
-        <p class="admin-empty">Захиалга байхгүй байна</p>
+        ${!orders.length ? `<p class="admin-empty">Захиалга байхгүй байна</p>` : orders.map(o => `
+          <div class="admin-order-row">
+            <div class="admin-order-row__info">
+              <p class="admin-order-row__name">${o.userName}</p>
+              <p class="admin-order-row__meta">${o.userEmail} · ${o.userPhone || "–"}</p>
+              <p class="admin-order-row__meta">${new Date(o.createdAt).toLocaleDateString("mn-MN")} · ${o.items.length} бараа</p>
+              <div class="admin-order-row__items">
+                ${o.items.map(item => `
+                  <span class="admin-order-row__item">${item.name} × ${item.qty}</span>
+                `).join("")}
+              </div>
+            </div>
+            <div class="admin-order-row__right">
+              <p class="admin-order-row__total">${Math.round(o.totalPrice).toLocaleString("mn-MN")}₮</p>
+              <select class="admin-order-status-select" data-id="${o._id}">
+                <option value="pending"   ${o.status === "pending"   ? "selected" : ""}>Хүлээгдэж байна</option>
+                <option value="confirmed" ${o.status === "confirmed" ? "selected" : ""}>Баталгаажсан</option>
+                <option value="delivered" ${o.status === "delivered" ? "selected" : ""}>Хүргэгдсэн</option>
+                <option value="cancelled" ${o.status === "cancelled" ? "selected" : ""}>Цуцлагдсан</option>
+              </select>
+            </div>
+          </div>
+        `).join("")}
       </div>
     `;
+
+    content.querySelectorAll(".admin-order-status-select").forEach(select => {
+      select.addEventListener("change", async () => {
+        await fetch(`/api/admin/orders/${select.dataset.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: select.value })
+        });
+        _loadStats();
+      });
+    });
 
   } else if (tab === "add") {
     content.innerHTML = `
@@ -206,9 +241,9 @@ function _productFormHtml(p = {}) {
         <label>Ангилал</label>
         <select id="f-category">
           <option value="">Ангилал сонгох</option>
-          <option value="skincare" ${p.categorySlug === "skincare" ? "selected" : ""}>Арьс арчилгаа</option>
-          <option value="makeup" ${p.categorySlug === "makeup" ? "selected" : ""}>Нүүр будалт</option>
-          <option value="sun-care" ${p.categorySlug === "sun-care" ? "selected" : ""}>Нарны хамгаалалт</option>
+          <option value="skincare"  ${p.categorySlug === "skincare"  ? "selected" : ""}>Арьс арчилгаа</option>
+          <option value="makeup"    ${p.categorySlug === "makeup"    ? "selected" : ""}>Нүүр будалт</option>
+          <option value="sun-care"  ${p.categorySlug === "sun-care"  ? "selected" : ""}>Нарны хамгаалалт</option>
           <option value="body-care" ${p.categorySlug === "body-care" ? "selected" : ""}>Бие арчилгаа</option>
           <option value="hair-care" ${p.categorySlug === "hair-care" ? "selected" : ""}>Үс арчилгаа</option>
         </select>
@@ -223,12 +258,12 @@ function _productFormHtml(p = {}) {
 
 function _getFormValues() {
   return {
-    name:        document.getElementById("f-name")?.value.trim(),
-    description: document.getElementById("f-desc")?.value.trim(),
-    price:       Number(document.getElementById("f-price")?.value),
-    stock:       Number(document.getElementById("f-stock")?.value),
+    name:         document.getElementById("f-name")?.value.trim(),
+    description:  document.getElementById("f-desc")?.value.trim(),
+    price:        Number(document.getElementById("f-price")?.value),
+    stock:        Number(document.getElementById("f-stock")?.value),
     categorySlug: document.getElementById("f-category")?.value,
-    img:         document.getElementById("f-img")?.value.trim()
+    img:          document.getElementById("f-img")?.value.trim()
   };
 }
 
