@@ -7,7 +7,6 @@ export function renderAccountPage(app, section = "profile") {
 
   app.innerHTML = `
     <div class="account-layout">
-      <!-- Зүүн sidebar -->
       <aside class="account-sidebar">
         <div class="account-sidebar__user">
           <div class="account-avatar">${user.name.charAt(0).toUpperCase()}</div>
@@ -29,7 +28,6 @@ export function renderAccountPage(app, section = "profile") {
         </nav>
       </aside>
 
-      <!-- Баруун контент -->
       <main class="account-content">
         ${section === "orders" ? renderOrders() : renderProfile(user)}
       </main>
@@ -63,7 +61,7 @@ function renderProfile(user) {
       <div class="profile-field">
         <div class="profile-field__info">
           <span class="profile-field__label">Утасны дугаар</span>
-          <span class="profile-field__value">${user.phone || "–"}</span>
+          <span class="profile-field__value" id="display-phone">${user.phone || "–"}</span>
         </div>
         <button class="profile-field__btn" data-field="phone">✎ Засах</button>
       </div>
@@ -77,7 +75,6 @@ function renderProfile(user) {
       </div>
     </div>
 
-    <!-- Edit modal -->
     <div class="profile-edit-modal hidden" id="profile-edit-modal">
       <div class="profile-edit-box">
         <h3 id="edit-modal-title">Засах</h3>
@@ -107,11 +104,11 @@ function renderOrders() {
 function _bindAccountEvents(user, section) {
   if (section !== "profile") return;
 
-  const modal    = document.getElementById("profile-edit-modal");
-  const title    = document.getElementById("edit-modal-title");
-  const body     = document.getElementById("edit-modal-body");
-  const errorEl  = document.getElementById("edit-error");
-  const saveBtn  = document.getElementById("edit-save");
+  const modal     = document.getElementById("profile-edit-modal");
+  const title     = document.getElementById("edit-modal-title");
+  const body      = document.getElementById("edit-modal-body");
+  const errorEl   = document.getElementById("edit-error");
+  const saveBtn   = document.getElementById("edit-save");
   const cancelBtn = document.getElementById("edit-cancel");
 
   let currentField = null;
@@ -120,6 +117,7 @@ function _bindAccountEvents(user, section) {
     btn.addEventListener("click", () => {
       currentField = btn.dataset.field;
       errorEl.classList.add("hidden");
+      errorEl.textContent = "";
 
       if (currentField === "name") {
         title.textContent = "Нэр засах";
@@ -143,19 +141,20 @@ function _bindAccountEvents(user, section) {
     });
   });
 
-  cancelBtn.addEventListener("click", () => {
-    modal.classList.add("hidden");
-  });
+  cancelBtn.addEventListener("click", () => modal.classList.add("hidden"));
 
   modal.addEventListener("click", (e) => {
     if (e.target === modal) modal.classList.add("hidden");
   });
 
-  saveBtn.addEventListener("click", () => {
+  saveBtn.addEventListener("click", async () => {
     errorEl.classList.add("hidden");
+    errorEl.textContent = "";
+
     const input = document.getElementById("edit-input");
     const value = input?.value.trim();
 
+    // Нууц үг солих
     if (currentField === "password") {
       const confirm = document.getElementById("edit-input-confirm")?.value;
       if (!value || value.length < 6) {
@@ -168,23 +167,65 @@ function _bindAccountEvents(user, section) {
         errorEl.classList.remove("hidden");
         return;
       }
+
+      const res = await fetch("/api/auth/update", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: user.id, password: value })
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        errorEl.textContent = data.error;
+        errorEl.classList.remove("hidden");
+        return;
+      }
+
       modal.classList.add("hidden");
       return;
     }
 
+    // Бусад field
     if (!value) {
       errorEl.textContent = "Утга хоосон байж болохгүй";
       errorEl.classList.remove("hidden");
       return;
     }
 
-    user[currentField] = value;
-    localStorage.setItem("user", JSON.stringify(user));
+    const body2 = { id: user.id };
+    if (currentField === "name")  body2.name  = value;
+    if (currentField === "phone") body2.phone = value;
+
+    const res = await fetch("/api/auth/update", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body2)
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      errorEl.textContent = data.error;
+      errorEl.classList.remove("hidden");
+      return;
+    }
+
+    // localStorage шинэчилнэ
+    const updatedUser = { ...user, ...data.user };
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+    Object.assign(user, updatedUser);
 
     if (currentField === "name") {
       document.getElementById("display-name").textContent = value;
       const btnText = document.querySelector(".login-btn__text");
       if (btnText) btnText.textContent = value;
+      // Sidebar нэр шинэчилнэ
+      const sidebarName = document.querySelector(".account-sidebar__name");
+      if (sidebarName) sidebarName.textContent = value;
+    }
+
+    if (currentField === "phone") {
+      const phoneEl = document.getElementById("display-phone");
+      if (phoneEl) phoneEl.textContent = value;
     }
 
     modal.classList.add("hidden");
