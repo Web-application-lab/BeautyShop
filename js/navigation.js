@@ -55,14 +55,11 @@ export function parseLocation() {
     }
   }
 
-<<<<<<< HEAD
   const brandParams = brandPathToParams(window.location.pathname);
   if (brandParams !== null) {
     return { page: "brand", params: brandParams };
   }
 
-=======
->>>>>>> 38e961e20b4bb5f6eede5e26514121ee98472485
   const categoryParams = categoryPathToParams(window.location.pathname);
   if (categoryParams !== null) {
     return { page: "category", params: categoryParams };
@@ -79,7 +76,6 @@ export function parseLocation() {
 export function navigateTo(path, { replace = false } = {}) {
   let next = path.startsWith("/") || path.startsWith("#") ? path : `/${path}`;
 
-  // Hash routes must reset pathname to / (e.g. /c/skincare + #home → /#home)
   if (next.startsWith("#")) {
     next = `/${next}`;
   }
@@ -106,11 +102,7 @@ export function setupAppNavigation(products, router) {
       return;
     }
 
-<<<<<<< HEAD
     if (href.startsWith("/c") || href.startsWith("/b")) {
-=======
-    if (href.startsWith("/c")) {
->>>>>>> 38e961e20b4bb5f6eede5e26514121ee98472485
       event.preventDefault();
       navigateTo(href.split("?")[0]);
       router(products);

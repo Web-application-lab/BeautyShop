@@ -13,16 +13,15 @@ import { renderCartPage } from "./pages/cartPage.js";
 import { renderSearchPage } from "./pages/searchPage.js";
 import { renderCategoryPage } from "./pages/categoryPage.js";
 import { renderBrandPage } from "./pages/brandPage.js";
+import { renderAccountPage } from "./pages/accountPage.js";
 import { parseLocation } from "./navigation.js";
 import { AuthModal } from "./pages/authPage.js";
-import { renderProfilePage } from "./pages/profilePage.js";
-import { renderAccountPage } from "./pages/accountPage.js";
-
 
 export function router(products) {
   const app = document.querySelector("#app");
 
   const pathname = window.location.pathname;
+
   if (pathname === "/login") {
     AuthModal.render("login");
     return;
@@ -31,18 +30,15 @@ export function router(products) {
     AuthModal.render("register");
     return;
   }
-  if (pathname === "/profile") {
-    renderProfilePage(app);
+  if (pathname === "/account/profile") {
+    renderAccountPage(app, "profile");
     return;
   }
-if (pathname === "/account/profile") {
-  renderAccountPage(app, "profile");
-  return;
-}
-if (pathname === "/account/orders") {
-  renderAccountPage(app, "orders");
-  return;
-}
+  if (pathname === "/account/orders") {
+    renderAccountPage(app, "orders");
+    return;
+  }
+
   const { page, params } = parseLocation();
 
   window.scrollTo(0, 0);
@@ -94,17 +90,9 @@ if (pathname === "/account/orders") {
     case "category":
       renderCategoryPage(products, app, params);
       break;
-<<<<<<< HEAD
-    case "profile":  // hash-based
-      renderProfilePage(app);
-      break;
-=======
-
     case "brand":
       renderBrandPage(products, app, params);
       break;
-
->>>>>>> 65282e7ffdb31b90bad73666effe583b4a50a530
     default:
       app.innerHTML = `
         <section class="page">

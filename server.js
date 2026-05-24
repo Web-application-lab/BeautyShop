@@ -16,7 +16,6 @@ app.use(express.json());
 app.use(express.static(root));
 app.use("/api/auth", authRoutes);
 
-// SPA Routes — sendSpa эхлээд тодорхойлно
 function sendSpa(req, res) {
   res.sendFile(path.join(root, "index.html"));
 }
@@ -24,14 +23,15 @@ function sendSpa(req, res) {
 app.get("/", sendSpa);
 app.get("/c", sendSpa);
 app.get("/c/*", sendSpa);
-<<<<<<< HEAD
+app.get("/b", sendSpa);
+app.get("/b/*", sendSpa);
 app.get("/login", sendSpa);
 app.get("/signup", sendSpa);
 app.get("/profile", sendSpa);
 app.get("/orders", sendSpa);
 app.get("/account/profile", sendSpa);
 app.get("/account/orders", sendSpa);
-// API
+
 app.get("/api/data", async (req, res) => {
   try {
     const db = mongoose.connection.db;
@@ -50,10 +50,6 @@ app.get("/api/data", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-=======
-app.get("/b", sendSpa);
-app.get("/b/*", sendSpa);
->>>>>>> 65282e7ffdb31b90bad73666effe583b4a50a530
 
 app.listen(port, () => {
   console.log(`BeautyShop running at http://localhost:${port}`);
