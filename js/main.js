@@ -7,11 +7,19 @@ import { setupCardActions } from "./components/cardAction.js";
 import { WishlistPanel } from "./pages/wishlistPage.js";
 import { CartPanel } from "./pages/cartPage.js";
 import { setupCategoryNav } from "./components/categoryNav.js";
+import { setupBrandNav } from "./components/brandNav.js";
 import { initCategoryCatalog } from "./components/categoryCatalog.js";
+<<<<<<< HEAD
+import { initBrandCatalog } from "./components/brandCatalog.js";
+=======
+>>>>>>> 38e961e20b4bb5f6eede5e26514121ee98472485
 import { navigateTo, setupAppNavigation } from "./navigation.js";
+<<<<<<< HEAD
 import { productImageSrc } from "./utils/assets.js";
 import { AuthModal } from "./pages/authPage.js";
 import { setupUserDropdown, updateUserBtn } from "./components/userDropdown.js";
+=======
+>>>>>>> 65282e7ffdb31b90bad73666effe583b4a50a530
 
 class Product {
   constructor(product) {
@@ -34,6 +42,7 @@ class Product {
   }
 }
 
+<<<<<<< HEAD
 function getData(dataUrl) {
   return fetch(dataUrl)
     .then(res => res.json())
@@ -41,6 +50,17 @@ function getData(dataUrl) {
       console.error("Error fetching data:", error);
       return { products: [], categories: [], subCategories: [], concerns: [] };
     });
+=======
+async function getData(dataUrl) {
+  try {
+    const res = await fetch(dataUrl);
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    return await res.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return { products: [], categories: [], subCategories: [] };
+  }
+>>>>>>> 65282e7ffdb31b90bad73666effe583b4a50a530
 }
 
 function syncSearchInputWithHash() {
@@ -113,9 +133,18 @@ function setupFooterNavigation(products) {
 }
 
 async function initApp() {
+<<<<<<< HEAD
   const data = await getData("/api/data");
+=======
+  const app = document.querySelector("#app");
+
+  try {
+  const data = await getData("/products.json");
+>>>>>>> 65282e7ffdb31b90bad73666effe583b4a50a530
   initCategoryCatalog(data);
-  const products = data.products.map(product => new Product(product));
+  const list = data.products || [];
+  const products = list.map(product => new Product(product));
+  initBrandCatalog(products);
 
   WishlistPanel.init(products);
   document.addEventListener("wishlist:addToCart", (e) => {
@@ -149,6 +178,7 @@ async function initApp() {
   setupSearch(products);
   setupFooterNavigation(products);
   setupCategoryNav();
+  setupBrandNav();
   setupAppNavigation(products, router);
   router(products);
   updateNavbarCount();
@@ -158,6 +188,12 @@ async function initApp() {
     router(products);
     updateNavbarCount();
   });
+  } catch (err) {
+    console.error(err);
+    if (app) {
+      app.innerHTML = "<p style='padding:2rem'>Апп ачаалахад алдаа гарлаа. Console-оо шалгана уу.</p>";
+    }
+  }
 }
 
 initApp();

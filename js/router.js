@@ -12,6 +12,7 @@ import { renderWishlistPage } from "./pages/wishlistPage.js";
 import { renderCartPage } from "./pages/cartPage.js";
 import { renderSearchPage } from "./pages/searchPage.js";
 import { renderCategoryPage } from "./pages/categoryPage.js";
+import { renderBrandPage } from "./pages/brandPage.js";
 import { parseLocation } from "./navigation.js";
 import { AuthModal } from "./pages/authPage.js";
 import { renderProfilePage } from "./pages/profilePage.js";
@@ -93,9 +94,17 @@ if (pathname === "/account/orders") {
     case "category":
       renderCategoryPage(products, app, params);
       break;
+<<<<<<< HEAD
     case "profile":  // hash-based
       renderProfilePage(app);
       break;
+=======
+
+    case "brand":
+      renderBrandPage(products, app, params);
+      break;
+
+>>>>>>> 65282e7ffdb31b90bad73666effe583b4a50a530
     default:
       app.innerHTML = `
         <section class="page">

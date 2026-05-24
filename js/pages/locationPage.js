@@ -1,38 +1,33 @@
 export function renderLocationPage(container) {
   container.innerHTML = `
-    <section class="locations page">
-      <h2 class="title">Манай салбарууд</h2>
+    <section class="about-page">
+      <div class="about-page__shell">
+        <header class="about-page__header">
+          <span class="about-page__eyebrow">BeautyShop</span>
+          <h1>Байршил</h1>
+          <p class="about-page__intro">
+            Манай дэлгүүрийн хаяг, ажлын цаг болон холбоо барих мэдээлэл.
+          </p>
+        </header>
 
-      <div class="location-grid">
-        <div class="location-card">
-          <h3>Сүхбаатар салбар</h3>
-          <p>📍 Улаанбаатар, СБД, 1-р хороо</p>
-          <p>📞 7777-1111</p>
-          <p>🕒 09:00 - 21:00</p>
-          <a class="btn" href="https://www.google.com/maps?q=Shangri-La+Mall+Ulaanbaatar" target="_blank">
-            Газрын зураг харах
-          </a>
-        </div>
+        <section class="about-page__section">
+          <div class="about-page__section-number">01</div>
+          <div class="about-page__section-body">
+            <h2>Хаяг</h2>
+            <p>Улаанбаатар хот, Сүхбаатар дүүрэг</p>
+            <p>И-мэйл: <a href="mailto:info@beautyshop.mn">info@beautyshop.mn</a></p>
+            <p>Утас: <a href="tel:77777777">7777-7777</a></p>
+          </div>
+        </section>
 
-        <div class="location-card">
-          <h3>Хан-Уул салбар</h3>
-          <p>📍 Улаанбаатар, ХУД, 15-р хороо</p>
-          <p>📞 7777-2222</p>
-          <p>🕒 10:00 - 22:00</p>
-          <a class="btn" href="https://www.google.com/maps?q=Khan-Uul+Ulaanbaatar" target="_blank">
-            Газрын зураг харах
-          </a>
-        </div>
-
-        <div class="location-card">
-          <h3>Баянгол салбар</h3>
-          <p>📍 Улаанбаатар, БГД, 3-р хороо</p>
-          <p>📞 7777-3333</p>
-          <p>🕒 09:00 - 20:00</p>
-          <a class="btn" href="https://www.google.com/maps/@47.9206249,106.8840984,15.72z" target="_blank">
-            Газрын зураг харах
-          </a>
-        </div>
+        <section class="about-page__section">
+          <div class="about-page__section-number">02</div>
+          <div class="about-page__section-body">
+            <h2>Ажлын цаг</h2>
+            <p>Даваа – Баасан: 10:00 – 19:00</p>
+            <p>Бямба – Ням: 11:00 – 18:00</p>
+          </div>
+        </section>
       </div>
     </section>
   `;

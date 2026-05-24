@@ -61,7 +61,7 @@ body {
 .strip-circle {
   width: 7rem;
   height: 5rem;
-  border-radius: 50rem;
+  border-radius: var(--radius-circle);
   background-color: var(--color-white-0);
   display: flex;
   align-items: center;
@@ -155,7 +155,7 @@ body {
   display:inline-flex; 
   align-self: flex-start;
   border: var(--border-width-thin);
-  border-radius: 0.75rem; 
+  border-radius: var(--radius-xs); 
   background: var(--color-main-100);
   padding: 0.65rem 0.33rem;
 }

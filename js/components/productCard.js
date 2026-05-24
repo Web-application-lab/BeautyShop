@@ -1,8 +1,7 @@
 import { starRating } from "./starRating.js";
 import { priceTemplate } from "./priceTemplate.js";
-import { productImageSrc } from "../utils/assets.js";
 
-const imgFallback = `onerror="this.onerror=null;this.src='/images/placeholder.svg'"`;
+const imgFallback = `onerror="this.onerror=null;this.src='/images/placeholder.svg'"`; 
 
 function productImgSrc(product) {
   return product.imageUrl || productImageSrc(product.img);

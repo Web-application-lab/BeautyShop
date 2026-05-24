@@ -24,6 +24,7 @@ function sendSpa(req, res) {
 app.get("/", sendSpa);
 app.get("/c", sendSpa);
 app.get("/c/*", sendSpa);
+<<<<<<< HEAD
 app.get("/login", sendSpa);
 app.get("/signup", sendSpa);
 app.get("/profile", sendSpa);
@@ -49,6 +50,10 @@ app.get("/api/data", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+=======
+app.get("/b", sendSpa);
+app.get("/b/*", sendSpa);
+>>>>>>> 65282e7ffdb31b90bad73666effe583b4a50a530
 
 app.listen(port, () => {
   console.log(`BeautyShop running at http://localhost:${port}`);
