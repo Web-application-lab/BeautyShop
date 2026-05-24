@@ -16,6 +16,7 @@ import { renderBrandPage } from "./pages/brandPage.js";
 import { renderAccountPage } from "./pages/accountPage.js";
 import { parseLocation } from "./navigation.js";
 import { AuthModal } from "./pages/authPage.js";
+import { renderAdminPage } from "./pages/adminPage.js";
 
 export function router(products) {
   const app = document.querySelector("#app");
@@ -37,6 +38,10 @@ export function router(products) {
   if (pathname === "/account/orders") {
     renderAccountPage(app, "orders");
     return;
+  }
+  if (pathname === "/admin") {
+  renderAdminPage(app);
+  return;
   }
 
   const { page, params } = parseLocation();

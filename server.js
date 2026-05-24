@@ -7,6 +7,9 @@ const app = express();
 const root = __dirname;
 const port = Number(process.env.PORT) || 3000;
 const authRoutes = require("./routes/auth");
+const adminRoutes = require("./routes/admin");
+const orderRoutes = require("./routes/order");
+
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
@@ -15,7 +18,8 @@ mongoose.connect(process.env.MONGO_URI)
 app.use(express.json());
 app.use(express.static(root));
 app.use("/api/auth", authRoutes);
-
+app.use("/api/admin", adminRoutes);
+app.use("/api/orders", orderRoutes);
 function sendSpa(req, res) {
   res.sendFile(path.join(root, "index.html"));
 }
@@ -31,6 +35,8 @@ app.get("/profile", sendSpa);
 app.get("/orders", sendSpa);
 app.get("/account/profile", sendSpa);
 app.get("/account/orders", sendSpa);
+app.get("/admin", sendSpa);
+app.use("/api/orders", orderRoutes);
 
 app.get("/api/data", async (req, res) => {
   try {

@@ -1,4 +1,3 @@
-// cartPage.js
 import { updateNavbarCount } from "../components/navbarCount.js";
 import { showToast } from "../components/toggle.js";
 
@@ -28,233 +27,36 @@ export function addToCart(productId) {
     cart[index].qty += 1;
   }
   saveCart(cart);
-  CartPanel.refresh();
+  CartPanelClass.refresh();
 }
 
 export function isInCart(productId) {
   return getCart().some(i => i.id === Number(productId));
 }
 
-function injectStyles() {
-  if (document.getElementById("cart-panel-styles")) return;
-
-  const style = document.createElement("style");
-  style.id = "cart-panel-styles";
-  style.textContent = `
-    .cp-overlay {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.32);
-      backdrop-filter: blur(2px);
-      -webkit-backdrop-filter: blur(2px);
-      z-index: 998; opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-    .cp-overlay.cp-open { opacity: 1; pointer-events: all; }
-
-    .cp-panel {
-      position: fixed; top: 0; right: 0;
-      height: 100dvh; width: 420px; max-width: 100vw;
-      background: #fff; z-index: 999;
-      display: flex; flex-direction: column;
-      transform: translateX(105%);
-      transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
-      box-shadow: -6px 0 48px rgba(0,0,0,0.10);
-    }
-    .cp-panel.cp-open { transform: translateX(0); }
-
-    .cp-header {
-      display: flex; align-items: center;
-      justify-content: space-between;
-      padding: 18px 20px;
-      border-bottom: 1.5px solid #f5f5f5;
-      flex-shrink: 0;
-    }
-    .cp-header__left { display: flex; align-items: center; gap: 10px; }
-    .cp-header__icon {
-      width: 34px; height: 34px; border-radius: 50%;
-      background: #f0f7ff; display: flex;
-      align-items: center; justify-content: center;
-      color: var(--color-main-500); font-size: 15px;
-    }
-    .cp-header__title { font-size: 15px; font-weight: 700; color: #1a1a1a; margin: 0; }
-    .cp-header__badge {
-      font-size: 12px; font-weight: 600;
-      background: var(--color-main-500); color: #fff;
-      border-radius: 20px; padding: 2px 9px; margin-left: 2px;
-    }
-    .cp-close {
-      width: 32px; height: 32px; border-radius: 50%;
-      border: 1.5px solid #eee; background: transparent;
-      cursor: pointer; display: flex; align-items: center;
-      justify-content: center; color: #777; font-size: 16px;
-      transition: background 0.18s, color 0.18s;
-    }
-    .cp-close:hover { background: #f5f5f5; color: #111; }
-
-    .cp-body {
-      flex: 1; overflow-y: auto;
-      padding: 12px 20px 20px;
-      scroll-behavior: smooth;
-    }
-    .cp-body::-webkit-scrollbar { width: 4px; }
-    .cp-body::-webkit-scrollbar-track { background: transparent; }
-    .cp-body::-webkit-scrollbar-thumb { background: #e8e8e8; border-radius: 99px; }
-
-    .cp-empty {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      height: 100%; gap: 12px;
-      padding: 48px 24px; text-align: center;
-    }
-    .cp-empty__icon {
-      width: 68px; height: 68px; border-radius: 50%;
-      background: #f0f7ff; display: flex;
-      align-items: center; justify-content: center;
-      color: #a8cff0; font-size: 28px; margin-bottom: 4px;
-    }
-    .cp-empty__title { font-size: 15px; font-weight: 700; color: #333; margin: 0; }
-    .cp-empty__sub { font-size: 13px; color: #aaa; margin: 0; line-height: 1.6; }
-
-    .cp-item {
-      display: flex; gap: 12px;
-      padding: 14px 0;
-      border-bottom: 1px solid #f5f5f5;
-      align-items: flex-start;
-      animation: cpFadeUp 0.22s ease both;
-    }
-    .cp-item:last-child { border-bottom: none; }
-
-    @keyframes cpFadeUp {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .cp-item__img {
-      width: 76px; height: 76px; border-radius: 10px;
-      object-fit: cover; background: #f8f8f8;
-      flex-shrink: 0; border: 1px solid #f0f0f0;
-    }
-    .cp-item__img-placeholder {
-      width: 76px; height: 76px; border-radius: 10px;
-      background: #f0f7ff; display: flex;
-      align-items: center; justify-content: center;
-      color: #a8cff0; font-size: 24px; flex-shrink: 0;
-    }
-    .cp-item__info {
-      flex: 1; display: flex; flex-direction: column;
-      gap: 3px; min-width: 0;
-    }
-    .cp-item__brand {
-      font-size: 10.5px; font-weight: 700;
-      color: var(--color-main-500);
-      text-transform: uppercase; letter-spacing: 0.06em;
-    }
-    .cp-item__name {
-      font-size: 13.5px; font-weight: 600; color: #1a1a1a;
-      line-height: 1.35; white-space: nowrap;
-      overflow: hidden; text-overflow: ellipsis;
-    }
-    .cp-item__price { font-size: 14px; font-weight: 700; color: #1a1a1a; margin-top: 2px; }
-    .cp-item__price-old {
-      font-size: 12px; font-weight: 400; color: #bbb;
-      text-decoration: line-through; margin-left: 5px;
-    }
-
-    .cp-item__row {
-      display: flex; align-items: center;
-      justify-content: space-between; margin-top: 8px;
-    }
-    .cp-qty {
-      display: flex; align-items: center;
-      border: 1.5px solid #eee; border-radius: 8px; overflow: hidden;
-    }
-    .cp-qty__btn {
-      width: 30px; height: 30px; border: none;
-      background: transparent; cursor: pointer;
-      font-size: 16px; color: #555;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.15s; line-height: 1;
-    }
-    .cp-qty__btn:hover { background: #f5f5f5; }
-    .cp-qty__val {
-      min-width: 28px; text-align: center;
-      font-size: 13px; font-weight: 700; color: #1a1a1a;
-      border-left: 1.5px solid #eee; border-right: 1.5px solid #eee;
-      padding: 0 4px; height: 30px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .cp-item__remove {
-      width: 30px; height: 30px; border-radius: 8px;
-      border: 1.5px solid #eee; background: transparent;
-      cursor: pointer; display: flex;
-      align-items: center; justify-content: center;
-      color: #ccc; font-size: 13px;
-      transition: border-color 0.18s, color 0.18s, background 0.18s;
-    }
-    .cp-item__remove:hover {
-      border-color: #ffd6dc; background: #fff5f7;
-      color: var(--color-main-500);
-    }
-
-    .cp-footer {
-      padding: 14px 20px;
-      border-top: 1.5px solid #f5f5f5;
-      flex-shrink: 0; display: flex;
-      flex-direction: column; gap: 10px;
-    }
-    .cp-footer__total {
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .cp-footer__label { font-size: 13px; color: #888; font-weight: 500; }
-    .cp-footer__amount { font-size: 17px; font-weight: 800; color: #1a1a1a; }
-    .cp-footer__checkout {
-      width: 100%; padding: 12px; border-radius: 10px;
-      border: none; background: var(--color-main-500);
-      color: #fff; font-size: 14px; font-weight: 700;
-      cursor: pointer; transition: opacity 0.18s;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-    }
-    .cp-footer__checkout:hover { opacity: 0.87; }
-    .cp-footer__clear {
-      width: 100%; padding: 10px; border-radius: 10px;
-      border: 1.5px solid #eee; background: transparent;
-      color: #aaa; font-size: 13px; font-weight: 600;
-      cursor: pointer; transition: background 0.18s, color 0.18s;
-    }
-    .cp-footer__clear:hover { background: #f9f9f9; color: #555; }
-
-    @media (max-width: 460px) {
-      .cp-panel { width: 100vw; }
-    }
-  `;
-  document.head.appendChild(style);
-}
-
 class CartPanelClass {
-  static #instance = null;
-  static #products  = [];
+  static _instance = null;
+  static _products  = [];
 
   static init(products) {
-    CartPanelClass.#products = products;
-    injectStyles();
-    if (!CartPanelClass.#instance) {
-      CartPanelClass.#instance = new CartPanelClass();
+    CartPanelClass._products = products;
+    if (!CartPanelClass._instance) {
+      CartPanelClass._instance = new CartPanelClass();
     }
-    return CartPanelClass.#instance;
+    return CartPanelClass._instance;
   }
 
   static open() {
-    if (!CartPanelClass.#instance) {
+    if (!CartPanelClass._instance) {
       console.warn("CartPanel.init(products) дуудагдаагүй байна.");
       return;
     }
-    CartPanelClass.#instance._open();
+    CartPanelClass._instance._open();
   }
 
   static refresh() {
-    if (CartPanelClass.#instance) {
-      CartPanelClass.#instance._renderItems();
+    if (CartPanelClass._instance) {
+      CartPanelClass._instance._renderItems();
     }
   }
 
@@ -278,24 +80,21 @@ class CartPanelClass {
     closeBtn.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
     closeBtn.setAttribute("aria-label", "Хаах");
     closeBtn.addEventListener("click", () => this._close());
-
     header.append(left, closeBtn);
 
     this._body = this._el("div", "cp-body");
 
-    const footer    = this._el("div", "cp-footer");
-    const totalRow  = this._el("div", "cp-footer__total");
-    const label     = this._el("span", "cp-footer__label");
+    const footer      = this._el("div", "cp-footer");
+    const totalRow    = this._el("div", "cp-footer__total");
+    const label       = this._el("span", "cp-footer__label");
     label.textContent = "Нийт дүн:";
-    this._totalEl   = this._el("span", "cp-footer__amount");
+    this._totalEl     = this._el("span", "cp-footer__amount");
     this._totalEl.textContent = "0₮";
     totalRow.append(label, this._totalEl);
 
     const checkoutBtn = this._el("button", "cp-footer__checkout");
     checkoutBtn.innerHTML = `<i class="fa-solid fa-credit-card"></i> Захиалга өгөх`;
-    checkoutBtn.addEventListener("click", () => {
-      showToast("Захиалга удахгүй нэмэгдэнэ!");
-    });
+    checkoutBtn.addEventListener("click", () => this._checkout());
 
     const clearBtn = this._el("button", "cp-footer__clear");
     clearBtn.innerHTML = `<i class="fa-regular fa-trash-can" style="margin-right:6px"></i>Сагс цэвэрлэх`;
@@ -309,6 +108,61 @@ class CartPanelClass {
     document.addEventListener("keydown", e => {
       if (e.key === "Escape") this._close();
     });
+  }
+
+  async _checkout() {
+    const user = JSON.parse(localStorage.getItem("user") || "null");
+    if (!user) {
+      showToast("Захиалга өгөхийн тулд нэвтэрнэ үү!");
+      setTimeout(() => { window.location.href = "/login"; }, 1500);
+      return;
+    }
+
+    const cart  = getCart();
+    const prods = CartPanelClass._products;
+
+    const items = cart.map(c => {
+      const p = prods.find(pr => Number(pr.id) === Number(c.id));
+      if (!p) return null;
+      return {
+        productId: p.id,
+        name:      p.name,
+        price:     p.discount > 0 ? p.newPrice : p.price,
+        qty:       c.qty,
+        img:       p.img || ""
+      };
+    }).filter(Boolean);
+
+    if (!items.length) return;
+
+    const totalPrice = items.reduce((s, i) => s + i.price * i.qty, 0);
+
+    try {
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId:    user.id,
+          userName:  user.name,
+          userEmail: user.email,
+          userPhone: user.phone || "",
+          items,
+          totalPrice
+        })
+      });
+
+      if (res.ok) {
+        saveCart([]);
+        this._renderItems();
+        this._close();
+        showToast("Захиалга амжилттай өгөгдлөө!");
+      } else {
+        const data = await res.json();
+        showToast(data.error || "Алдаа гарлаа, дахин оролдоно уу");
+      }
+    } catch {
+      showToast("Сервертэй холбогдоход алдаа гарлаа");
+    }
   }
 
   _open() {
@@ -326,7 +180,7 @@ class CartPanelClass {
 
   _renderItems() {
     const cart  = getCart();
-    const items = CartPanelClass.#products
+    const items = CartPanelClass._products
       .map(p => {
         const entry = cart.find(i => i.id === Number(p.id));
         return entry ? { product: p, qty: entry.qty } : null;

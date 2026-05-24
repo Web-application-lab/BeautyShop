@@ -4,10 +4,21 @@ export function setupUserDropdown() {
   const btn = document.querySelector(".login-btn");
   if (!btn) return;
 
-  // Dropdown HTML үүсгэнэ
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+
   const dropdown = document.createElement("div");
   dropdown.className = "user-dropdown hidden";
+
+  const adminItem = user?.isAdmin
+    ? `<a class="user-dropdown__item" data-route="admin">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Админ панел
+      </a>
+      <div class="user-dropdown__divider"></div>`
+    : "";
+
   dropdown.innerHTML = `
+    ${adminItem}
     <a class="user-dropdown__item" data-route="orders">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
       Захиалгууд
@@ -28,8 +39,8 @@ export function setupUserDropdown() {
 
   // Товч дарахад dropdown нээх/хаах
   btn.addEventListener("click", (e) => {
-    const user = JSON.parse(localStorage.getItem("user") || "null");
-    if (!user) {
+    const currentUser = JSON.parse(localStorage.getItem("user") || "null");
+    if (!currentUser) {
       AuthModal.open("login");
       return;
     }
@@ -43,20 +54,29 @@ export function setupUserDropdown() {
     dropdown.classList.add("hidden");
     const btnText = document.querySelector(".login-btn__text");
     if (btnText) btnText.textContent = "Нэвтрэх";
+    window.location.href = "/";
+  });
+
+  // Захиалгууд
+  dropdown.querySelector("[data-route='orders']").addEventListener("click", () => {
+    dropdown.classList.add("hidden");
+    history.pushState(null, "", "/account/orders");
     window.location.reload();
   });
 
-dropdown.querySelector("[data-route='profile']").addEventListener("click", () => {
-  dropdown.classList.add("hidden");
-  history.pushState(null, "", "/account/profile");
-  window.location.reload();
-});
+  // Хувийн мэдээлэл
+  dropdown.querySelector("[data-route='profile']").addEventListener("click", () => {
+    dropdown.classList.add("hidden");
+    history.pushState(null, "", "/account/profile");
+    window.location.reload();
+  });
 
-dropdown.querySelector("[data-route='orders']").addEventListener("click", () => {
-  dropdown.classList.add("hidden");
-  history.pushState(null, "", "/account/orders");
-  window.location.reload();
-});
+  // Админ панел
+  dropdown.querySelector("[data-route='admin']")?.addEventListener("click", () => {
+    dropdown.classList.add("hidden");
+    history.pushState(null, "", "/admin");
+    window.location.reload();
+  });
 
   // Гадна дарахад хаах
   document.addEventListener("click", (e) => {

@@ -1,9 +1,13 @@
-export function renderAccountPage(app, section = "profile") {
+export async function renderAccountPage(app, section = "profile") {
   const user = JSON.parse(localStorage.getItem("user") || "null");
   if (!user) {
     window.location.href = "/login";
     return;
   }
+
+  const content = section === "orders"
+    ? await renderOrders(user)
+    : renderProfile(user);
 
   app.innerHTML = `
     <div class="account-layout">
@@ -29,7 +33,7 @@ export function renderAccountPage(app, section = "profile") {
       </aside>
 
       <main class="account-content">
-        ${section === "orders" ? renderOrders() : renderProfile(user)}
+        ${content}
       </main>
     </div>
   `;
@@ -89,16 +93,74 @@ function renderProfile(user) {
   `;
 }
 
-function renderOrders() {
-  return `
-    <div class="account-section">
-      <h2 class="account-section__title">Захиалгууд</h2>
-      <div class="orders-empty">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        <p>Одоогоор захиалга байхгүй байна</p>
+async function renderOrders(user) {
+  try {
+    const res    = await fetch(`/api/orders/my/${user.id}`);
+    const orders = await res.json();
+
+    if (!orders.length) {
+      return `
+        <div class="account-section">
+          <h2 class="account-section__title">Захиалгууд</h2>
+          <div class="orders-empty">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <p>Одоогоор захиалга байхгүй байна</p>
+          </div>
+        </div>
+      `;
+    }
+
+    const statusLabel = {
+      pending:   "Хүлээгдэж байна",
+      confirmed: "Баталгаажсан",
+      delivered: "Хүргэгдсэн",
+      cancelled: "Цуцлагдсан"
+    };
+
+    const statusClass = {
+      pending:   "order-status--pending",
+      confirmed: "order-status--confirmed",
+      delivered: "order-status--delivered",
+      cancelled: "order-status--cancelled"
+    };
+
+    return `
+      <div class="account-section">
+        <h2 class="account-section__title">Захиалгууд</h2>
+        ${orders.map(o => `
+          <div class="order-card">
+            <div class="order-card__header">
+              <div>
+                <p class="order-card__date">${new Date(o.createdAt).toLocaleDateString("mn-MN")}</p>
+                <p class="order-card__total">${Math.round(o.totalPrice).toLocaleString("mn-MN")}₮</p>
+              </div>
+              <span class="order-status ${statusClass[o.status] || ""}">
+                ${statusLabel[o.status] || o.status}
+              </span>
+            </div>
+            <div class="order-card__items">
+              ${o.items.map(item => `
+                <div class="order-card__item">
+                  <img src="/images/${item.img}" onerror="this.src='/images/placeholder.svg'" />
+                  <div>
+                    <p class="order-card__item-name">${item.name}</p>
+                    <p class="order-card__item-meta">${item.qty} ш · ${Math.round(item.price).toLocaleString("mn-MN")}₮</p>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        `).join("")}
       </div>
-    </div>
-  `;
+    `;
+  } catch {
+    return `
+      <div class="account-section">
+        <h2 class="account-section__title">Захиалгууд</h2>
+        <p style="color: var(--color-black-7)">Захиалга ачаалахад алдаа гарлаа</p>
+      </div>
+    `;
+  }
 }
 
 function _bindAccountEvents(user, section) {
@@ -154,7 +216,6 @@ function _bindAccountEvents(user, section) {
     const input = document.getElementById("edit-input");
     const value = input?.value.trim();
 
-    // Нууц үг солих
     if (currentField === "password") {
       const confirm = document.getElementById("edit-input-confirm")?.value;
       if (!value || value.length < 6) {
@@ -185,7 +246,6 @@ function _bindAccountEvents(user, section) {
       return;
     }
 
-    // Бусад field
     if (!value) {
       errorEl.textContent = "Утга хоосон байж болохгүй";
       errorEl.classList.remove("hidden");
@@ -209,7 +269,6 @@ function _bindAccountEvents(user, section) {
       return;
     }
 
-    // localStorage шинэчилнэ
     const updatedUser = { ...user, ...data.user };
     localStorage.setItem("user", JSON.stringify(updatedUser));
     Object.assign(user, updatedUser);
@@ -218,7 +277,6 @@ function _bindAccountEvents(user, section) {
       document.getElementById("display-name").textContent = value;
       const btnText = document.querySelector(".login-btn__text");
       if (btnText) btnText.textContent = value;
-      // Sidebar нэр шинэчилнэ
       const sidebarName = document.querySelector(".account-sidebar__name");
       if (sidebarName) sidebarName.textContent = value;
     }

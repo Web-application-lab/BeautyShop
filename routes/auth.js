@@ -23,7 +23,13 @@ router.post("/register", async (req, res) => {
 
     res.status(201).json({
       message: "Амжилттай бүртгэгдлээ",
-      user: { id: user._id, name: user.name, email: user.email }
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone || "",
+        isAdmin: user.isAdmin || false
+      }
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -48,7 +54,13 @@ router.post("/login", async (req, res) => {
 
     res.json({
       message: "Амжилттай нэвтэрлээ",
-      user: { id: user._id, name: user.name, email: user.email, phone: user.phone || "" }
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone || "",
+        isAdmin: user.isAdmin || false
+      }
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -78,7 +90,13 @@ router.put("/update", async (req, res) => {
 
     res.json({
       message: "Амжилттай шинэчлэгдлээ",
-      user: { id: user._id, name: user.name, email: user.email, phone: user.phone || "" }
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone || "",
+        isAdmin: user.isAdmin || false
+      }
     });
   } catch (err) {
     res.status(500).json({ error: err.message });

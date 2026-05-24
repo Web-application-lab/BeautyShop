@@ -28,5 +28,8 @@
   "bugs": {
     "url": "https://github.com/Web-application-lab/BeautyShop/issues"
   },
-  "homepage": "https://github.com/Web-application-lab/BeautyShop#readme"
+  "homepage": "https://github.com/Web-application-lab/BeautyShop#readme",
+  "devDependencies": {
+    "esbuild": "^0.28.0"
+  }
 }
