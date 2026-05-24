@@ -1,5 +1,5 @@
 import { template } from "../components/productCard.js";
-import { setActiveCategoryNav } from "../components/categoryNav.js";
+import { setActiveCategoryNav } from "../utils/categoryNav.js";
 import {
   buildCategoryPath,
   categoryPathToParams,
@@ -7,7 +7,7 @@ import {
   getCategoryPageTitle,
   normalizeCategoryPath,
   resolveCategoryParams
-} from "../components/categoryCatalog.js";
+} from "../utils/categoryCatalog.js";
 
 function getSubCategoryId(product) {
   return product.subCategoryId;
@@ -48,59 +48,79 @@ function sortProducts(list, sortKey) {
 
 function renderProductGrid(products) {
   if (!products.length) {
-    return `<p class="category-page__empty">Бүтээгдэхүүн олдсонгүй</p>`;
+    return `<p class="products-empty">Бүтээгдэхүүн олдсонгүй</p>`;
   }
   return products.map(p => template.cardTemplate(p)).join("");
 }
 
 function renderBreadcrumb(resolved, pageTitle) {
-  const sep = `<span class="category-page__sep">/</span>`;
+  const sep = `<span class="breadcrumb-sep">/</span>`;
   if (resolved.subCategoryId) {
     return `
-      <a href="/" class="category-page__crumb">Нүүр</a>${sep}
+      <a href="/" class="breadcrumb-link">Нүүр</a>${sep}
       <a href="${buildCategoryPath({ categorySlug: resolved.categorySlug })}"
-         class="category-page__crumb">${resolved.categoryName}</a>${sep}
-      <span class="category-page__crumb category-page__crumb--current">${pageTitle}</span>
+         class="breadcrumb-link">${resolved.categoryName}</a>${sep}
+      <span class="breadcrumb-link breadcrumb-current">${pageTitle}</span>
     `;
   }
   return `
-    <a href="/" class="category-page__crumb">Нүүр</a>${sep}
-    <span class="category-page__crumb category-page__crumb--current">${pageTitle}</span>
+    <a href="/" class="breadcrumb-link">Нүүр</a>${sep}
+    <span class="breadcrumb-link breadcrumb-current">${pageTitle}</span>
   `;
 }
 
 function renderSidebar(resolved, baseProducts) {
   const catalog = getCategoryCatalog();
   if (!catalog) return "";
-
-  // Дэд ангилалууд
+  
   let subNavHtml = "";
+
   if (resolved.categoryId) {
     const category = catalog.categoryById[resolved.categoryId];
     const subs = catalog.subCategoriesByCategoryId[resolved.categoryId] || [];
 
     const allActive = !resolved.subCategoryId ? " is-active" : "";
+
     const subsHtml = subs.map(sub => {
-      const active = Number(resolved.subCategoryId) === Number(sub.id) ? " is-active" : "";
+      const active =
+        Number(resolved.subCategoryId) === Number(sub.id)
+          ? " is-active"
+          : "";
+
       return `
-        <li class="category-sidebar__item">
-          <a href="${buildCategoryPath({ categorySlug: category.slug, subCategorySlug: sub.slug })}"
-             class="category-sidebar__sub${active}">${sub.name}</a>
-        </li>`;
+        <li class="sidebar-item">
+          <a href="${buildCategoryPath({
+            categorySlug: category.slug,
+            subCategorySlug: sub.slug
+          })}"
+             class="sidebar-link${active}">
+             ${sub.name}
+          </a>
+        </li>
+      `;
     }).join("");
 
     subNavHtml = `
-      <div class="category-sidebar__group">
-        <a href="${buildCategoryPath({ categorySlug: category.slug })}"
-           class="category-sidebar__parent${allActive}">${category.name}</a>
-        <ul class="category-sidebar__list">${subsHtml}</ul>
+      <div class="sidebar-group">
+        <a href="${buildCategoryPath({
+          categorySlug: category.slug
+        })}"
+           class="sidebar-title${allActive}">
+           ${category.name}
+        </a>
+
+        <ul class="sidebar-list">
+          ${subsHtml}
+        </ul>
       </div>
     `;
   }
 
-  // Арьсны асуудал (concernIds ашиглана)
+  // Concern filter
   const concerns = catalog.concerns || [];
+
   const concernCounts = {};
+
   baseProducts.forEach(p => {
     (p.concernIds || []).forEach(c => {
       concernCounts[c] = (concernCounts[c] || 0) + 1;
@@ -109,22 +129,36 @@ function renderSidebar(resolved, baseProducts) {
 
   const concernHtml = concerns.map(c => {
     const count = concernCounts[c.id] || 0;
+
     return `
-      <li class="category-sidebar__filter-item">
-        <label class="category-sidebar__filter-label">
-          <input type="checkbox" class="category-sidebar__filter-input filter-concern" value="${c.id}" />
-          <span class="category-sidebar__filter-name">${c.name}</span>
-          <span class="category-sidebar__filter-count">${count}</span>
+      <li class="filter-item">
+        <label class="filter-label">
+          <input
+            type="checkbox"
+            class="filter-checkbox filter-concern"
+            value="${c.id}"
+          />
+
+          <span class="filter-name">${c.name}</span>
+
+          <span class="filter-count">${count}</span>
         </label>
-      </li>`;
+      </li>
+    `;
   }).join("");
 
   return `
-    <aside class="category-sidebar">
+    <aside class="sidebar">
       ${subNavHtml}
-      <div class="category-sidebar__filters">
-        <h4 class="category-sidebar__filter-heading">Арьсны асуудал</h4>
-        <ul class="category-sidebar__filter-list">${concernHtml}</ul>
+
+      <div class="sidebar-filters">
+        <h4 class="filters-title">
+          Арьсны асуудал
+        </h4>
+
+        <ul class="filter-list">
+          ${concernHtml}
+        </ul>
       </div>
     </aside>
   `;
@@ -177,17 +211,18 @@ export function renderCategoryPage(products, container, params) {
   const baseList  = filterProducts(products, resolved);
 
   container.innerHTML = `
-    <section class="category-page">
-      <div class="category-layout">
+    <section class="cat-page">
+      <div class="cat-layout">
         ${renderSidebar(resolved, baseList)}
 
-        <div class="category-main">
-          <div class="category-toolbar">
-            <nav class="category-page__breadcrumb">
+        <div class="cat-main">
+          <div class="cat-toolbar">
+            <nav class="breadcrumb">
               ${renderBreadcrumb(resolved, pageTitle)}
             </nav>
+
             <div class="category-sort">
-              <select class="sorting">
+              <select class="sort-select sorting">
                 <option value="">--Эрэмбэлэх--</option>
                 <option value="price-asc">Үнэ өсөхөөр</option>
                 <option value="price-desc">Үнэ буурахаар</option>
@@ -196,7 +231,8 @@ export function renderCategoryPage(products, container, params) {
             </div>
           </div>
 
-          <h2 class="category-page__title">${pageTitle}</h2>
+          <h2 class="cat-title">${pageTitle}</h2>
+
           <p class="product-count">
             <span id="category-product-count">${baseList.length}</span> бүтээгдэхүүн
           </p>
@@ -207,7 +243,7 @@ export function renderCategoryPage(products, container, params) {
         </div>
       </div>
     </section>
-  `;
+`;
 
   setActiveCategoryNav(resolved);
   setupFilters(container, products, resolved);

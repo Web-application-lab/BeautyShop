@@ -1,6 +1,6 @@
 // wishlistPage.js
-import { updateNavbarCount } from "../components/navbarCount.js";
-import { showToast } from "../components/toggle.js";
+import { updateNavbarCount } from "../utils/navbarCount.js";
+import { showToast } from "../utils/toggle.js";
 
 function injectStyles() {
   if (document.getElementById("wl-panel-styles")) return;

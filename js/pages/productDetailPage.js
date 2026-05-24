@@ -1,6 +1,6 @@
 import { renderProductDetailView } from "../components/productDetailView.js";
 import { setupProductDetailLogic } from "../productDetailLogic.js";
-import { updateNavbarCount } from "../components/navbarCount.js";
+import { updateNavbarCount } from "../utils/navbarCount.js";
 
 export function renderProductDetailPage(products, container, params) {
     const id = Number(params.get("id"));

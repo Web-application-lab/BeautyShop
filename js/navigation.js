@@ -2,8 +2,8 @@ import {
   buildCategoryPath,
   categoryPathToParams,
   normalizeLegacyCategoryLocation
-} from "./components/categoryCatalog.js";
-import { brandPathToParams } from "./components/brandCatalog.js";
+} from "./utils/categoryCatalog.js";
+import { brandPathToParams } from "./utils/brandCatalog.js";
 
 const HASH_ROUTES = new Set([
   "home",

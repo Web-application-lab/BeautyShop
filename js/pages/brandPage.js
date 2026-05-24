@@ -1,18 +1,20 @@
 import { template } from "../components/productCard.js";
-import { setActiveBrandNav } from "../components/brandNav.js";
-import { setActiveCategoryNav } from "../components/categoryNav.js";
+import { setActiveBrandNav } from "../utils/brandNav.js";
+import { setActiveCategoryNav } from "../utils/categoryNav.js";
 import {
   buildBrandPath,
   getBrandCatalog,
   getBrandPageTitle,
   productMatchesBrand,
   resolveBrandParams
-} from "../components/brandCatalog.js";
-import { renderSidebarFilters, setupSidebarFilters } from "../components/categoryFilters.js";
+} from "../utils/brandCatalog.js";
+import { renderSidebarFilters, setupSidebarFilters } from "../utils/categoryFilters.js";
 
 function filterProducts(products, resolved) {
   if (!resolved.brandName) return products;
-  return products.filter(product => productMatchesBrand(product, resolved.brandName));
+  return products.filter(product =>
+    productMatchesBrand(product, resolved.brandName)
+  );
 }
 
 function sortProducts(list, sortKey) {
@@ -32,7 +34,7 @@ function sortProducts(list, sortKey) {
 
 function renderProductGrid(products) {
   if (!products.length) {
-    return `<p class="category-page__empty">Бүтээгдэхүүн олдсонгүй</p>`;
+    return `<p class="products-empty">Бүтээгдэхүүн олдсонгүй</p>`;
   }
 
   return products.map(product => template.cardTemplate(product)).join("");
@@ -48,10 +50,12 @@ function renderBrandSidebar(resolved, products) {
   const listHtml = catalog.brands
     .map(brand => {
       const isActive = resolved.brandSlug === brand.slug;
+
       return `
-        <li class="category-sidebar__item">
-          <a href="${buildBrandPath({ brandSlug: brand.slug })}" class="category-sidebar__sub${isActive ? " is-active" : ""}">
-            <span>${brand.name}</span>
+        <li class="sidebar-item">
+          <a href="${buildBrandPath({ brandSlug: brand.slug })}"
+             class="sidebar-link${isActive ? " is-active" : ""}">
+            ${brand.name}
           </a>
         </li>
       `;
@@ -61,40 +65,46 @@ function renderBrandSidebar(resolved, products) {
   const allActive = !resolved.brandSlug ? " is-active" : "";
 
   return `
-    <aside class="category-sidebar" aria-label="Брэнд">
-      <div class="category-sidebar__group">
-        <a href="${buildBrandPath()}" class="category-sidebar__parent${allActive}">Бүх брэнд</a>
-        <ul class="category-sidebar__list">${listHtml}</ul>
+    <aside class="sidebar" aria-label="Брэнд">
+      <div class="sidebar-group">
+        <a href="${buildBrandPath()}" class="sidebar-title${allActive}">
+          Бүх брэнд
+        </a>
+
+        <ul class="sidebar-list">
+          ${listHtml}
+        </ul>
       </div>
+
       ${filtersHtml}
     </aside>
   `;
 }
 
 function renderBreadcrumb(resolved, pageTitle) {
-  const sep = `<span class="category-page__sep" aria-hidden="true">&gt;</span>`;
+  const sep = `<span class="breadcrumb-sep" aria-hidden="true">&gt;</span>`;
 
   if (!resolved.brandName) {
     return `
-      <a href="/" class="category-page__crumb">Нүүр</a>
+      <a href="/" class="breadcrumb-link">Нүүр</a>
       ${sep}
-      <span class="category-page__crumb category-page__crumb--current">${pageTitle}</span>
+      <span class="breadcrumb-link breadcrumb-current">${pageTitle}</span>
     `;
   }
 
   return `
-    <a href="/" class="category-page__crumb">Нүүр</a>
+    <a href="/" class="breadcrumb-link">Нүүр</a>
     ${sep}
-    <a href="${buildBrandPath()}" class="category-page__crumb">Брэнд</a>
+    <a href="${buildBrandPath()}" class="breadcrumb-link">Брэнд</a>
     ${sep}
-    <span class="category-page__crumb category-page__crumb--current">${pageTitle}</span>
+    <span class="breadcrumb-link breadcrumb-current">${pageTitle}</span>
   `;
 }
 
 function renderSortSelect() {
   return `
     <div class="category-sort">
-      <select class="sorting">
+      <select class="sort-select sorting">
         <option value="">--Эрэмбэлэх--</option>
         <option value="price-asc">Үнэ өсөхөөр</option>
         <option value="price-desc">Үнэ буурахаар</option>
@@ -109,11 +119,12 @@ export function renderBrandPage(products, container, params) {
 
   if (resolved.notFound) {
     container.innerHTML = `
-      <section class="category-page">
-        <h2 class="category-page__title">Брэнд олдсонгүй</h2>
+      <section class="cat-page">
+        <h2 class="cat-title">Брэнд олдсонгүй</h2>
         <p><a href="/b">Бүх брэнд рүү буцах</a></p>
       </section>
     `;
+
     setActiveCategoryNav();
     setActiveBrandNav();
     return;
@@ -123,14 +134,25 @@ export function renderBrandPage(products, container, params) {
   const filtered = filterProducts(products, resolved);
 
   container.innerHTML = `
-    <section class="category-page category-page--brand">
-      <div class="category-layout">
+    <section class="cat-page">
+      <div class="cat-layout">
         ${renderBrandSidebar(resolved, products)}
-        <div class="category-main">
-          <div class="category-toolbar">
-            <nav class="category-page__breadcrumb" aria-label="Зам">${renderBreadcrumb(resolved, pageTitle)}</nav>
+
+        <div class="cat-main">
+          <div class="cat-toolbar">
+            <nav class="breadcrumb" aria-label="Зам">
+              ${renderBreadcrumb(resolved, pageTitle)}
+            </nav>
+
             ${renderSortSelect()}
           </div>
+
+          <h2 class="cat-title">${pageTitle}</h2>
+
+          <p class="product-count">
+            ${filtered.length} бүтээгдэхүүн
+          </p>
+
           <div class="products">
             ${renderProductGrid(filtered)}
           </div>
@@ -143,12 +165,19 @@ export function renderBrandPage(products, container, params) {
   setActiveBrandNav(resolved);
 
   const grid = container.querySelector(".products");
+  const countEl = container.querySelector(".product-count");
 
   setupSidebarFilters(
     container,
     () => filterProducts(products, resolved),
     (list, sortKey) => {
-      grid.innerHTML = renderProductGrid(sortProducts(list, sortKey));
+      const sortedList = sortProducts(list, sortKey);
+
+      if (countEl) {
+        countEl.textContent = `${sortedList.length} бүтээгдэхүүн`;
+      }
+
+      grid.innerHTML = renderProductGrid(sortedList);
     }
   );
 }

@@ -1,19 +1,21 @@
+/* ========== AUTH PAGE ========== */
+
 .auth-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--color-white-2);
-  padding: 2rem;
+  padding: var(--space-xl);
 }
 
 .auth-box {
   background: var(--color-white-0);
   border-radius: var(--radius-lg);
-  padding: 2.5rem 2rem 2rem;
-  width: 100%;
-  max-width: 480px;
   border: var(--border-light-all);
+  padding: var(--space-xl) var(--space-lg) var(--space-lg);
+  width: 100%;
+  max-width: 30rem;
 }
 
 .auth-logo {
@@ -28,62 +30,67 @@
 .auth-subtitle {
   display: none;
 }
+
+/* Таб */
 .auth-tabs {
   display: flex;
   background: var(--color-white-3);
   border-radius: var(--radius-pill);
-  padding: 4px;
+  padding: var(--space-xs);
   margin-bottom: var(--space-lg);
+
+  .auth-tab {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: var(--space-sm);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-base);
+    cursor: pointer;
+    color: var(--color-black-9);
+    font-weight: 500;
+    transition: all 0.2s;
+
+    &.active {
+      background: var(--color-white-0);
+      color: var(--color-black-1);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
 }
 
-.auth-tab {
-  flex: 1;
-  background: none;
-  border: none;
-  padding: 10px;
-  border-radius: var(--radius-pill);
-  font-size: var(--text-base);
-  cursor: pointer;
-  color: var(--color-black-9);
-  font-weight: 500;
-  transition: all 0.2s;
-}
+/* Форм */
+.auth-form {
+  label {
+    display: block;
+    font-size: var(--text-base);
+    font-weight: 500;
+    margin-bottom: var(--space-sm);
+    color: var(--color-black-1);
+  }
 
-.auth-tab.active {
-  background: var(--color-white-0);
-  color: var(--color-black-1);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-}
+  input {
+    display: block;
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    margin-bottom: var(--space-md);
+    border: none;
+    border-radius: var(--radius-xxs);
+    font-size: var(--text-base);
+    box-sizing: border-box;
+    background: var(--color-white-2);
+    outline: none;
+    font-family: var(--font-body);
 
-.auth-form label {
-  display: block;
-  font-size: var(--text-base);
-  font-weight: 500;
-  margin-bottom: var(--space-sm);
-  color: var(--color-black-1);
-}
-
-.auth-form input {
-  display: block;
-  width: 100%;
-  padding: 12px 14px;
-  margin-bottom: var(--space-md);
-  border: none;
-  border-radius: var(--radius-xxs);
-  font-size: var(--text-base);
-  box-sizing: border-box;
-  background: var(--color-white-2);
-  outline: none;
-  font-family: var(--font-body);
-}
-
-.auth-form input:focus {
-  background: var(--color-white-3);
+    &:focus {
+      background: var(--color-white-3);
+    }
+  }
 }
 
 .auth-submit {
   width: 100%;
-  padding: 13px;
+  padding: var(--space-sm);
   background: var(--color-main-500);
   color: var(--color-white-0);
   border: none;
@@ -94,17 +101,17 @@
   margin-top: var(--space-xs);
   transition: background 0.2s;
   font-family: var(--font-body);
-}
 
-.auth-submit:hover {
-  background: var(--color-main-600);
+  &:hover {
+    background: var(--color-main-600);
+  }
 }
 
 .auth-error {
   color: #e24b4a;
   font-size: var(--text-sm);
-  margin: -8px 0 12px;
-  min-height: 18px;
+  margin: -0.5rem 0 var(--space-sm);
+  min-height: 1.125rem;
 }
 
 .auth-hint {
@@ -116,29 +123,33 @@
 
 .auth-success {
   text-align: center;
-  padding: 1rem 0;
+  padding: var(--space-md) 0;
   font-size: var(--text-md);
   color: var(--color-main-600);
 }
+
+/* Toast */
 .auth-toast {
   position: fixed;
-  bottom: 2rem;
+  bottom: var(--space-xl);
   left: 50%;
-  transform: translateX(-50%) translateY(20px);
+  transform: translateX(-50%) translateY(1.25rem);
   background: var(--color-main-500);
   color: var(--color-white-0);
-  padding: 12px 24px;
+  padding: var(--space-sm) var(--space-lg);
   border-radius: var(--radius-pill);
   font-size: var(--text-base);
   font-weight: 500;
   opacity: 0;
   transition: all 0.3s ease;
   z-index: 9999;
+
+  &--show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
 
-.auth-toast--show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
+.hidden {
+  display: none !important;
 }
-
-.hidden { display: none !important; }

@@ -1,5 +1,5 @@
-import { updateNavbarCount } from "../components/navbarCount.js";
-import { showToast } from "../components/toggle.js";
+import { updateNavbarCount } from "../utils/navbarCount.js";
+import { showToast } from "../utils/toggle.js";
 
 function getCart() {
   try {
@@ -61,42 +61,42 @@ class CartPanelClass {
   }
 
   constructor() {
-    this._overlay = this._el("div", "cp-overlay");
-    this._panel   = this._el("div", "cp-panel");
+    this._overlay = this._el("div", "cart-overlay");
+    this._panel   = this._el("div", "cart-panel");
     this._panel.setAttribute("role", "dialog");
     this._panel.setAttribute("aria-label", "Миний сагс");
 
-    const header   = this._el("div", "cp-header");
-    const left     = this._el("div", "cp-header__left");
-    const iconWrap = this._el("div", "cp-header__icon");
+    const header   = this._el("div", "cart-header");
+    const left     = this._el("div", "cart-header-left");
+    const iconWrap = this._el("div", "cart-header-icon");
     iconWrap.innerHTML = `<i class="fa-solid fa-bag-shopping"></i>`;
-    const title = this._el("h2", "cp-header__title");
+    const title = this._el("h2", "cart-title");
     title.textContent = "Миний сагс";
-    this._badge = this._el("span", "cp-header__badge");
+    this._badge = this._el("span", "cart-badge");
     this._badge.textContent = "0";
     left.append(iconWrap, title, this._badge);
 
-    const closeBtn = this._el("button", "cp-close");
+    const closeBtn = this._el("button", "cart-close");
     closeBtn.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
     closeBtn.setAttribute("aria-label", "Хаах");
     closeBtn.addEventListener("click", () => this._close());
     header.append(left, closeBtn);
 
-    this._body = this._el("div", "cp-body");
+    this._body = this._el("div", "cart-body");
 
-    const footer      = this._el("div", "cp-footer");
-    const totalRow    = this._el("div", "cp-footer__total");
-    const label       = this._el("span", "cp-footer__label");
+    const footer      = this._el("div", "cart-footer");
+    const totalRow    = this._el("div", "cart-footer-total");
+    const label       = this._el("span", "cart-footer-label");
     label.textContent = "Нийт дүн:";
-    this._totalEl     = this._el("span", "cp-footer__amount");
+    this._totalEl     = this._el("span", "cart-footer-amount");
     this._totalEl.textContent = "0₮";
     totalRow.append(label, this._totalEl);
 
-    const checkoutBtn = this._el("button", "cp-footer__checkout");
+    const checkoutBtn = this._el("button", "cart-checkout-btn");
     checkoutBtn.innerHTML = `<i class="fa-solid fa-credit-card"></i> Захиалга өгөх`;
     checkoutBtn.addEventListener("click", () => this._checkout());
 
-    const clearBtn = this._el("button", "cp-footer__clear");
+    const clearBtn = this._el("button", "cart-clear-btn");
     clearBtn.innerHTML = `<i class="fa-regular fa-trash-can" style="margin-right:6px"></i>Сагс цэвэрлэх`;
     clearBtn.addEventListener("click", () => this._clearAll());
 
@@ -167,14 +167,14 @@ class CartPanelClass {
 
   _open() {
     this._renderItems();
-    this._overlay.classList.add("cp-open");
-    this._panel.classList.add("cp-open");
+    this._overlay.classList.add("cart-open");
+    this._panel.classList.add("cart-open");
     document.body.style.overflow = "hidden";
   }
 
   _close() {
-    this._overlay.classList.remove("cp-open");
-    this._panel.classList.remove("cp-open");
+    this._overlay.classList.remove("cart-open");
+    this._panel.classList.remove("cart-open");
     document.body.style.overflow = "";
   }
 
@@ -208,73 +208,73 @@ class CartPanelClass {
   }
 
   _emptyState() {
-    const wrap = this._el("div", "cp-empty");
-    const icon = this._el("div", "cp-empty__icon");
+    const wrap = this._el("div", "cart-empty");
+    const icon = this._el("div", "cart-empty-icon");
     icon.innerHTML = `<i class="fa-solid fa-bag-shopping"></i>`;
-    const t = this._el("p", "cp-empty__title");
+    const t = this._el("p", "cart-empty-title");
     t.textContent = "Сагс хоосон байна";
-    const s = this._el("p", "cp-empty__sub");
+    const s = this._el("p", "cart-empty-sub");
     s.textContent = "Бараа сонгоод сагсанд нэмээрэй";
     wrap.append(icon, t, s);
     return wrap;
   }
 
   _itemEl(p, qty, index) {
-    const item = this._el("div", "cp-item");
+    const item = this._el("div", "cart-item");
     item.style.animationDelay = `${index * 0.055}s`;
 
     let imgEl;
     if (p.img) {
       const src = p.imageUrl || (p.img?.includes("/") ? p.img : `/images/${p.img}`);
-      imgEl = Object.assign(this._el("img", "cp-item__img"), { src, alt: p.name ?? "" });
+      imgEl = Object.assign(this._el("img", "cart-item-img"), { src, alt: p.name ?? "" });
       imgEl.onerror = () => { imgEl.onerror = null; imgEl.src = "/images/placeholder.svg"; };
     } else {
-      imgEl = this._el("div", "cp-item__img-placeholder");
+      imgEl = this._el("div", "cart-item-img-placeholder");
       imgEl.innerHTML = `<i class="fa-solid fa-bottle-droplet"></i>`;
     }
 
-    const info = this._el("div", "cp-item__info");
+    const info = this._el("div", "cart-item-info");
 
     if (p.brand) {
-      const brand = this._el("span", "cp-item__brand");
+      const brand = this._el("span", "cart-item-brand");
       brand.textContent = p.brand;
       info.appendChild(brand);
     }
 
-    const name = this._el("div", "cp-item__name");
+    const name = this._el("div", "cart-item-name");
     name.textContent = p.name ?? `Бараа #${p.id}`;
     name.title = p.name ?? "";
     info.appendChild(name);
 
-    const priceRow     = this._el("div", "cp-item__price");
+    const priceRow     = this._el("div", "cart-item-price");
     const displayPrice = p.discount > 0 ? p.newPrice : p.price;
     priceRow.textContent = `${Math.round(displayPrice).toLocaleString("mn-MN")}₮`;
     if (p.discount > 0) {
-      const old = this._el("span", "cp-item__price-old");
+      const old = this._el("span", "cart-item-price-old");
       old.textContent = `${Number(p.price).toLocaleString("mn-MN")}₮`;
       priceRow.appendChild(old);
     }
     info.appendChild(priceRow);
 
-    const row     = this._el("div", "cp-item__row");
-    const qtyWrap = this._el("div", "cp-qty");
+    const row     = this._el("div", "cart-item-row");
+    const qtyWrap = this._el("div", "cart-qty");
 
-    const minusBtn = this._el("button", "cp-qty__btn");
+    const minusBtn = this._el("button", "cart-qty-btn");
     minusBtn.innerHTML = `<i class="fa-solid fa-minus"></i>`;
     minusBtn.setAttribute("aria-label", "Хасах");
     minusBtn.addEventListener("click", () => this._changeQty(p.id, -1));
 
-    const qtyVal = this._el("span", "cp-qty__val");
+    const qtyVal = this._el("span", "cart-qty-val");
     qtyVal.textContent = qty;
 
-    const plusBtn = this._el("button", "cp-qty__btn");
+    const plusBtn = this._el("button", "cart-qty-btn");
     plusBtn.innerHTML = `<i class="fa-solid fa-plus"></i>`;
     plusBtn.setAttribute("aria-label", "Нэмэх");
     plusBtn.addEventListener("click", () => this._changeQty(p.id, +1));
 
     qtyWrap.append(minusBtn, qtyVal, plusBtn);
 
-    const removeBtn = this._el("button", "cp-item__remove");
+    const removeBtn = this._el("button", "cart-item-remove");
     removeBtn.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
     removeBtn.setAttribute("aria-label", "Устгах");
     removeBtn.addEventListener("click", () => this._remove(p.id));

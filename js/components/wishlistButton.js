@@ -1,6 +1,6 @@
 // wishlistButton.js
-import { updateNavbarCount } from "./navbarCount.js";
-import { showToast } from "./toggle.js";
+import { updateNavbarCount } from "../utils/navbarCount.js";
+import { showToast } from "../utils/toggle.js";
 import { WishlistPanel } from "../pages/wishlistPage.js";
 
 class WishlistButton extends HTMLElement {

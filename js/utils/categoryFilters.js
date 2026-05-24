@@ -109,11 +109,11 @@ function renderFilterGroup(products, items, inputName, useConcernIds, defaultChe
     if (defaultCheckedId === item.id) checked = " checked";
 
     return `
-      <li class="category-sidebar__filter-item">
-        <label class="category-sidebar__filter-label">
-          <input type="checkbox" class="category-sidebar__filter-input" name="${inputName}" value="${item.id}"${checked}>
-          <span class="category-sidebar__filter-name">${item.name}</span>
-          <span class="category-sidebar__filter-count">${countMatches(products, item, useConcernIds)}</span>
+      <li class="filter-item">
+        <label class="filter-label">
+          <input type="checkbox" class="filter-checkbox" name="${inputName}" value="${item.id}"${checked}>
+          <span class="filter-name">${item.name}</span>
+          <span class="filter-count">${countMatches(products, item, useConcernIds)}</span>
         </label>
       </li>
     `;
@@ -140,14 +140,14 @@ export function renderSidebarFilters(products, resolved, mode) {
       defaultConcern
     );
     concernsBlock =
-      '<h3 class="category-sidebar__filter-heading">' + sets.concernTitle + "</h3>" +
-      '<ul class="category-sidebar__filter-list">' + concernsHtml + "</ul>";
+      '<h3 class="filters-title">' + sets.concernTitle + "</h3>" +
+      '<ul class="filter-list">' + concernsHtml + "</ul>";
   }
 
   return (
-    '<div class="category-sidebar__filters" data-filter-mode="' + mode + '">' +
-    '<h3 class="category-sidebar__filter-heading">' + sets.typeTitle + "</h3>" +
-    '<ul class="category-sidebar__filter-list">' + typesHtml + "</ul>" +
+    '<div class="sidebar-filters" data-filter-mode="' + mode + '">' +
+    '<h3 class="filters-title">' + sets.typeTitle + "</h3>" +
+    '<ul class="filter-list">' + typesHtml + "</ul>" +
     concernsBlock +
     "</div>"
   );
@@ -185,8 +185,8 @@ export function applySidebarFilters(list, sidebar, mode) {
 }
 
 export function setupSidebarFilters(container, getList, onUpdate) {
-  const sidebar = container.querySelector(".category-sidebar");
-  const sortSelect = container.querySelector(".sorting");
+  const sidebar = container.querySelector(".sidebar");
+  const sortSelect = container.querySelector(".sort-select");
   if (!sidebar) return;
 
   const filterBox = sidebar.querySelector("[data-filter-mode]");

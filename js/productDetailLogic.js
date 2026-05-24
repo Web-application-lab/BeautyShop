@@ -1,5 +1,5 @@
 import { starRating } from "./components/starRating.js";
-import { setupCardActions } from "./components/cardAction.js";
+import { setupCardActions } from "./utils/cardAction.js";
 
 export function setupProductDetailLogic(product, products) {
     renderStaticStars();
