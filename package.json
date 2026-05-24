@@ -7,6 +7,23 @@
     "dev": "node server.js"
   },
   "dependencies": {
-    "express": "^4.21.2"
-  }
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.4.2",
+    "express": "^4.22.2",
+    "mongoose": "^9.6.2"
+  },
+  "description": "",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Web-application-lab/BeautyShop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Web-application-lab/BeautyShop/issues"
+  },
+  "homepage": "https://github.com/Web-application-lab/BeautyShop#readme"
 }

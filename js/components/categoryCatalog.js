@@ -5,18 +5,26 @@ export function initCategoryCatalog(data) {
   const subCategories = data.subCategories || [];
   const navigation = data.categoryNavigation || { bySlug: {}, byName: {} };
 
-  const categoryById = Object.fromEntries(categories.map(c => [c.id, c]));
-  const subCategoryById = Object.fromEntries(subCategories.map(s => [s.id, s]));
+  // id-г бүгдийг Number болгоно
+  const normalizedCategories = categories.map(c => ({ ...c, id: Number(c.id) }));
+  const normalizedSubs = subCategories.map(s => ({
+    ...s,
+    id: Number(s.id),
+    categoryId: Number(s.categoryId)
+  }));
 
-  const subCategoriesByCategoryId = subCategories.reduce((groups, sub) => {
+  const categoryById = Object.fromEntries(normalizedCategories.map(c => [c.id, c]));
+  const subCategoryById = Object.fromEntries(normalizedSubs.map(s => [s.id, s]));
+
+  const subCategoriesByCategoryId = normalizedSubs.reduce((groups, sub) => {
     if (!groups[sub.categoryId]) groups[sub.categoryId] = [];
     groups[sub.categoryId].push(sub);
     return groups;
   }, {});
 
   catalog = {
-    categories,
-    subCategories,
+    categories: normalizedCategories,
+    subCategories: normalizedSubs,
     concerns: data.concerns || [],
     navigation,
     categoryById,
@@ -26,7 +34,6 @@ export function initCategoryCatalog(data) {
 
   return catalog;
 }
-
 export function getCategoryCatalog() {
   return catalog;
 }

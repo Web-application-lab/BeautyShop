@@ -22,15 +22,14 @@ function filterProducts(products, resolved) {
   const { categoryId, subCategoryId } = resolved;
   if (!categoryId) return products;
 
-  let list = products.filter(product => product.categoryId === categoryId);
+  let list = products.filter(product => Number(product.categoryId) === Number(categoryId));
 
   if (subCategoryId) {
-    list = list.filter(product => getSubCategoryId(product) === subCategoryId);
+    list = list.filter(product => Number(getSubCategoryId(product)) === Number(subCategoryId));
   }
 
   return list;
 }
-
 function sortProducts(list, sortKey) {
   const items = [...list];
 

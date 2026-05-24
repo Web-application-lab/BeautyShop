@@ -13,9 +13,35 @@ import { renderCartPage } from "./pages/cartPage.js";
 import { renderSearchPage } from "./pages/searchPage.js";
 import { renderCategoryPage } from "./pages/categoryPage.js";
 import { parseLocation } from "./navigation.js";
+import { AuthModal } from "./pages/authPage.js";
+import { renderProfilePage } from "./pages/profilePage.js";
+import { renderAccountPage } from "./pages/accountPage.js";
+
 
 export function router(products) {
   const app = document.querySelector("#app");
+
+  const pathname = window.location.pathname;
+  if (pathname === "/login") {
+    AuthModal.render("login");
+    return;
+  }
+  if (pathname === "/signup") {
+    AuthModal.render("register");
+    return;
+  }
+  if (pathname === "/profile") {
+    renderProfilePage(app);
+    return;
+  }
+if (pathname === "/account/profile") {
+  renderAccountPage(app, "profile");
+  return;
+}
+if (pathname === "/account/orders") {
+  renderAccountPage(app, "orders");
+  return;
+}
   const { page, params } = parseLocation();
 
   window.scrollTo(0, 0);
@@ -24,64 +50,52 @@ export function router(products) {
     case "home":
       renderHomePage(products, app);
       break;
-
     case "high-rated":
       renderHighRatedPage(products, app);
       break;
-
     case "sales":
       renderSalePage(products, app);
       break;
-    
     case "concern":
       renderCategoryPage(products, app, params);
       break;
-
     case "wishlist":
       renderHomePage(products, app);
       renderWishlistPage(products, app);
       break;
-
     case "cart":
       renderCartPage(products, app);
       break;
-
     case "about":
       renderAboutPage(app);
       break;
-
     case "location":
       renderLocationPage(app);
       break;
-
     case "privacy":
       renderPrivacyPage(app);
       break;
-
     case "terms":
       renderTermsPage(app);
       break;
-
     case "skin-coach":
       renderSkinCoachPage(products, app);
       break;
-
     case "delivery":
       renderDeliveryPage(app);
       break;
-
     case "product-detail":
       renderProductDetailPage(products, app, params);
       break;
-
     case "search":
       renderSearchPage(products, app, params);
       break;
-
     case "category":
       renderCategoryPage(products, app, params);
       break;
-
+    case "profile":  // hash-based
+      renderProfilePage(app);
+      break;
     default:
       app.innerHTML = `
         <section class="page">

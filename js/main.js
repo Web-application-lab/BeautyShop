@@ -10,25 +10,27 @@ import { setupCategoryNav } from "./components/categoryNav.js";
 import { initCategoryCatalog } from "./components/categoryCatalog.js";
 import { navigateTo, setupAppNavigation } from "./navigation.js";
 import { productImageSrc } from "./utils/assets.js";
+import { AuthModal } from "./pages/authPage.js";
+import { setupUserDropdown, updateUserBtn } from "./components/userDropdown.js";
 
 class Product {
   constructor(product) {
-    this.id          = product.id;
-    this.name        = product.name;
-    this.brand       = product.brand;
-    this.price       = product.price;
-    this.discount    = product.discount || 0;
-    this.newPrice    = product.price - (product.price * this.discount / 100);
-    this.rating      = product.rating;
-    this.reviews     = product.reviews;
-    this.categoryId     = product.categoryId;
+    this.id           = product.id;
+    this.name         = product.name;
+    this.brand        = product.brand;
+    this.price        = product.price;
+    this.discount     = product.discount || 0;
+    this.newPrice     = product.price - (product.price * this.discount / 100);
+    this.rating       = product.rating;
+    this.reviews      = product.reviews;
+    this.categoryId   = product.categoryId;
     this.subCategoryId = product.subCategoryId;
-    this.concernIds    = product.concernIds || [];
-    this.description = product.description;
-    this.ingredients = product.ingredients;
-    this.usage       = product.usage;
-    this.img         = product.img;
-    this.imageUrl    = productImageSrc(product.img);
+    this.concernIds   = product.concernIds || [];
+    this.description  = product.description;
+    this.ingredients  = product.ingredients;
+    this.usage        = product.usage;
+    this.img          = product.img;
+    this.imageUrl     = productImageSrc(product.img);
   }
 }
 
@@ -37,7 +39,7 @@ function getData(dataUrl) {
     .then(res => res.json())
     .catch(error => {
       console.error("Error fetching data:", error);
-      return { products: [] };
+      return { products: [], categories: [], subCategories: [], concerns: [] };
     });
 }
 
@@ -48,9 +50,7 @@ function syncSearchInputWithHash() {
   const hash = window.location.hash || "";
   const [page, query] = hash.replace("#", "").split("?");
 
-  if (page !== "search") {
-    return;
-  }
+  if (page !== "search") return;
 
   const params = new URLSearchParams(query || "");
   input.value = params.get("q") || "";
@@ -58,11 +58,11 @@ function syncSearchInputWithHash() {
 
 function setupSearch(products) {
   const input = document.querySelector(".search-box__input");
-  const icon = document.querySelector(".search-box__icon");
+  const icon  = document.querySelector(".search-box__icon");
   if (!input) return;
 
   const runSearch = () => {
-    const query = input.value.trim();
+    const query    = input.value.trim();
     const nextHash = `#search?q=${encodeURIComponent(query)}`;
 
     if (window.location.pathname + window.location.hash === `/${nextHash}`) {
@@ -113,34 +113,37 @@ function setupFooterNavigation(products) {
 }
 
 async function initApp() {
-  const data     = await getData("/products.json");
+  const data = await getData("/api/data");
   initCategoryCatalog(data);
   const products = data.products.map(product => new Product(product));
 
-  // Drawer-уудыг нэг удаа эхлүүлнэ
   WishlistPanel.init(products);
   document.addEventListener("wishlist:addToCart", (e) => {
-    const product = e.detail;
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const product  = e.detail;
+    const cart     = JSON.parse(localStorage.getItem("cart")) || [];
     const existing = cart.find(item => Number(item.id) === Number(product.id));
-    
+
     if (existing) {
       existing.quantity = (existing.quantity || 1) + 1;
     } else {
       cart.push({ id: product.id, quantity: 1 });
     }
-    
+
     localStorage.setItem("cart", JSON.stringify(cart));
     updateNavbarCount();
   });
+
   CartPanel.init(products);
 
-  // Navbar товчнуудыг drawer-тай холбоно
   document.querySelector(".top-nav__actions .icon-btn[aria-label='Wishlist']")
     ?.addEventListener("click", () => WishlistPanel.open());
 
   document.querySelector("#cartToggle")
     ?.addEventListener("click", () => CartPanel.open());
+
+  // Auth
+  setupUserDropdown();
+  updateUserBtn();
 
   setupCardActions(products);
   setupSearch(products);
