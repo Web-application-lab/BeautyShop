@@ -7,7 +7,7 @@ export function renderHomePage(products, container) {
 
   container.innerHTML = `
     <section class="hero" aria-label="hero">
-      <img src="/images/hero.jpg" class="hero-img" onerror="this.style.display='none'">
+      <img src="/images/hero.webp" class="hero-img" onerror="this.style.display='none'">
     </section>
 
     <main class="container">

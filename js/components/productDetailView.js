@@ -73,7 +73,7 @@ export function renderProductDetailView(product, container) {
                         <div class="comments-left-header">
                             <div class="comments-left">
                                 <span class="avatar-circle">
-                                    <img class="profile-avatar" src="/images/avatar.jpg" alt="User">
+                                    <img class="profile-avatar" src="/images/avatar.webp" alt="User">
                                 </span>
                             </div>
                             <div class="comments-right">
