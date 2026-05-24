@@ -263,3 +263,15 @@ a.category-page__crumb:hover {
     width: 100%;
   }
 }
+.category-page__title {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  margin: var(--space-sm) 0 var(--space-xs);
+  color: var(--color-black-1);
+}
+
+.product-count {
+  font-size: var(--text-xs);
+  color: var(--color-black-8);
+  margin-bottom: var(--space-lg);
+}
