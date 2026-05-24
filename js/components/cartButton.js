@@ -1,24 +1,29 @@
-// cartButton.js
-import { CartPanel, addToCart } from "../pages/cartPage.js";
+import { addToCart, CartPanel } from "../pages/cartPage.js";
 
 class CartButton extends HTMLElement {
   connectedCallback() {
-    this.productId = this.getAttribute("product-id");
-    this.#render();
+    this.productId  = this.getAttribute("product-id");
+    this.isDisabled = this.hasAttribute("disabled");
+    this._render();
   }
 
-  #render() {
+  _render() {
     this.innerHTML = `
-      <button class="add-cart" type="button" aria-label="Сагсанд нэмэх">
+      <button class="add-cart ${this.isDisabled ? "add-cart--disabled" : ""}"
+              type="button"
+              aria-label="Сагсанд нэмэх"
+              ${this.isDisabled ? "disabled" : ""}>
         <i class="fa-solid fa-cart-shopping"></i>
       </button>
     `;
 
-    this.querySelector("button").addEventListener("click", (e) => {
-      e.stopPropagation();
-      addToCart(this.productId);   // ← тоог нэмнэ + storage хадгална
-      CartPanel.open();            // ← drawer нээнэ
-    });
+    if (!this.isDisabled) {
+      this.querySelector("button").addEventListener("click", (e) => {
+        e.stopPropagation();
+        addToCart(this.productId);
+        CartPanel.open();
+      });
+    }
   }
 }
 

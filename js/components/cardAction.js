@@ -1,30 +1,17 @@
-import { updateNavbarCount } from "./navbarCount.js";
 import { showToast } from "./toggle.js";
+import { addToCart } from "../pages/cartPage.js";
+import { updateNavbarCount } from "./navbarCount.js";
 
 export function setupCardActions(products) {
+  // cart-button custom element-ээр зохицуулагдах тул
+  // зөвхөн wishlist болон бусад card action-уудыг энд хийнэ
   document.addEventListener("add-cart", (event) => {
-    console.log("add-cart event received", event.detail);
-
-    const id = Number(event.detail.productId);
+    const id      = Number(event.detail?.productId);
     const product = products.find(p => Number(p.id) === id);
-
     if (!product) return;
 
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const existing = cart.find(item => Number(item.id) === id);
-
-    if (existing) {
-      existing.quantity = (existing.quantity || 1) + 1;
-    } else {
-      cart.push({
-        ...product,
-        quantity: 1
-      });
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
+    addToCart(id);
     updateNavbarCount();
-    showToast("Сагсанд нэмэгдлээ!")
+    showToast("Сагсанд нэмэгдлээ!");
   });
-
 }

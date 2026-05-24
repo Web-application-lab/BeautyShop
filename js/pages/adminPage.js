@@ -99,26 +99,28 @@ async function _renderTab(tab) {
     content.innerHTML = `
       <div class="admin-table-wrap">
         <h3 class="admin-table-title">Бүтээгдэхүүний жагсаалт</h3>
-        ${!products.length ? `<p class="admin-empty">Бүтээгдэхүүн байхгүй байна</p>` : products.map(p => `
-          <div class="admin-product-row" data-id="${p._id}">
-            <img class="admin-product-row__img" src="/images/${p.img}" onerror="this.src='/images/placeholder.svg'" />
-            <div class="admin-product-row__info">
-              <p class="admin-product-row__name">${p.name}</p>
-              <p class="admin-product-row__meta">
-                ${Number(p.price).toLocaleString("mn-MN")}₮ &nbsp;·&nbsp; Нөөц: ${p.stock || 0} &nbsp;
-                <span class="admin-product-row__tag">${p.categorySlug || ""}</span>
-              </p>
+        ${!products.length
+          ? `<p class="admin-empty">Бүтээгдэхүүн байхгүй байна</p>`
+          : products.map(p => `
+            <div class="admin-product-row" data-id="${p._id}">
+              <img class="admin-product-row__img" src="/images/${p.img}" onerror="this.src='/images/placeholder.svg'" />
+              <div class="admin-product-row__info">
+                <p class="admin-product-row__name">${p.name}</p>
+                <p class="admin-product-row__meta">
+                  ${Number(p.price).toLocaleString("mn-MN")}₮ &nbsp;·&nbsp; Нөөц: ${p.stock || 0} &nbsp;
+                  <span class="admin-product-row__tag">${p.categorySlug || ""}</span>
+                </p>
+              </div>
+              <div class="admin-product-row__actions">
+                <button class="admin-edit-btn" data-id="${p._id}">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                </button>
+                <button class="admin-delete-btn" data-id="${p._id}">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                </button>
+              </div>
             </div>
-            <div class="admin-product-row__actions">
-              <button class="admin-edit-btn" data-id="${p._id}">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-              </button>
-              <button class="admin-delete-btn" data-id="${p._id}">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
-              </button>
-            </div>
-          </div>
-        `).join("")}
+          `).join("")}
       </div>
     `;
 
@@ -146,29 +148,43 @@ async function _renderTab(tab) {
     content.innerHTML = `
       <div class="admin-table-wrap">
         <h3 class="admin-table-title">Захиалгын жагсаалт</h3>
-        ${!orders.length ? `<p class="admin-empty">Захиалга байхгүй байна</p>` : orders.map(o => `
-          <div class="admin-order-row">
-            <div class="admin-order-row__info">
-              <p class="admin-order-row__name">${o.userName}</p>
-              <p class="admin-order-row__meta">${o.userEmail} · ${o.userPhone || "–"}</p>
-              <p class="admin-order-row__meta">${new Date(o.createdAt).toLocaleDateString("mn-MN")} · ${o.items.length} бараа</p>
-              <div class="admin-order-row__items">
+        ${!orders.length
+          ? `<p class="admin-empty">Захиалга байхгүй байна</p>`
+          : orders.map(o => `
+            <div class="admin-order-card">
+              <div class="admin-order-card__header">
+                <div class="admin-order-card__user">
+                  <div class="admin-order-card__avatar">${o.userName.charAt(0).toUpperCase()}</div>
+                  <div>
+                    <p class="admin-order-card__name">${o.userName}</p>
+                    <p class="admin-order-card__meta">${o.userEmail} · ${o.userPhone || "–"}</p>
+                    <p class="admin-order-card__meta">${new Date(o.createdAt).toLocaleDateString("mn-MN")}</p>
+                  </div>
+                </div>
+                <div class="admin-order-card__right">
+                  <p class="admin-order-card__total">${Math.round(o.totalPrice).toLocaleString("mn-MN")}₮</p>
+                  <select class="admin-order-status-select" data-id="${o._id}">
+                    <option value="pending"   ${o.status === "pending"   ? "selected" : ""}>Хүлээгдэж байна</option>
+                    <option value="confirmed" ${o.status === "confirmed" ? "selected" : ""}>Баталгаажсан</option>
+                    <option value="delivered" ${o.status === "delivered" ? "selected" : ""}>Хүргэгдсэн</option>
+                    <option value="cancelled" ${o.status === "cancelled" ? "selected" : ""}>Цуцлагдсан</option>
+                  </select>
+                </div>
+              </div>
+              <div class="admin-order-card__items">
                 ${o.items.map(item => `
-                  <span class="admin-order-row__item">${item.name} × ${item.qty}</span>
+                  <div class="admin-order-card__item">
+                    <img src="/images/${item.img}" onerror="this.src='/images/placeholder.svg'" />
+                    <div class="admin-order-card__item-info">
+                      <p class="admin-order-card__item-name">${item.name}</p>
+                      <p class="admin-order-card__item-meta">${item.qty} ш · ${Math.round(item.price).toLocaleString("mn-MN")}₮</p>
+                    </div>
+                    <p class="admin-order-card__item-total">${Math.round(item.price * item.qty).toLocaleString("mn-MN")}₮</p>
+                  </div>
                 `).join("")}
               </div>
             </div>
-            <div class="admin-order-row__right">
-              <p class="admin-order-row__total">${Math.round(o.totalPrice).toLocaleString("mn-MN")}₮</p>
-              <select class="admin-order-status-select" data-id="${o._id}">
-                <option value="pending"   ${o.status === "pending"   ? "selected" : ""}>Хүлээгдэж байна</option>
-                <option value="confirmed" ${o.status === "confirmed" ? "selected" : ""}>Баталгаажсан</option>
-                <option value="delivered" ${o.status === "delivered" ? "selected" : ""}>Хүргэгдсэн</option>
-                <option value="cancelled" ${o.status === "cancelled" ? "selected" : ""}>Цуцлагдсан</option>
-              </select>
-            </div>
-          </div>
-        `).join("")}
+          `).join("")}
       </div>
     `;
 

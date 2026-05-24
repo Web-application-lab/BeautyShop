@@ -11,7 +11,7 @@ async function makeAdmin() {
     { $set: { isAdmin: true } }
   );
   
-  console.log("Admin болгогдлоо!");
+  console.log("Admin болголоо!");
   await mongoose.disconnect();
 }
 

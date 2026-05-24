@@ -9,6 +9,8 @@ const port = Number(process.env.PORT) || 3000;
 const authRoutes = require("./routes/auth");
 const adminRoutes = require("./routes/admin");
 const orderRoutes = require("./routes/order");
+const reviewRoutes = require("./routes/review");
+
 
 
 mongoose.connect(process.env.MONGO_URI)
@@ -20,6 +22,8 @@ app.use(express.static(root));
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/reviews", reviewRoutes);
+
 function sendSpa(req, res) {
   res.sendFile(path.join(root, "index.html"));
 }

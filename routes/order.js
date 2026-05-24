@@ -1,6 +1,7 @@
-const express = require("express");
-const router  = express.Router();
-const Order   = require("../models/Order");
+const express  = require("express");
+const router   = express.Router();
+const Order    = require("../models/Order");
+const mongoose = require("mongoose");
 
 // Захиалга үүсгэх
 router.post("/", async (req, res) => {
@@ -9,6 +10,29 @@ router.post("/", async (req, res) => {
 
     if (!userId || !items?.length)
       return res.status(400).json({ error: "Мэдээлэл дутуу байна" });
+
+    const db = mongoose.connection.db;
+
+    // Stock шалгах
+    for (const item of items) {
+      const product = await db.collection("products").findOne({ id: Number(item.productId) });
+      if (!product) {
+        return res.status(400).json({ error: `"${item.name}" бүтээгдэхүүн олдсонгүй` });
+      }
+      if ((product.stock ?? 0) < item.qty) {
+        return res.status(400).json({
+          error: `"${item.name}" — нөөц хүрэлцэхгүй байна (үлдэгдэл: ${product.stock ?? 0} ш)`
+        });
+      }
+    }
+
+    // Stock хасах
+    for (const item of items) {
+      await db.collection("products").updateOne(
+        { id: Number(item.productId) },
+        { $inc: { stock: -item.qty } }
+      );
+    }
 
     const order = await Order.create({
       userId, userName, userEmail, userPhone,

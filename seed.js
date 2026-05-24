@@ -18,8 +18,10 @@ async function seed() {
   console.log(`Inserted ${data.subCategories.length} subcategories`);
 
   await db.collection("products").deleteMany({});
-  await db.collection("products").insertMany(data.products);
-  console.log(`Inserted ${data.products.length} products`);
+  // Stock автоматаар 10 нэмнэ
+  const productsWithStock = data.products.map(p => ({ ...p, stock: p.stock ?? 10 }));
+  await db.collection("products").insertMany(productsWithStock);
+  console.log(`Inserted ${productsWithStock.length} products`);
 
   await db.collection("concerns").deleteMany({});
   await db.collection("concerns").insertMany(data.concerns);

@@ -475,4 +475,46 @@ body {
     max-height: 5rem;
   }
 }
-    
+/* ── Stock badge ── */
+.container .product-card {
+  position: relative;
+}
+
+.product-stock {
+  position: absolute;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  z-index: 2;
+}
+
+.product-stock--out {
+  background: #fef2f2;
+  color: #e24b4a;
+}
+
+.product-stock--low {
+  background: #fff8e1;
+  color: #f59e0b;
+}
+
+.product-card--out {
+  opacity: 0.7;
+}
+
+.product-card--out .product-image img {
+  filter: grayscale(30%);
+}
+
+.add-cart--disabled {
+  opacity: 0.4;
+  cursor: not-allowed !important;
+}
+
+.add-cart--disabled:hover {
+  background: none !important;
+  color: inherit !important;
+}
