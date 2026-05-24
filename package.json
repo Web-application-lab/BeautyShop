@@ -13,7 +13,8 @@
     "express": "^4.22.2",
     "mongodb": "^4.17.2",
     "mongoose": "^6.13.8",
-    "pg": "^8.21.0"
+    "pg": "^8.21.0",
+    "sharp": "^0.34.5"
   },
   "description": "",
   "main": "server.js",

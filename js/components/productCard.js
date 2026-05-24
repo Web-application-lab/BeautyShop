@@ -4,7 +4,8 @@ import { priceTemplate } from "./priceTemplate.js";
 const imgFallback = `onerror="this.onerror=null;this.src='/images/placeholder.svg'"`; 
 
 function productImgSrc(product) {
-  return product.imageUrl || productImageSrc(product.img);
+    if (product.imageUrl) return product.imageUrl;
+    return `/images/${product.img}`;
 }
 
 export const template = {
