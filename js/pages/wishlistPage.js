@@ -412,7 +412,11 @@ class WishlistPanel {
     // Зураг — Product class дотор `img` гэсэн field байгаа тул тэрийг ашиглана
     let imgEl;
     if (p.img) {
+<<<<<<< HEAD
       const src = p.imageUrl || (p.img?.includes("/") ? p.img : `/images/${p.img}`);
+=======
+      const src = p.imageUrl || (p.img?.includes("/") ? p.img : `images/${p.img}`);
+>>>>>>> 38e961e20b4bb5f6eede5e26514121ee98472485
       imgEl = Object.assign(this.#el("img", "wl-item__img"), { src, alt: p.name ?? "" });
       imgEl.onerror = () => { imgEl.onerror = null; imgEl.src = "/images/placeholder.svg"; };
     } else {

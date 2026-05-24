@@ -8,6 +8,7 @@ import {
   normalizeCategoryPath,
   resolveCategoryParams
 } from "../components/categoryCatalog.js";
+<<<<<<< HEAD
 import {
   getFilterMode,
   renderSidebarFilters,
@@ -17,6 +18,27 @@ import {
 function filterProducts(products, resolved) {
   if (resolved.concernId) {
     return products.filter(p => (p.concernIds || []).includes(resolved.concernId));
+=======
+
+function getSubCategoryId(product) {
+  return product.subCategoryId;
+}
+
+function filterProducts(products, resolved) {
+  if (resolved.concernId) {
+    return products.filter(product =>
+      (product.concernIds || []).includes(resolved.concernId)
+    );
+  }
+
+  const { categoryId, subCategoryId } = resolved;
+  if (!categoryId) return products;
+
+  let list = products.filter(product => product.categoryId === categoryId);
+
+  if (subCategoryId) {
+    list = list.filter(product => getSubCategoryId(product) === subCategoryId);
+>>>>>>> 38e961e20b4bb5f6eede5e26514121ee98472485
   }
 
   if (!resolved.categoryId) return products;
@@ -120,6 +142,24 @@ function renderSidebar(resolved, products) {
   `;
 }
 
+<<<<<<< HEAD
+=======
+function setupCategorySorting(container, products, resolved) {
+  const sortSelect = container.querySelector(".sorting");
+  const grid = container.querySelector(".products");
+  const countEl = container.querySelector("#category-product-count");
+
+  if (!sortSelect || !grid) return;
+
+  sortSelect.addEventListener("change", () => {
+    const sorted = sortProducts(filterProducts(products, resolved), sortSelect.value);
+
+    if (countEl) countEl.textContent = String(sorted.length);
+    grid.innerHTML = renderProductGrid(sorted);
+  });
+}
+
+>>>>>>> 38e961e20b4bb5f6eede5e26514121ee98472485
 function renderBreadcrumb(resolved, pageTitle) {
   const sep = `<span class="category-page__sep">&gt;</span>`;
 
@@ -140,6 +180,7 @@ function renderBreadcrumb(resolved, pageTitle) {
 
 function renderSortSelect() {
   return `
+<<<<<<< HEAD
     <div class="category-sort">
       <select class="sorting">
         <option value="">--Эрэмбэлэх--</option>
@@ -148,6 +189,11 @@ function renderSortSelect() {
         <option value="sale">Хямдарсан</option>
       </select>
     </div>
+=======
+    <a href="/" class="category-page__crumb">Нүүр</a>
+    <span class="category-page__sep">/</span>
+    <span class="category-page__crumb category-page__crumb--current">${pageTitle}</span>
+>>>>>>> 38e961e20b4bb5f6eede5e26514121ee98472485
   `;
 }
 
@@ -173,6 +219,7 @@ export function renderCategoryPage(products, container, params) {
 
   const pageTitle = getCategoryPageTitle(resolved);
   const filtered = filterProducts(products, resolved);
+<<<<<<< HEAD
   const isConcern = Boolean(resolved.concernId);
 
   let pageClass = "category-page";
@@ -184,6 +231,8 @@ export function renderCategoryPage(products, container, params) {
       `<h1 class="category-page__title">${pageTitle}</h1>` +
       `<p class="product-count"><span id="category-product-count">${filtered.length}</span> бүтээгдэхүүн</p>`;
   }
+=======
+>>>>>>> 38e961e20b4bb5f6eede5e26514121ee98472485
 
   container.innerHTML = `
     <section class="${pageClass}">

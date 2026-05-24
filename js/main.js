@@ -9,7 +9,10 @@ import { CartPanel } from "./pages/cartPage.js";
 import { setupCategoryNav } from "./components/categoryNav.js";
 import { setupBrandNav } from "./components/brandNav.js";
 import { initCategoryCatalog } from "./components/categoryCatalog.js";
+<<<<<<< HEAD
 import { initBrandCatalog } from "./components/brandCatalog.js";
+=======
+>>>>>>> 38e961e20b4bb5f6eede5e26514121ee98472485
 import { navigateTo, setupAppNavigation } from "./navigation.js";
 import { productImageSrc } from "./utils/assets.js";
 
