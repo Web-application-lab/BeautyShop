@@ -203,13 +203,15 @@
         border-radius: var(--radius-lg); 
         border: var(--border-default-all); 
         width: 48%; 
-        padding: 1rem 1rem 1rem 1rem; }
+        padding: 1rem 1rem 1rem 1rem; 
+    }
     .comments-header {
         border: none; 
         border-radius: var(--radius-lg);
         border: var(--border-default-all); 
         width: 100%; 
-        padding: 1rem;}
+        padding: 1rem;
+    }
     .comments-left-header {
         display: flex; 
         flex-direction: row; 

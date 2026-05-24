@@ -14,7 +14,6 @@ import { initBrandCatalog } from "./components/brandCatalog.js";
 =======
 >>>>>>> 38e961e20b4bb5f6eede5e26514121ee98472485
 import { navigateTo, setupAppNavigation } from "./navigation.js";
-import { productImageSrc } from "./utils/assets.js";
 
 class Product {
   constructor(product) {
