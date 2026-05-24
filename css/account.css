@@ -4,7 +4,6 @@
   background: var(--color-white-0);
 }
 
-/* Sidebar */
 .account-sidebar {
   width: 260px;
   min-width: 260px;
@@ -84,7 +83,6 @@
   stroke: var(--color-main-500);
 }
 
-/* Content */
 .account-content {
   flex: 1;
   padding: var(--space-xl) var(--space-2xl);
@@ -99,7 +97,6 @@
   margin-bottom: var(--space-xl);
 }
 
-/* Profile fields */
 .profile-field {
   display: flex;
   align-items: center;
@@ -142,7 +139,6 @@
   color: var(--color-main-500);
 }
 
-/* Edit modal */
 .profile-edit-modal {
   position: fixed;
   inset: 0;
@@ -224,7 +220,6 @@
   margin-top: var(--space-sm);
 }
 
-/* Orders empty */
 .orders-empty {
   display: flex;
   flex-direction: column;
@@ -238,7 +233,6 @@
   stroke: var(--color-black-6);
 }
 
-/* Order cards */
 .order-card {
   border: var(--border-light-all);
   border-radius: var(--radius-lg);
@@ -309,4 +303,37 @@
 .order-card__item-meta {
   font-size: var(--text-sm);
   color: var(--color-black-7);
+}
+
+@media (max-width: 48rem) {
+  .account-layout {
+    flex-direction: column;
+  }
+
+  .account-sidebar {
+    width: 100%;
+    min-width: 100%;
+    border-right: none;
+    border-bottom: var(--border-light-all);
+    padding: var(--space-md) 0;
+  }
+
+  .account-nav {
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: 0 var(--space-md);
+  }
+
+  .account-nav__item {
+    flex: 1;
+    justify-content: center;
+    padding: 8px var(--space-sm);
+    font-size: var(--text-sm);
+  }
+
+  .account-content {
+    padding: var(--space-lg) var(--space-md);
+    max-width: 100%;
+  }
 }

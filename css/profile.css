@@ -47,47 +47,44 @@
   margin-bottom: var(--space-xl);
 }
 
-/* Форм */
-.profile-form {
-  h3 {
-    font-size: var(--text-md);
-    font-weight: 600;
-    margin-bottom: var(--space-md);
-    color: var(--color-black-2);
-    border-top: var(--border-light-all);
-    padding-top: var(--space-md);
-  }
+.profile-form h3 {
+  font-size: var(--text-md);
+  font-weight: 600;
+  margin-bottom: var(--space-md);
+  color: var(--color-black-2);
+  border-top: var(--border-light-all);
+  padding-top: var(--space-md);
+}
 
-  label {
-    display: block;
-    font-size: var(--text-base);
-    font-weight: 500;
-    margin-bottom: var(--space-sm);
-    color: var(--color-black-2);
-  }
+.profile-form label {
+  display: block;
+  font-size: var(--text-base);
+  font-weight: 500;
+  margin-bottom: var(--space-sm);
+  color: var(--color-black-2);
+}
 
-  input {
-    display: block;
-    width: 100%;
-    padding: var(--space-sm) var(--space-md);
-    margin-bottom: var(--space-md);
-    border: none;
-    border-radius: var(--radius-xxs);
-    font-size: var(--text-base);
-    box-sizing: border-box;
-    background: var(--color-white-2);
-    outline: none;
-    font-family: var(--font-body);
+.profile-form input {
+  display: block;
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-md);
+  border: none;
+  border-radius: var(--radius-xxs);
+  font-size: var(--text-base);
+  box-sizing: border-box;
+  background: var(--color-white-2);
+  outline: none;
+  font-family: var(--font-body);
+}
 
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+.profile-form input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
-    &:focus {
-      background: var(--color-white-3);
-    }
-  }
+.profile-form input:focus {
+  background: var(--color-white-3);
 }
 
 .profile-submit {
@@ -102,10 +99,10 @@
   cursor: pointer;
   transition: background 0.2s;
   font-family: var(--font-body);
+}
 
-  &:hover {
-    background: var(--color-main-600);
-  }
+.profile-submit:hover {
+  background: var(--color-main-600);
 }
 
 .profile-error {
@@ -121,41 +118,158 @@
 }
 
 /* Хэрэглэгчийн dropdown */
+
 .user-dropdown {
   position: absolute;
-  top: calc(100% + var(--space-sm));
+  top: calc(100% + 0.75rem);
   right: 0;
-  background: var(--color-white-0);
-  border: var(--border-light-all);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-dropdown);
-  min-width: 11.25rem;
   z-index: 999;
-  padding: var(--space-sm) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 14rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 1rem;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+  animation: dropdownFade 0.18s ease;
+  cursor: pointer;
+}
 
-  &__item {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    padding: var(--space-sm) var(--space-md);
-    font-size: var(--text-base);
-    color: var(--color-black-3);
-    cursor: pointer;
-    transition: background 0.15s;
-    text-decoration: none;
+.user-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
 
-    &:hover {
-      background: var(--color-white-2);
-    }
+  width: 100%;
+  padding: 0.85rem 1rem;
 
-    &--logout {
-      color: #e24b4a;
-    }
+  border: none;
+  border-radius: 0.75rem;
+
+  background: transparent;
+
+  color: var(--color-black-2);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    color 0.2s ease;
+}
+
+.user-dropdown-item:hover {
+  background: #f5f5f7;
+  transform: translateX(3px);
+}
+
+.user-dropdown-item i {
+  width: 1.2rem;
+
+  font-size: 1rem;
+  color: #777;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.user-dropdown-item:hover i {
+  color: var(--color-black-1);
+  transform: scale(1.05);
+}
+
+.user-dropdown-divider {
+  width: 100%;
+  height: 1px;
+
+  margin: 0.35rem 0;
+
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.user-dropdown-logout {
+  color: #e54848;
+}
+
+.user-dropdown-logout i {
+  color: #e54848;
+}
+
+.user-dropdown-logout:hover {
+  background: rgba(229, 72, 72, 0.08);
+  color: #d92d2d;
+}
+
+.user-dropdown-logout:hover i {
+  color: #d92d2d;
+}
+
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
   }
 
-  &__divider {
-    height: 1px;
-    background: var(--color-white-3);
-    margin: var(--space-sm) 0;
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ================================================================= */
+/* 📱 💻 ТАБЛЕТ БОЛОН ГАР УТАСНЫ (RESPONSIVE) ДЭЛГЭЦЭНД ҮЙЛЧЛЭХ ХЭСЭГ */
+/* ================================================================= */
+
+/* 1. Таблет (iPad) болон жижиг дэлгэцэнд зориулсан зай (Максимум 768px) */
+@media (max-width: 768px) {
+  .profile-page {
+    padding: var(--space-xl) var(--space-md);
+  }
+  
+  .profile-box {
+    padding: var(--space-lg);
+  }
+}
+
+/* 2. Зөвхөн гар утасны жижиг дэлгэцэнд зориулсан хэсэг (Максимум 480px) */
+@media (max-width: 480px) {
+  .profile-page {
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  .profile-box {
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+  }
+
+  .profile-avatar {
+    width: 4rem;
+    height: 4rem;
+    font-size: var(--text-xl);
+  }
+
+  .profile-email {
+    margin-bottom: var(--space-lg);
+  }
+
+  /* Товчлууруудыг хажуу хажуудаа шахагдаж эвдрэхээс сэргийлж дээр дээрээс нь байрлуулна */
+  .profile-actions {
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin-top: var(--space-lg);
+  }
+
+  .profile-btn {
+    width: 100%;
+    padding: var(--space-sm);
   }
 }

@@ -469,49 +469,117 @@
   margin: 0;
 }
 
-/* Responsive */
 @media (max-width: 48rem) {
+  /* Зүүн, баруун хэсгийг босоо бүтэцтэй болгох */
   .product-detail {
     flex-direction: column;
     padding: var(--space-md);
   }
 
+  /* Зургийн хэсгийг голлуулах */
   .detail-left {
     width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-md);
   }
 
   .detail-left img {
     max-width: 100%;
+    height: auto;
+    max-height: 320px; /* Зургийг хэт том олж дэлгэц дүүргэхээс сэргийлнэ */
+    object-fit: contain;
   }
 
+  /* Баруун талын мэдээллийн зайг засах */
   .detail-right {
     width: 100%;
     max-width: 100%;
-    padding: var(--space-md);
+    padding: 0;
   }
 
   .product-description {
     padding-left: 0;
   }
 
+  /* Үнэ болон брэндийн текстийн хэмжээг утсанд тааруулах */
+  .product-brand {
+    font-size: var(--text-xs);
+  }
+
+  .product-price {
+    font-size: var(--text-lg);
+    font-weight: 700;
+  }
+
+  /* Тоо хэмжээ сонгох хэсгийг утас дээр дарахад илүү эвтэйхэн том болгох */
+  .product-count {
+    margin-top: var(--space-md);
+  }
+
+  .product-count .minus,
+  .product-count .plus {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: var(--text-base);
+  }
+
+  .product-count input, 
+  .product-count span {
+    font-size: var(--text-base);
+  }
+
+  /* Сагсанд нэмэх, Захиалах товчийг утсан дээр дарахад маш гоё, том болгох */
+  .product-actions {
+    padding-top: var(--space-md);
+    gap: var(--space-xs);
+  }
+
+  .product-actions .add-cart,
+  .detail-order-btn {
+    height: 3.25rem; /* Хуруугаар дарахад хамгийн тохиромжтой өндөр */
+    font-size: var(--text-sm);
+    border-radius: var(--radius-md);
+  }
+
+  .product-actions .wishlist {
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: var(--radius-md);
+  }
+
+  /* Таб хэсгийг утасны дэлгэцэнд шахцалдуулахгүй харуулах */
+  .tabs {
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+  }
+
+  .tab-btn {
+    padding: var(--space-sm);
+    font-size: var(--text-xs);
+  }
+
   .tab-content {
     padding: var(--space-md);
+    font-size: var(--text-sm);
   }
 
-  .tab-content p {
-    margin: var(--space-md);
-  }
-
+  /* Сэтгэгдлийн хэсэг утас дээр 1 баганаар доошоо цуврах */
   .product-reviews {
-    padding: var(--space-md);
-  }
-
-  .reviews-card,
-  .comments-card {
-    width: 100%;
+    padding: var(--space-md) 0;
   }
 
   .reviews-layout {
     grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .review-write-card {
+    padding: var(--space-md);
+  }
+
+  /* Сэтгэгдлийн жагсаалтын нэг блок */
+  .review-item {
+    padding: var(--space-md);
   }
 }

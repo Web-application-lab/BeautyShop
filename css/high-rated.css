@@ -1,240 +1,203 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import url('variables.css');    
 
-    body {
-      background: var(--color-white-0);
-    }
-    .high-rated {
-        margin: 2rem 2rem 2rem 2rem; 
-        gap: 1rem;
-    }
-
-    .product-count {
-        font-size: var(--text-xs);
-        color: var(--color-black-8);
-    }
-
-    h2.high-rated-product {
-      font-size: var(--text-2xl);
-    }
-
-    .sort {
-      display: flex;
-      border-radius: var(--radius-xxxs);
-      border: var(--border-default-all);
-      padding: 1rem;
-      gap: 2rem;
-      padding: 0.75rem;
-      margin-top: 1rem;
-      .category, .sorting {
-        border-radius: var(--radius-xxxs);
-        border-color: var(--color-white-3);
-        font-size: var(--text-base);
-        background: var(--color-white-3);
-        height: 2rem;
-      }
-    }
-    
-    .products {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 1rem;
-        margin: 2rem 0rem 2rem 0rem;
-    }
-    .product-card {
-      overflow: hidden;
-      background: var(--color-white-0);
-      border-radius: 1rem;
-      box-shadow: var(--shadow-card);
-      padding: 0.75rem;
-      transition: all 0.3s; 
-      scroll-snap-align: start; 
-      &:hover {
-        transform: translateY(-0.33rem); 
-        box-shadow: var(--shadow-hover);
-      }
-    }
-
-    .product-image {
-      width: 100%;
-      display: flex;  
-      align-items: center; 
-      justify-content: center;
-      img {
-        width: 100%;
-        height: 5rem;
-        object-fit: contain;
-      }
-    }
-
-    .product-rating {
-      font-size: var(--text-sm);
-      .review-star {
-        color: var(--product-rating-star);
-      }
-    }
-
-    .product-card .product-actions {
-    display: flex; 
-    gap: 0.75rem; 
-    margin-top: 0.75rem; 
-    justify-content: center; 
-    opacity: 0; 
-    pointer-events: none; 
-    transform: translateY(1rem); 
-    transition: opacity 0.2s, transform 0.2s;
-    }
-
-    .product-card:hover .product-actions {
-      opacity: 1; 
-      pointer-events: auto; 
-      transform: translateY(0);
-    }
-    
-    .product-card .product-actions .add-cart,
-    .product-card .product-actions .wishlist {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 5rem;
-      height: 2rem;
-      background: var(--color-main-100);
-      border: none;
-      border-radius: var(--radius-xs);
-      cursor: pointer;
-    }
-
-    .product-title {
-      font-size: var(--text-md); 
-      margin: 0.33rem; 
-      text-decoration: none;
-
-    }
-    .product-brand {
-      margin: 0.33rem;
-      font-size: var(--text-sm); 
-      color: var(--color-black-10); 
-      text-decoration: none;
-    }
- 
-    .product-detail {text-decoration: none; color: var(--color-black-0);}
-    
-
-    .discount-product {
-        margin: 2rem 2rem 2rem 2rem; 
-        gap: 1rem;
-    }
-
-    h2.sale-product {
-      font-size: var(--text-2xl);
-    }
-
-    .discount-product .product-card .product-actions {
-      display: flex; 
-      gap: 0.75rem; 
-      margin-top: 0.75rem; 
-      justify-content: center; 
-      opacity: 0; 
-      pointer-events: none; 
-      transform: translateY(1rem); 
-      transition: opacity 0.2s, transform 0.2s;
-    }
-
-    .discount-product .product-card:hover .product-actions {
-      opacity: 1; 
-      pointer-events: auto; 
-      transform: translateY(0);
-    }
-
-    @media (max-width: 768px) {
-      h2.high-rated-product {
-        font-size: var(--text-lg);
-      }
-
-      .sort {
-        padding: 0.75rem;
-        gap: 1rem;
-        .category, .sorting {
-          border-radius: var(--radius-xxxs);
-          border-color: var(--color-white-3);
-          font-size: var(--text-xs);
-          background: var(--color-white-3);
-          height: 2rem;
-        }
-      }
-      .products {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    .product-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
+body {
+  background: var(--color-white-0);
+}
+.high-rated {
+    margin: 2rem 2rem 2rem 2rem; 
+    gap: 1rem;
 }
 
-    .breadcrumb {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: var(--space-xs);
-      font-size: var(--text-sm);
-      color: var(--color-black-8);
-      margin-bottom: var(--space-md);
-    }
+.product-count {
+    font-size: var(--text-xs);
+    color: var(--color-black-8);
+}
 
-    .breadcrumb-link {
-      color: var(--color-black-6);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
+h2.high-rated-product {
+  font-size: var(--text-2xl);
+}
 
-    a.breadcrumb-link:hover {
-      color: var(--color-main-500);
-    }
+.sort {
+  display: flex;
+  border-radius: var(--radius-xxxs);
+  border: var(--border-default-all);
+  padding: 1rem;
+  gap: 2rem;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  .category, .sorting {
+    border-radius: var(--radius-xxxs);
+    border-color: var(--color-white-3);
+    font-size: var(--text-base);
+    background: var(--color-white-3);
+    height: 2rem;
+  }
+}
 
-    .breadcrumb-current {
-      color: var(--color-black-3);
-      font-weight: 500;
-    }
+.products {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    margin: 2rem 0rem 2rem 0rem;
+}
+.product-card {
+  overflow: hidden;
+  background: var(--color-white-0);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-card);
+  padding: 0.75rem;
+  transition: all 0.3s; 
+  scroll-snap-align: start; 
+  &:hover {
+    transform: translateY(-0.33rem); 
+    box-shadow: var(--shadow-hover);
+  }
+}
 
-    .breadcrumb-sep {
-      color: var(--color-white-7);
-    }
+.product-image {
+  width: 100%;
+  display: flex;  
+  align-items: center; 
+  justify-content: center;
+  img {
+    width: 100%;
+    height: 5rem;
+    object-fit: contain;
+  }
+}
 
-    .subnav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-sm);
-      margin: var(--space-md) 0;
-    }
+.product-rating {
+  font-size: var(--text-sm);
+  .review-star {
+    color: var(--product-rating-star);
+  }
+}
 
-    .subnav-link {
-      padding: var(--space-sm) var(--space-md);
-      border-radius: var(--radius-pill);
-      border: var(--border-light-all);
-      background: var(--color-white-0);
-      color: var(--color-black-4);
-      font-size: var(--text-sm);
-      text-decoration: none;
-      transition: background 0.15s, color 0.15s, border-color 0.15s;
-    }
+.product-card .product-actions {
+  display: flex; 
+  gap: 0.75rem; 
+  margin-top: 0.75rem; 
+  justify-content: center; 
+  opacity: 0; 
+  pointer-events: none; 
+  transform: translateY(1rem); 
+  transition: opacity 0.2s, transform 0.2s;
+}
 
-    .subnav-link:hover {
-      border-color: var(--color-rose-border);
-      color: var(--color-main-500);
-      background: var(--color-rose-light);
-    }
+.product-card:hover .product-actions {
+  opacity: 1; 
+  pointer-events: auto; 
+  transform: translateY(0);
+}
 
-    .subnav-link is-active {
-      border-color: var(--color-main-400);
-      background: var(--color-rose-light);
-      color: var(--color-main-600);
-      font-weight: 500;
-    }
+.product-card .product-actions .add-cart,
+.product-card .product-actions .wishlist {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  height: 2rem;
+  background: var(--color-main-100);
+  border: none;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+}
 
-    .products-empty {
-      grid-column: 1 / -1;
-      padding: var(--space-2xl);
-      text-align: center;
-      color: var(--color-black-8);
-    }
+.product-title {
+  font-size: var(--text-md); 
+  margin: 0.33rem; 
+  text-decoration: none;
+}
+.product-brand {
+  margin: 0.33rem;
+  font-size: var(--text-sm); 
+  color: var(--color-black-10); 
+  text-decoration: none;
+}
+
+.product-detail {text-decoration: none; color: var(--color-black-0);}
+
+
+.discount-product {
+    margin: 2rem 2rem 2rem 2rem; 
+    gap: 1rem;
+}
+
+h2.sale-product {
+  font-size: var(--text-2xl);
+}
+
+.discount-product .product-card .product-actions {
+  display: flex; 
+  gap: 0.75rem; 
+  margin-top: 0.75rem; 
+  justify-content: center; 
+  opacity: 0; 
+  pointer-events: none; 
+  transform: translateY(1rem); 
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.discount-product .product-card:hover .product-actions {
+  opacity: 1; 
+  pointer-events: auto; 
+  transform: translateY(0);
+}
+
+
+/* ================================================================= */
+/* 📱 ЗӨВХӨН ГАР УТАСНЫ (MOBILE — МАКСИМУМ 480px) ДЭЛГЭЦЭНД ҮЙЛЧЛЭХ ЗАСВАР */
+/* ================================================================= */
+@media (max-width: 480px) {
+  /* Хуудасны баруун зүүн зайг утасны дэлгэцэнд тааруулах */
+  .high-rated,
+  .discount-product {
+    margin: 1rem !important;
+  }
+
+  h2.high-rated-product,
+  h2.sale-product {
+    font-size: var(--text-lg) !important;
+  }
+
+  /* Сүлжээг утас дээр цэвэрхэн 2 багана болгох */
+  .products {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+  }
+
+  /* 🛠️ ЗӨВХӨН гар утасны хөтөч дээр текст хөхөрч харагдахаас сэргийлнэ */
+  .product-card .product-title,
+  .product-card .product-brand,
+  .product-card .product-detail,
+  .product-card a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+
+  /* Гар утас дээр hover байхгүй тул товчлууруудыг үргэлж ил харуулна */
+  .product-card .product-actions,
+  .discount-product .product-card .product-actions {
+    display: flex !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translateY(0) !important;
+    
+    margin-top: 0.75rem !important;
+    margin-bottom: 0.5rem !important;
+    justify-content: center !important;
+    gap: 0.75rem !important;
+  }
+
+  /* 🌸 ТАНЫ ҮНДСЭН ТОВЧЛУУРЫН ХЭМЖЭЭ, ӨНГӨ (100% хэвээрээ) */
+  .product-card .product-actions .add-cart,
+  .product-card .product-actions .wishlist {
+    width: 5rem !important;         /* Таны анхны урт */
+    height: 2rem !important;        /* Таны анхны өндөр */
+    background: var(--color-main-100) !important; /* Таны анхны өнгө */
+    border: none !important;
+    border-radius: var(--radius-xs) !important;  /* Таны анхны хэлбэр */
+    flex-shrink: 0 !important;      /* Утасны дэлгэцэнд хавчигдаж сунахаас сэргийлнэ */
+  }
+}
