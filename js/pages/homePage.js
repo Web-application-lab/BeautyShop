@@ -7,7 +7,9 @@ export function renderHomePage(products, container) {
 
   container.innerHTML = `
     <section class="hero" aria-label="hero">
-      <img src="/images/hero.webp" class="hero-img" onerror="this.style.display='none'">
+      <img src="/images/hero.webp" class="hero-img" 
+        width="1440" height="460"
+        onerror="this.style.display='none'">
     </section>
 
     <main class="container">
@@ -109,7 +111,7 @@ export function renderHomePage(products, container) {
   container.querySelectorAll(".strip-button[data-concern]").forEach(btn => {
     btn.addEventListener("click", () => {
       const concernId = Number(btn.dataset.concern);
-      navigateTo(`#category?concern=${concernId}`);
+      const url = `#category?concern=${concernId}`;
       window.dispatchEvent(new PopStateEvent("popstate"));
     });
   });

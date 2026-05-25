@@ -106,7 +106,6 @@ export class AuthModal {
       }, 2000);
     });
 
-    // Бүртгүүлэх
     document.getElementById("reg-submit")?.addEventListener("click", async () => {
       const name     = document.getElementById("reg-name").value.trim();
       const email    = document.getElementById("reg-email").value.trim();

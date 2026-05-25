@@ -108,6 +108,7 @@ h2.high-rated-product {
   font-size: var(--text-md); 
   margin: 0.33rem; 
   text-decoration: none;
+  color: var(--color-black-0);
 }
 .product-brand {
   margin: 0.33rem;
@@ -116,7 +117,21 @@ h2.high-rated-product {
   text-decoration: none;
 }
 
-.product-detail {text-decoration: none; color: var(--color-black-0);}
+.product-detail {
+  text-decoration: none;
+  color: var(--color-black-0);
+}
+
+/* a tag browser default-ийг бүх дэлгэцэнд override хийнэ */
+.product-card a,
+.product-card a:visited {
+  text-decoration: none;
+  color: var(--color-black-0);
+}
+
+.product-card a:hover {
+  text-decoration: none;
+}
 
 
 .discount-product {
@@ -147,9 +162,9 @@ h2.sale-product {
 
 
 /* ================================================================= */
-/* 📱 ЗӨВХӨН ГАР УТАСНЫ (MOBILE — МАКСИМУМ 480px) ДЭЛГЭЦЭНД ҮЙЛЧЛЭХ ЗАСВАР */
+/* 📱 ЗӨВХӨН ГАР УТАСНЫ (MOBILE — МАКСИМУМ 30rem) ДЭЛГЭЦЭНД ҮЙЛЧЛЭХ ЗАСВАР */
 /* ================================================================= */
-@media (max-width: 480px) {
+@media (max-width: 30rem) {
   /* Хуудасны баруун зүүн зайг утасны дэлгэцэнд тааруулах */
   .high-rated,
   .discount-product {
@@ -165,15 +180,6 @@ h2.sale-product {
   .products {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 1rem !important;
-  }
-
-  /* 🛠️ ЗӨВХӨН гар утасны хөтөч дээр текст хөхөрч харагдахаас сэргийлнэ */
-  .product-card .product-title,
-  .product-card .product-brand,
-  .product-card .product-detail,
-  .product-card a {
-    color: inherit !important;
-    text-decoration: none !important;
   }
 
   /* Гар утас дээр hover байхгүй тул товчлууруудыг үргэлж ил харуулна */

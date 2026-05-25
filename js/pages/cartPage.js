@@ -60,6 +60,10 @@ class CartPanelClass {
     }
   }
 
+  static close() {
+    CartPanelClass._instance?._close();
+  }
+
   constructor() {
     this._overlay = this._el("div", "cart-overlay");
     this._panel   = this._el("div", "cart-panel");

@@ -144,11 +144,17 @@ async function initApp() {
 
     CartPanel.init(products);
 
-    document.querySelector(".top-nav__actions .icon-btn[aria-label='Wishlist']")
-      ?.addEventListener("click", () => WishlistPanel.open());
+    document.querySelector("#wishlistToggle")
+      ?.addEventListener("click", () => {
+        CartPanel.close();
+        WishlistPanel.open();
+      });
 
     document.querySelector("#cartToggle")
-      ?.addEventListener("click", () => CartPanel.open());
+      ?.addEventListener("click", () => {
+        WishlistPanel.close();
+        CartPanel.open();
+      });
 
     setupUserDropdown();
     updateUserBtn();
