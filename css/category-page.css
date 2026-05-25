@@ -312,6 +312,7 @@
   .cat-toolbar {
     flex-direction: column;
     align-items: flex-start;
+    gap: var(--space-sm);
   }
 
   .sort-select {

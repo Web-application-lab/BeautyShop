@@ -72,7 +72,7 @@ function renderBreadcrumb(resolved, pageTitle) {
 function renderSidebar(resolved, baseProducts) {
   const catalog = getCategoryCatalog();
   if (!catalog) return "";
-
+  
   let subNavHtml = "";
 
   if (resolved.categoryId) {
@@ -116,6 +116,7 @@ function renderSidebar(resolved, baseProducts) {
     `;
   }
 
+  // Concern filter
   const concerns = catalog.concerns || [];
 
   const concernCounts = {};
